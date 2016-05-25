@@ -21,7 +21,6 @@
             android:name=".Ainekset"
             android:label="@string/title_activity_ainekset"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Koira"></activity>
     </application>
 
 </manifest>

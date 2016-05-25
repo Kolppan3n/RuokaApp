@@ -14,6 +14,7 @@ public class MainAct extends AppCompatActivity {
     }
 
     public void AineksetBtnClick(View view){
-        Intent intentObj = new Intent(this, Ainekset.class);
+        Intent intent = new Intent(this, Ainekset.class);
+        startActivity(intent);
     }
 }
