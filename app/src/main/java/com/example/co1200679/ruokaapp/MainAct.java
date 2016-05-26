@@ -12,7 +12,6 @@ public class MainAct extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         TK = new Tietokanta(this);
-
     }
 
     public void AineksetBtnClick(View view){

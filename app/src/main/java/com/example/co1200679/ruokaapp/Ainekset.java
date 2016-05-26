@@ -9,11 +9,14 @@ import android.view.View;
 
 public class Ainekset extends AppCompatActivity {
 
+    Tietokanta TK;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ainekset);
+        TK = new Tietokanta(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
     }
+
 }
