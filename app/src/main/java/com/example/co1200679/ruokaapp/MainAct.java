@@ -6,11 +6,13 @@ import android.os.Bundle;
 import android.view.View;
 
 public class MainAct extends AppCompatActivity {
-
+    Tietokanta TK;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        TK = new Tietokanta(this);
+
     }
 
     public void AineksetBtnClick(View view){
