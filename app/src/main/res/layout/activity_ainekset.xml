@@ -31,9 +31,6 @@
 
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
-
-    <include layout="@layout/content_ainekset" />
-
-
+    
 
 </android.support.design.widget.CoordinatorLayout>
