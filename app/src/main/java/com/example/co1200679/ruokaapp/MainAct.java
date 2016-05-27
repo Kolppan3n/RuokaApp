@@ -20,4 +20,9 @@ public class MainAct extends AppCompatActivity {
         Intent intent = new Intent(this, Ainekset.class);
         startActivity(intent);
     }
+
+    public void KaappiBtnClick(View view){
+        TK.TaytaKaappi();
+    }
+
 }
