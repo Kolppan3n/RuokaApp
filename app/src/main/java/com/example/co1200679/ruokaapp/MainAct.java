@@ -7,7 +7,6 @@ import android.view.View;
 
 public class MainAct extends AppCompatActivity {
     Tietokanta TK;
-    String DATABASE_NAME = "AppiKanta.db";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,6 +17,11 @@ public class MainAct extends AppCompatActivity {
 
     public void AineksetBtnClick(View view){
         Intent intent = new Intent(this, Ainekset.class);
+        startActivity(intent);
+    }
+
+    public void OstoslistaBtnClick(View view){
+        Intent intent = new Intent(this, Ostoslista.class);
         startActivity(intent);
     }
 

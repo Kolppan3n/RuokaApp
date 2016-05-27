@@ -92,4 +92,6 @@
     </string>
     <string name="action_settings">Settings</string>
     <string name="AineksetButton">Ainekset</string>
+    <string name="title_activity_ostoslista">Ostoslista</string>
+    <string name="ostoslistaButtonText">OSTOSLISTA</string>
 </resources>

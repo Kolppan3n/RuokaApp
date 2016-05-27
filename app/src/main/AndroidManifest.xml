@@ -17,10 +17,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".Ainekset"
             android:label="@string/title_activity_ainekset"
             android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity android:name=".Ostoslista"></activity>
     </application>
 
 </manifest>
