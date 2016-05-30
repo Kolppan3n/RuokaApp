@@ -8,6 +8,7 @@ import android.widget.TextView;
 public class itemInfo extends TextView {
 
     private String nimi = "Tomaatti";
+    private int ID;
 
     public itemInfo(Context context) {
         super(context);

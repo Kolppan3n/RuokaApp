@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="cherryBlossom">#FFB7DD</color>
+    <color name="cherryWood">#420C07</color>
     <color name="liveGreen">#ACD97B</color>
     <color name="white">#FFFFFF</color>
 </resources>

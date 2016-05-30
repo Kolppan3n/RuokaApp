@@ -30,8 +30,13 @@ public class Ostoslista extends AppCompatActivity {
 
     public void toutoutoutoumeitous(){
         LinearLayout content = (LinearLayout) findViewById(R.id.content);
-        View temp = getLayoutInflater().inflate(R.layout.item, content, false);
-        content.addView(temp);
+        View temp;
+
+        for (int k = 0; k < 14; k++){
+            temp = getLayoutInflater().inflate(R.layout.item, content, false);
+            content.addView(temp);
+        }
+
     }
 
     //Täyttää listan

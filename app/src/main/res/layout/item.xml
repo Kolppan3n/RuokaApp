@@ -3,29 +3,36 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:weightSum="10"
-    android:background="@color/cherryBlossom">
+    android:background="@color/cherryWood">
 
     <ImageView
         android:layout_width="60dp"
         android:layout_height="60dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="1dp"
         android:id="@+id/imageView"
-        android:layout_weight="1"
         android:background="@color/liveGreen"
         style="@style/AlertDialog.AppCompat.Light"
-        android:padding="6dp"
+        android:padding="4dp"
         android:src="@drawable/tomaatti" />
 
     <com.example.co1200679.ruokaapp.itemInfo
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="1dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="1dp"
+        android:layout_marginRight="2dp"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:id="@+id/view"
-        android:text="Tomaatti saatana"
+        android:text="Testisteroonimakarooni"
         android:textSize="26dp"
-        android:layout_weight="9"
         android:textAlignment="center"
         android:textAllCaps="true"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"
+        android:gravity="center_vertical"
+        android:background="@color/cherryBlossom"/>
 
 </LinearLayout>
