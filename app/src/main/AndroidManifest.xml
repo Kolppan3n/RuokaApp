@@ -18,10 +18,10 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".Ainekset"
-            android:label="@string/title_activity_ainekset"
-            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Ainekset"></activity>
+
+
+        <activity android:name=".Liukuvalikko"></activity>
 
         <activity android:name=".Ostoslista"></activity>
     </application>

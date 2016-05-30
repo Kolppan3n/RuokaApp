@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import java.util.Random;
 
-public class Ainekset extends AppCompatActivity {
+public class Liukuvalikko extends AppCompatActivity {
     Tietokanta TK;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -4,6 +4,7 @@ package com.example.co1200679.ruokaapp;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -60,6 +61,13 @@ public class Tietokanta extends SQLiteOpenHelper {
         db.insert("KaappiKanta",null,tiedot);
         tiedot.put("aine","tomaatti");
         db.insert("KaappiKanta",null,tiedot);
+    }
+
+    public Cursor HaeTiedot(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor tulos = db.rawQuery("SELECT * FROM KaappiKanta",null);
+        return tulos;
+
     }
 
 
