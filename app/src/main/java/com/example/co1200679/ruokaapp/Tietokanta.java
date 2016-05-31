@@ -63,9 +63,9 @@ public class Tietokanta extends SQLiteOpenHelper {
         db.insert("KaappiKanta",null,tiedot);
     }
 
-    public Cursor HaeTiedot(){
+    public Cursor HaeTiedot(String haku){
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor tulos = db.rawQuery("SELECT * FROM KaappiKanta",null);
+        Cursor tulos = db.rawQuery(haku,null);
         return tulos;
 
     }

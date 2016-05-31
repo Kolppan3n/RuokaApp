@@ -12,21 +12,11 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/AineksetButton"
+        android:text="@string/LiukuvalikkoButton"
         android:id="@+id/button1"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:onClick="AineksetBtnClick" />
-
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/ostoslistaButtonText"
-        android:id="@+id/button2"
-        android:layout_below="@+id/button1"
-        android:layout_centerHorizontal="true"
-        android:onClick="OstoslistaBtnClick" />
+        android:onClick="LiukuvalikkoBtnClick" />
 
     <Button
         android:layout_width="wrap_content"
@@ -34,7 +24,7 @@
         android:text="Täytä Kaappi"
         android:id="@+id/button3"
         android:onClick="KaappiBtnClick"
-        android:layout_below="@+id/button2"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/button1" />
 
 </RelativeLayout>

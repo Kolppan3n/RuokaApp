@@ -1,51 +1,55 @@
 package com.example.co1200679.ruokaapp;
 
+import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Gravity;
+import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-
-import java.util.Random;
 
 public class Liukuvalikko extends AppCompatActivity {
+
     Tietokanta TK;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         TK = new Tietokanta(this);
+        String lause = getIntent().getStringExtra("sqlqry");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ainekset);
-        fillScrollView();
+        setContentView(R.layout.activity_liukuvalikko);
+        fillScrollView(lause);
     }
 
-    //Täyttää listan
-    public void fillScrollView(){
+    public void fillScrollView(String lause) {
 
         LinearLayout content = (LinearLayout) findViewById(R.id.content);
-        TextView temp;
+        View temp;
+        itemInfo item;
 
-        Random rnd;
-        int color;
+        if(content.getChildCount() > 0)
+            content.removeAllViews();
 
-        Cursor tiedot = TK.HaeTiedot();
+        Cursor tiedot = TK.HaeTiedot(lause); //WHERE aine IS ' + Aineen nimi tähän +'
 
         while(tiedot.moveToNext()) {
-            rnd = new Random();
-            color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
-
-            temp = new TextView(this);
-
-                temp.setText(String.valueOf(tiedot.getString(0)));
-                temp.setBackgroundColor(color);
-
-            temp.setTextColor(Color.WHITE);
-            temp.setGravity(Gravity.CENTER);
-            temp.setTextSize(29);
-            temp.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 200));
+            temp = getLayoutInflater().inflate(R.layout.item, content, false);
+            item = (itemInfo) temp.findViewById(R.id.itemView);
+            item.setNimi(tiedot.getString(0));
+            item.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    whatthesht((itemInfo) v);
+                }
+            });
             content.addView(temp);
         }
+    }
 
+    public void whatthesht(itemInfo v){
+
+        Intent intent = new Intent(this, Liukuvalikko.class);
+        String lause = ("SELECT * FROM KaappiKanta WHERE aine IS '" + v.getNimi()+"'");
+        intent.putExtra("sqlqry", lause);
+        startActivity(intent);
     }
 }

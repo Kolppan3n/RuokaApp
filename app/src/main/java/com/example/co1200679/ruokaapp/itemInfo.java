@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 public class itemInfo extends TextView {
 
-    private String nimi = "Tomaatti";
+    private String nimi = "Testi";
     private int ID;
 
     public itemInfo(Context context) {
@@ -25,11 +25,18 @@ public class itemInfo extends TextView {
         this.setText(getNimi());
     }
 
-    public String getNimi() {
-        return nimi;
-    }
+    public String getNimi() { return nimi; }
 
     public void setNimi(String nimi) {
         this.nimi = nimi;
+        this.setText(nimi);
+    }
+
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
     }
 }

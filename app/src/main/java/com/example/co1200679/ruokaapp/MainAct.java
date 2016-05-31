@@ -15,13 +15,10 @@ public class MainAct extends AppCompatActivity {
         //TK.onUpgrade(TK.getReadableDatabase(),1,1); //Tällä saadaan tehtyä uusi versio tietokannasta, mutta tiedot poistuu
     }
 
-    public void AineksetBtnClick(View view){
-        Intent intent = new Intent(this, Ainekset.class);
-        startActivity(intent);
-    }
-
-    public void OstoslistaBtnClick(View view){
-        Intent intent = new Intent(this, Ostoslista.class);
+    public void LiukuvalikkoBtnClick(View view){
+        Intent intent = new Intent(this, Liukuvalikko.class);
+        String lause = "SELECT * FROM KaappiKanta";
+        intent.putExtra("sqlqry", lause);
         startActivity(intent);
     }
 
