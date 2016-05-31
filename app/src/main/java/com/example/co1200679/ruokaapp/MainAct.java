@@ -12,18 +12,20 @@ public class MainAct extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         TK = new Tietokanta(this);
-        //TK.onUpgrade(TK.getReadableDatabase(),1,1); //Tällä saadaan tehtyä uusi versio tietokannasta, mutta tiedot poistuu
+        TK.onUpgrade(TK.getReadableDatabase(),1,1); //Tällä saadaan tehtyä uusi versio tietokannasta, mutta tiedot poistu
     }
 
     public void LiukuvalikkoBtnClick(View view){
         Intent intent = new Intent(this, Liukuvalikko.class);
-        String lause = "SELECT * FROM KaappiKanta";
+        String lause = "SELECT * FROM AineKanta";
         intent.putExtra("sqlqry", lause);
         startActivity(intent);
     }
 
     public void KaappiBtnClick(View view){
-        TK.TaytaKaappi();
+        //TK.TaytaKaappi();
+        Kirjastonhoitaja kirja = new Kirjastonhoitaja(this);
+        kirja.execute();
     }
 
 }
