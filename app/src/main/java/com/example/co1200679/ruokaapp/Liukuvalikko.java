@@ -29,7 +29,7 @@ public class Liukuvalikko extends AppCompatActivity {
         if(content.getChildCount() > 0)
             content.removeAllViews();
 
-        Cursor tiedot = TK.HaeTiedot(lause); //WHERE aine IS ' + Aineen nimi tähän +'
+        Cursor tiedot = TK.HaeTiedot(lause);
 
         while(tiedot.moveToNext()) {
             temp = getLayoutInflater().inflate(R.layout.item, content, false);
