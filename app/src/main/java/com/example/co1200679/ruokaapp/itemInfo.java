@@ -9,6 +9,7 @@ public class itemInfo extends TextView {
 
     private String nimi = "Testi";
     private int ID;
+    private int edellinenID;
 
     public itemInfo(Context context) {
         super(context);
@@ -38,5 +39,13 @@ public class itemInfo extends TextView {
 
     public void setID(int ID) {
         this.ID = ID;
+    }
+
+    public int getEdellinenID() {
+        return edellinenID;
+    }
+
+    public void setEdellinenID(int edellinenID) {
+        this.edellinenID = edellinenID;
     }
 }

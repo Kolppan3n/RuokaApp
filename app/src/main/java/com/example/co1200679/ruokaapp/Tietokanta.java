@@ -22,10 +22,9 @@ public class Tietokanta extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table RuokaKanta (ruokaID INTEGER PRIMARY KEY AUTOINCREMENT, nimi TEXT NOT NULL UNIQUE,resepti TEXT)");
-        db.execSQL("create table ReseptiKanta (ruokaID INTEGER NOT NULL,kategoriaID INTEGER NOT NULL, aineID INTEGER NOT NULL)");
-        db.execSQL("create table KategoriaKanta (tyyppi TEXT NOT NULL, kategoria TEXT UNIQUE NOT NULL,kategoriaID INTEGER PRIMARY KEY AUTOINCREMENT)");
-        db.execSQL("create table AineKanta (aine TEXT UNIQUE NOT NULL,kategoriaID INTEGER NOT NULL, aineID INTEGER PRIMARY KEY AUTOINCREMENT)");
+        db.execSQL("create table RuokaKanta (nimi TEXT NOT NULL UNIQUE,ruokaID INTEGER PRIMARY KEY AUTOINCREMENT, resepti TEXT)");
+        db.execSQL("create table ReseptiKanta (kantaID INTEGER PRIMARY KEY,ruokaID INTEGER NOT NULL, aineID INTEGER NOT NULL)");
+        db.execSQL("create table AineKanta (aine TEXT NOT NULL, aineID INTEGER PRIMARY KEY,edellinenID INTEGER NOT NULL)");
 
         db.execSQL("create table KaappiKanta (aine TEXT UNIQUE)");
         db.execSQL("create table OstosKanta (aine TEXT UNIQUE)");
@@ -46,28 +45,21 @@ public class Tietokanta extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void TaytaKaappi() {
-        SQLiteDatabase db = this.getReadableDatabase();
-        ContentValues tiedot = new ContentValues();
-        tiedot.put("aine","makaroni");
-        db.insert("KaappiKanta",null,tiedot);
-        tiedot.put("aine","spagetti");
-        db.insert("KaappiKanta",null,tiedot);
-        tiedot.put("aine","jauheliha");
-        db.insert("KaappiKanta",null,tiedot);
-        tiedot.put("aine","muna");
-        db.insert("KaappiKanta",null,tiedot);
-        tiedot.put("aine","maito");
-        db.insert("KaappiKanta",null,tiedot);
-        tiedot.put("aine","tomaatti");
-        db.insert("KaappiKanta",null,tiedot);
-    }
-
     public Cursor HaeTiedot(String haku){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor tulos = db.rawQuery(haku,null);
         return tulos;
 
+    }
+
+    public void LaitaAine(String aine, int aineID, int edellinenID)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        ContentValues tiedot = new ContentValues();
+        tiedot.put("aine",aine);
+        tiedot.put("aineID",aineID);
+        tiedot.put("edellinenID",edellinenID);
+        db.insert("AineKanta",null,tiedot);
     }
 
 

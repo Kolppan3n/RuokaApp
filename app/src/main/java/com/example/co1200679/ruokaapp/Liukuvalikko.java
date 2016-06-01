@@ -35,6 +35,7 @@ public class Liukuvalikko extends AppCompatActivity {
             temp = getLayoutInflater().inflate(R.layout.item, content, false);
             item = (itemInfo) temp.findViewById(R.id.itemView);
             item.setNimi(tiedot.getString(0));
+            item.setID(tiedot.getInt(1));
             item.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -48,7 +49,7 @@ public class Liukuvalikko extends AppCompatActivity {
     public void whatthesht(itemInfo v){
 
         Intent intent = new Intent(this, Liukuvalikko.class);
-        String lause = ("SELECT * FROM KaappiKanta WHERE aine IS '" + v.getNimi()+"'");
+        String lause = ("SELECT * FROM AineKanta WHERE edellinenID IS " + v.getID());
         intent.putExtra("sqlqry", lause);
         startActivity(intent);
     }

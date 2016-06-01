@@ -56,11 +56,11 @@ public class Kirjastonhoitaja extends AsyncTask <Void,Void,Void> {
             //Log.d("JSON_STRING",json_string);
 
             JSONObject jsonObject = new JSONObject(json_string);
-            JSONArray jsonArray = jsonObject.getJSONArray("server response");
+            JSONArray aineet = jsonObject.getJSONArray("aine response");
 
-            for(int k = 0; k<jsonArray.length();k++)
+            for(int k = 0; k<aineet.length();k++)
             {
-                JSONObject JO = jsonArray.getJSONObject(k);
+                JSONObject JO = aineet.getJSONObject(k);
                 TK.LaitaAine(JO.getString("aine"),JO.getInt("aineID"),JO.getInt("edellinenID"));
             }
 

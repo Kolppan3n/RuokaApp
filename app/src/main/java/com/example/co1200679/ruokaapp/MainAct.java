@@ -17,7 +17,14 @@ public class MainAct extends AppCompatActivity {
 
     public void LiukuvalikkoBtnClick(View view){
         Intent intent = new Intent(this, Liukuvalikko.class);
-        String lause = "SELECT * FROM AineKanta";
+        String lause = "SELECT * FROM AineKanta WHERE edellinenID is 0";
+        intent.putExtra("sqlqry", lause);
+        startActivity(intent);
+    }
+
+    public void RuokaBtnClick(View view){
+        Intent intent = new Intent(this, Liukuvalikko.class);
+        String lause = "SELECT * FROM RuokaKanta";
         intent.putExtra("sqlqry", lause);
         startActivity(intent);
     }
