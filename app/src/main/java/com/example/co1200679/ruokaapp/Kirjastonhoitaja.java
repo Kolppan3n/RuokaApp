@@ -2,7 +2,6 @@ package com.example.co1200679.ruokaapp;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,7 +23,6 @@ public class Kirjastonhoitaja extends AsyncTask <Void,Void,Void> {
 
     Context context;
 
-
     public Kirjastonhoitaja(Context context) {
         this.context = context;
         TK = new Tietokanta(context);
@@ -34,8 +32,7 @@ public class Kirjastonhoitaja extends AsyncTask <Void,Void,Void> {
     protected Void doInBackground(Void... params) {
         try
         {
-
-            String osoite = "http://atlantis.passoja.fi/~niiranen/ruokaapp/hae_ainekset.php";
+            String osoite = "http://atlantis.passoja.fi/~niiranen/ruokaapp/hae_tiedot.php";
             URL url = new URL(osoite);
             HttpURLConnection Yhteys = (HttpURLConnection)url.openConnection();
             InputStream Tietovuoto = Yhteys.getInputStream();
@@ -53,10 +50,12 @@ public class Kirjastonhoitaja extends AsyncTask <Void,Void,Void> {
 
             String json_string = StringiRaksa.toString().trim();
 
-            //Log.d("JSON_STRING",json_string);
-
             JSONObject jsonObject = new JSONObject(json_string);
-            JSONArray aineet = jsonObject.getJSONArray("aine response");
+            JSONArray tiedot = jsonObject.getJSONArray("tieto response");
+
+            JSONArray aineet = tiedot.getJSONObject(0).getJSONArray("aine response");
+            JSONArray ruuat = tiedot.getJSONObject(1).getJSONArray("ruoka response");
+            JSONArray reseptit = tiedot.getJSONObject(2).getJSONArray("resepti response");
 
             for(int k = 0; k<aineet.length();k++)
             {
@@ -64,9 +63,17 @@ public class Kirjastonhoitaja extends AsyncTask <Void,Void,Void> {
                 TK.LaitaAine(JO.getString("aine"),JO.getInt("aineID"),JO.getInt("edellinenID"));
             }
 
+            for(int k = 0; k<ruuat.length();k++)
+            {
+                JSONObject JO = ruuat.getJSONObject(k);
+                TK.LaitaRuoka(JO.getString("ruoka"), JO.getInt("ruokaID"), JO.getString ("resepti"));
+            }
 
-
-
+            for(int k = 0; k<reseptit.length();k++)
+            {
+                JSONObject JO = reseptit.getJSONObject(k);
+                TK.LaitaResepti(JO.getInt("kantaID"), JO.getInt("ruokaID"), JO.getInt("aineID"));
+            }
 
 
         } catch (MalformedURLException e) {

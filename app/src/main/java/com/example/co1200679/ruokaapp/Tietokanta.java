@@ -22,14 +22,12 @@ public class Tietokanta extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table RuokaKanta (nimi TEXT NOT NULL UNIQUE,ruokaID INTEGER PRIMARY KEY AUTOINCREMENT, resepti TEXT)");
+        db.execSQL("create table RuokaKanta (ruoka TEXT NOT NULL,ruokaID INTEGER PRIMARY KEY, resepti TEXT)");
         db.execSQL("create table ReseptiKanta (kantaID INTEGER PRIMARY KEY,ruokaID INTEGER NOT NULL, aineID INTEGER NOT NULL)");
         db.execSQL("create table AineKanta (aine TEXT NOT NULL, aineID INTEGER PRIMARY KEY,edellinenID INTEGER NOT NULL)");
 
         db.execSQL("create table KaappiKanta (aine TEXT UNIQUE)");
         db.execSQL("create table OstosKanta (aine TEXT UNIQUE)");
-
-
     }
 
 
@@ -49,7 +47,6 @@ public class Tietokanta extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor tulos = db.rawQuery(haku,null);
         return tulos;
-
     }
 
     public void LaitaAine(String aine, int aineID, int edellinenID)
@@ -61,6 +58,27 @@ public class Tietokanta extends SQLiteOpenHelper {
         tiedot.put("edellinenID",edellinenID);
         db.insert("AineKanta",null,tiedot);
     }
+
+    public void LaitaResepti(int kantaID, int ruokaID, int aineID)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        ContentValues tiedot = new ContentValues();
+        tiedot.put("kantaID",kantaID);
+        tiedot.put("ruokaID",ruokaID);
+        tiedot.put("aineID",aineID);
+        db.insert("ReseptiKanta",null,tiedot);
+    }
+
+    public void LaitaRuoka(String ruoka, int ruokaID, String resepti)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        ContentValues tiedot = new ContentValues();
+        tiedot.put("ruoka",ruoka);
+        tiedot.put("ruokaID",ruokaID);
+        tiedot.put("resepti",resepti);
+        db.insert("RuokaKanta",null,tiedot);
+    }
+
 
 
 }

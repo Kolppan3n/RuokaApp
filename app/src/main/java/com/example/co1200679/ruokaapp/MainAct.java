@@ -30,7 +30,6 @@ public class MainAct extends AppCompatActivity {
     }
 
     public void KaappiBtnClick(View view){
-        //TK.TaytaKaappi();
         Kirjastonhoitaja kirja = new Kirjastonhoitaja(this);
         kirja.execute();
     }
