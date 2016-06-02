@@ -5,24 +5,24 @@ import android.os.Bundle;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
-public class itemInfo extends TextView {
+public class ItemInfo extends TextView {
 
     private String nimi = "Testi";
     private int ID;
     private int edellinenID;
     private int moodi;
 
-    public itemInfo(Context context) {
+    public ItemInfo(Context context) {
         super(context);
         this.setText(getNimi());
     }
 
-    public itemInfo(Context context, AttributeSet attrs) {
+    public ItemInfo(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.setText(getNimi());
     }
 
-    public itemInfo(Context context, AttributeSet attrs, int defStyleAttr) {
+    public ItemInfo(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         this.setText(getNimi());
     }

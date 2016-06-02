@@ -27,7 +27,7 @@ public class MainAct extends AppCompatActivity {
     }
 
     public void RuokaBtnClick(View view){
-        Intent intent = new Intent(this, Liukuvalikko.class);
+        Intent intent = new Intent(this, Kokkausohjeet.class);
         String lause = "SELECT * FROM RuokaKanta";
         intent.putExtra("sqlqry", lause);
         intent.putExtra("moodi", 1);

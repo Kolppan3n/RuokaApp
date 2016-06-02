@@ -29,7 +29,7 @@ public class Liukuvalikko extends AppCompatActivity {
 
         LinearLayout content = (LinearLayout) findViewById(R.id.content);
         View temp;
-        itemInfo item;
+        ItemInfo item;
         ImageView icon;
         RoundImage roi;
 
@@ -40,14 +40,14 @@ public class Liukuvalikko extends AppCompatActivity {
 
         while(tiedot.moveToNext()) {
             temp = getLayoutInflater().inflate(R.layout.item, content, false);
-            item = (itemInfo) temp.findViewById(R.id.itemView);
+            item = (ItemInfo) temp.findViewById(R.id.itemView);
             item.setNimi(tiedot.getString(0));
             item.setID(tiedot.getInt(1));
             item.setMoodi(moodi);
             item.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    whatthesht((itemInfo) v);
+                    whatthesht((ItemInfo) v);
                 }
             });
             icon = (ImageView) temp.findViewById(R.id.imageView);
@@ -58,7 +58,7 @@ public class Liukuvalikko extends AppCompatActivity {
         }
     }
 
-    public void whatthesht(itemInfo v){
+    public void whatthesht(ItemInfo v){
 
         if(v.getMoodi()==0) {
             //Cursor lasku = TK.HaeTiedot("SELECT count(aineID) AS LUKU FROM AineKanta WHERE edellinenID IS " + v.getID());
@@ -71,7 +71,7 @@ public class Liukuvalikko extends AppCompatActivity {
                 String lause = ("SELECT * FROM AineKanta WHERE edellinenID IS " + v.getID());
                 intent.putExtra("sqlqry", lause);
                 startActivity(intent);
-            }
+            //}
         }
         if(v.getMoodi()==1)
         {
