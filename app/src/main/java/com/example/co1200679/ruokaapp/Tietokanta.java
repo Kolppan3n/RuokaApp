@@ -55,6 +55,7 @@ public class Tietokanta extends SQLiteOpenHelper {
         tiedot.put("aineID",aineID);
         tiedot.put("edellinenID",edellinenID);
         db.insert("AineKanta",null,tiedot);
+        db.update("AineKanta",tiedot,("aineID is "+aineID),null);
     }
 
     public void LaitaResepti(int kantaID, int ruokaID, int aineID)
@@ -64,6 +65,7 @@ public class Tietokanta extends SQLiteOpenHelper {
         tiedot.put("ruokaID",ruokaID);
         tiedot.put("aineID",aineID);
         db.insert("ReseptiKanta",null,tiedot);
+        db.update("ReseptiKanta",tiedot,("kantaID is "+kantaID),null);
     }
 
     public void LaitaRuoka(String ruoka, int ruokaID, String resepti)
@@ -73,6 +75,9 @@ public class Tietokanta extends SQLiteOpenHelper {
         tiedot.put("ruokaID",ruokaID);
         tiedot.put("resepti",resepti);
         db.insert("RuokaKanta",null,tiedot);
+        db.update("RuokaKanta",tiedot,("ruokaID is "+ruokaID),null);
     }
+
+
 
 }
