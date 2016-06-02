@@ -12,12 +12,12 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class Tietokanta extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "AppiKanta.db";
-
+    SQLiteDatabase db;
 
 
     public Tietokanta(Context context) {
         super(context, DATABASE_NAME, null, 1);
-        SQLiteDatabase db = this.getReadableDatabase();
+        db = this.getReadableDatabase();
     }
 
     @Override
@@ -44,14 +44,12 @@ public class Tietokanta extends SQLiteOpenHelper {
     }
 
     public Cursor HaeTiedot(String haku){
-        SQLiteDatabase db = this.getReadableDatabase();
         Cursor tulos = db.rawQuery(haku,null);
         return tulos;
     }
 
     public void LaitaAine(String aine, int aineID, int edellinenID)
     {
-        SQLiteDatabase db = this.getReadableDatabase();
         ContentValues tiedot = new ContentValues();
         tiedot.put("aine",aine);
         tiedot.put("aineID",aineID);
@@ -61,7 +59,6 @@ public class Tietokanta extends SQLiteOpenHelper {
 
     public void LaitaResepti(int kantaID, int ruokaID, int aineID)
     {
-        SQLiteDatabase db = this.getReadableDatabase();
         ContentValues tiedot = new ContentValues();
         tiedot.put("kantaID",kantaID);
         tiedot.put("ruokaID",ruokaID);
@@ -71,14 +68,11 @@ public class Tietokanta extends SQLiteOpenHelper {
 
     public void LaitaRuoka(String ruoka, int ruokaID, String resepti)
     {
-        SQLiteDatabase db = this.getReadableDatabase();
         ContentValues tiedot = new ContentValues();
         tiedot.put("ruoka",ruoka);
         tiedot.put("ruokaID",ruokaID);
         tiedot.put("resepti",resepti);
         db.insert("RuokaKanta",null,tiedot);
     }
-
-
 
 }

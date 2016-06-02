@@ -15,10 +15,15 @@ public class Liukuvalikko extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         TK = new Tietokanta(this);
         String lause = getIntent().getStringExtra("sqlqry");
+        getIntent().getIntExtra("moodi",0);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_liukuvalikko);
         fillScrollView(lause);
     }
+    //int seuraavat[] =
+   // int lauseet[] = {"SELECT * FROM AineKanta WHERE edellinenID is "};
+
+
 
     public void fillScrollView(String lause) {
 
