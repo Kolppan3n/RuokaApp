@@ -13,20 +13,17 @@ import android.widget.LinearLayout;
 public class Liukuvalikko extends AppCompatActivity {
 
     Tietokanta TK;
+    int moodi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         TK = new Tietokanta(this);
         String lause = getIntent().getStringExtra("sqlqry");
-        getIntent().getIntExtra("moodi",0);
+        moodi = getIntent().getIntExtra("moodi",0);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_liukuvalikko);
         fillScrollView(lause);
     }
-    //int seuraavat[] =
-   // int lauseet[] = {"SELECT * FROM AineKanta WHERE edellinenID is "};
-
-
 
     public void fillScrollView(String lause) {
 
@@ -46,6 +43,7 @@ public class Liukuvalikko extends AppCompatActivity {
             item = (itemInfo) temp.findViewById(R.id.itemView);
             item.setNimi(tiedot.getString(0));
             item.setID(tiedot.getInt(1));
+            item.setMoodi(moodi);
             item.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -62,9 +60,26 @@ public class Liukuvalikko extends AppCompatActivity {
 
     public void whatthesht(itemInfo v){
 
-        Intent intent = new Intent(this, Liukuvalikko.class);
-        String lause = ("SELECT * FROM AineKanta WHERE edellinenID IS " + v.getID());
-        intent.putExtra("sqlqry", lause);
-        startActivity(intent);
+        if(v.getMoodi()==0) {
+            //Cursor lasku = TK.HaeTiedot("SELECT count(aineID) AS LUKU FROM AineKanta WHERE edellinenID IS " + v.getID());
+            //if(lasku.getInt(0)==0)
+            //{
+
+            //}
+            //else {
+                Intent intent = new Intent(this, Liukuvalikko.class);
+                String lause = ("SELECT * FROM AineKanta WHERE edellinenID IS " + v.getID());
+                intent.putExtra("sqlqry", lause);
+                startActivity(intent);
+            }
+        }
+        if(v.getMoodi()==1)
+        {
+            Intent intent = new Intent(this, Liukuvalikko.class);
+            String lause = ("SELECT * FROM AineKanta AK, ReseptiKanta RK WHERE AK.aineID IS RK.AineID AND RK.RuokaID IS " + v.getID());
+            intent.putExtra("sqlqry", lause);
+            startActivity(intent);
+        }
+
     }
 }
