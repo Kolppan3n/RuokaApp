@@ -2,9 +2,12 @@ package com.example.co1200679.ruokaapp;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 public class Liukuvalikko extends AppCompatActivity {
@@ -30,6 +33,8 @@ public class Liukuvalikko extends AppCompatActivity {
         LinearLayout content = (LinearLayout) findViewById(R.id.content);
         View temp;
         itemInfo item;
+        ImageView icon;
+        RoundImage roi;
 
         if(content.getChildCount() > 0)
             content.removeAllViews();
@@ -47,6 +52,10 @@ public class Liukuvalikko extends AppCompatActivity {
                     whatthesht((itemInfo) v);
                 }
             });
+            icon = (ImageView) temp.findViewById(R.id.imageView);
+            Bitmap bm = BitmapFactory.decodeResource(getResources(),R.drawable.tomaatti);
+            roi = new RoundImage(bm);
+            icon.setImageDrawable(roi);
             content.addView(temp);
         }
     }

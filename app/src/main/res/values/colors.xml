@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#40C0CB</color>
+    <color name="colorPrimaryDark">#00A8C6</color>
+    <color name="colorAccent">#AEE239</color>
+    <color name="colorAccentDark">#8FBE00</color>
+    <color name="colorBackground">#F9F2E7</color>
+    <color name="colorTextPrimary">#E61D1D1D</color>
+    <color name="colorTextSecondary">#991D1D1D</color>
     <color name="cherryBlossom">#FFB7DD</color>
     <color name="cherryWood">#420C07</color>
-    <color name="liveGreen">#ACD97B</color>
-    <color name="white">#FFFFFF</color>
 </resources>

@@ -7,6 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/colorBackground"
     tools:context="com.example.co1200679.ruokaapp.MainAct">
 
     <Button
@@ -17,6 +18,7 @@
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:onClick="LiukuvalikkoBtnClick" />
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -24,7 +26,7 @@
         android:id="@+id/button2"
         android:onClick="RuokaBtnClick"
         android:layout_above="@+id/button1"
-        android:layout_alignEnd="@+id/button1" />
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:layout_width="wrap_content"
