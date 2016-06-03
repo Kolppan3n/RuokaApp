@@ -60,7 +60,7 @@ public class Kokkausohjeet extends AppCompatActivity {
         ViewGroup.LayoutParams lap = lio.getLayoutParams();
 
         if(lap.height == ViewGroup.LayoutParams.WRAP_CONTENT) {
-            lap.height = 100; //new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 100);
+            lap.height = 0; //new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 100);
             lio.setLayoutParams(lap);
         } else {
             lap.height = ViewGroup.LayoutParams.WRAP_CONTENT;
