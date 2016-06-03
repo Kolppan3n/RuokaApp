@@ -14,7 +14,7 @@
         android:text="Pasta Bolognese"
         android:textSize="30dp"
         android:textColor="#FFFFFF"
-        android:id="@+id/textView"
+        android:id="@+id/ruuanNimi"
         android:gravity="center"
         android:textAlignment="center"
         android:background="@color/colorTextSecondary"/>
@@ -30,15 +30,16 @@
         android:background="@color/colorAccent"
         android:onClick="toggleAinekset" />
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:id="@+id/ainesKontti"
         android:paddingBottom="0dp"
         android:paddingLeft="16dp"
         android:paddingRight="16dp">
 
-    </RelativeLayout>
+    </LinearLayout>
 
     <TextView
         android:layout_width="match_parent"
@@ -48,8 +49,7 @@
         android:id="@+id/ohjeOtsikko"
         android:gravity="center"
         android:textAlignment="center"
-        android:background="@color/colorAccentDark"
-        android:onClick="toggleAinekset" />
+        android:background="@color/colorAccentDark" />
 
     <RelativeLayout
         android:layout_width="match_parent"

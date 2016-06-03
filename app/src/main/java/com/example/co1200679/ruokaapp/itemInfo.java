@@ -57,4 +57,6 @@ public class ItemInfo extends TextView {
     public void setMoodi(int moodi) {
         this.moodi = moodi;
     }
+
+
 }
