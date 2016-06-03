@@ -9,7 +9,7 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="50dp"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Pasta Bolognese"
         android:textSize="30dp"
@@ -17,47 +17,58 @@
         android:id="@+id/ruuanNimi"
         android:gravity="center"
         android:textAlignment="center"
-        android:background="@color/colorTextSecondary"/>
+        android:background="@color/colorPrimary"/>
 
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Ainesosat"
-        android:id="@+id/ainesOtsikko"
-        android:gravity="center"
-        android:textAlignment="center"
-        android:background="@color/colorAccent"
-        android:onClick="toggleAinekset" />
+        android:layout_height="match_parent"
+        android:id="@+id/scrollView2" >
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        android:id="@+id/ainesKontti"
-        android:paddingBottom="0dp"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Ainesosat"
+                android:id="@+id/ainesOtsikko"
+                android:gravity="center"
+                android:textAlignment="center"
+                android:background="@color/colorAccentDark"
+                android:onClick="toggleA" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Ohje"
-        android:id="@+id/ohjeOtsikko"
-        android:gravity="center"
-        android:textAlignment="center"
-        android:background="@color/colorAccentDark" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/ainesKontti">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/ohjeKontti"
-        android:paddingBottom="0dp"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp">
+            </LinearLayout>
 
-    </RelativeLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Ohje"
+                android:id="@+id/ohjeOtsikko"
+                android:gravity="center"
+                android:textAlignment="center"
+                android:background="@color/colorAccentDark"
+                android:onClick="toggleO" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/ohjeKontti"
+                android:paddingBottom="0dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp">
+
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+
 </LinearLayout>

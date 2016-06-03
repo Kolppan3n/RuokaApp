@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorTextPrimary">
+
+    <com.example.co1200679.ruokaapp.ItemInfo
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="joo"
+        android:id="@+id/lkm"
+        android:layout_margin="2dp"
+        android:gravity="center"
+        android:textAlignment="center"
+        android:background="@color/colorAccent"/>
+
+    <com.example.co1200679.ruokaapp.ItemInfo
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="joojoojoojoojoojoojoo"
+        android:id="@+id/aine"
+        android:layout_margin="2dp"
+        android:gravity="center"
+        android:textAlignment="center"
+        android:background="@color/colorAccent"/>
+</LinearLayout>
