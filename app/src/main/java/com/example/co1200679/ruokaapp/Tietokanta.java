@@ -5,9 +5,10 @@ package com.example.co1200679.ruokaapp;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
+import android.util.Log;
 
 
 public class Tietokanta extends SQLiteOpenHelper {
@@ -66,6 +67,7 @@ public class Tietokanta extends SQLiteOpenHelper {
         tiedot.put("ruokaID",ruokaID);
         tiedot.put("aineID",aineID);
         tiedot.put("lkm",lkm);
+        Log.d("asdasd", String.valueOf(lkm));
         db.insert("ReseptiKanta",null,tiedot);
         db.update("ReseptiKanta",tiedot,("kantaID is "+kantaID),null);
     }
