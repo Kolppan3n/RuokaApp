@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 public class Kokkausohjeet extends AppCompatActivity {
 
@@ -24,6 +25,13 @@ public class Kokkausohjeet extends AppCompatActivity {
         setContentView(R.layout.activity_kokkausohjeet);
         TK = new Tietokanta(this);
         ruokaID = getIntent().getIntExtra("ruokaID",0);
+        String lause = ("SELECT * FROM RuokaKanta WHERE RuokaID IS " + ruokaID);
+        Cursor tiedot = TK.HaeTiedot(lause);
+        tiedot.moveToNext();
+        TextView otsikko = (TextView)findViewById(R.id.ruuanNimi);
+        //LinearLayout resepti = (LinearLayout)findViewById(R.id.ohjeKontti);
+        otsikko.setText(tiedot.getString(0));
+        //resepti. tiedot.getString(2);
         fillScrollView();
     }
 
@@ -43,7 +51,6 @@ public class Kokkausohjeet extends AppCompatActivity {
         Cursor tiedot = TK.HaeTiedot(lause);
 
         while(tiedot.moveToNext()) {
-            Log.d("dumpaa",tiedot.getString(0));
             temp = getLayoutInflater().inflate(R.layout.item, content, false);
             item = (ItemInfo) temp.findViewById(R.id.itemView);
             item.setNimi(tiedot.getString(0));
@@ -54,6 +61,7 @@ public class Kokkausohjeet extends AppCompatActivity {
             content.addView(temp);
         }
     }
+
 
     public void toggleAinekset(View view){
         LinearLayout lio = (LinearLayout) findViewById(R.id.ainesKontti);
