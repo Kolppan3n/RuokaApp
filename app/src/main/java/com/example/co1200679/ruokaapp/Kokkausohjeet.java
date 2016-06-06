@@ -65,6 +65,10 @@ public class Kokkausohjeet extends AppCompatActivity {
             temp = getLayoutInflater().inflate(R.layout.ainesosa, kontti, false);
             item = (ItemInfo) temp.findViewById(R.id.aine);
             item.setNimi(tiedot.getString(0));
+            item = (ItemInfo) temp.findViewById(R.id.lkm);
+            Log.d("asdasdasd", DatabaseUtils.dumpCursorToString(tiedot));
+            item.setText(tiedot.getFloat(7) + " " + tiedot.getString(3));
+            item.setKpl("kaksisataa");
             kontti.addView(temp);
         }
     }
