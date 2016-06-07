@@ -10,12 +10,15 @@ import android.widget.ImageView;
 
 public class MainAct extends AppCompatActivity {
     Tietokanta TK;
+    Kirjastonhoitaja kirja;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         TK = new Tietokanta(this);
         TK.onUpgrade(TK.getReadableDatabase(),1,1); //Tällä saadaan tehtyä uusi versio tietokannasta, mutta tiedot poistu
+        kirja = new Kirjastonhoitaja(this);
+        kirja.execute();
     }
 
     public void LiukuvalikkoBtnClick(View view){
@@ -35,8 +38,6 @@ public class MainAct extends AppCompatActivity {
     }
 
     public void KaappiBtnClick(View view){
-        Kirjastonhoitaja kirja = new Kirjastonhoitaja(this);
-        kirja.execute();
     }
 
 }

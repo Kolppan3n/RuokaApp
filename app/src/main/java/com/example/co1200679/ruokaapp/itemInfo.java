@@ -8,23 +8,21 @@ import android.widget.TextView;
 public class ItemInfo extends TextView {
 
     private String nimi = "Testi";
+    private String kpl = "Testi";
     private int ID;
     private int edellinenID;
     private int moodi;
 
     public ItemInfo(Context context) {
         super(context);
-        this.setText(getNimi());
     }
 
     public ItemInfo(Context context, AttributeSet attrs) {
         super(context, attrs);
-        this.setText(getNimi());
     }
 
     public ItemInfo(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        this.setText(getNimi());
     }
 
     public String getNimi() { return nimi; }
@@ -58,5 +56,11 @@ public class ItemInfo extends TextView {
         this.moodi = moodi;
     }
 
+    public String getKpl() {
+        return kpl;
+    }
 
+    public void setKpl(String kpl) {
+        this.kpl = kpl;
+    }
 }

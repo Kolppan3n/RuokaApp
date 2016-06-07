@@ -5,6 +5,7 @@
     <color name="colorAccent">#AEE239</color>
     <color name="colorAccentDark">#8FBE00</color>
     <color name="colorBackground">#F9F2E7</color>
+    <color name="colorBackground2">#ECF6BB</color>
     <color name="colorTextPrimary">#E61D1D1D</color>
     <color name="colorTextSecondary">#991D1D1D</color>
     <color name="cherryBlossom">#FFB7DD</color>
