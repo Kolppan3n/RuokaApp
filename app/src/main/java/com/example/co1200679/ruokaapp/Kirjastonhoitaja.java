@@ -60,7 +60,7 @@ public class Kirjastonhoitaja extends AsyncTask <Void,Void,Void> {
             for(int k = 0; k<aineet.length();k++)
             {
                 JSONObject JO = aineet.getJSONObject(k);
-                TK.LaitaAine(JO.getString("aine"),JO.getInt("aineID"),JO.getInt("edellinenID"),JO.getString("mitta"));
+                TK.LaitaAine(JO.getString("aine"),JO.getInt("aineID"),JO.getInt("edellinenID"),JO.getString("mitta"),JO.getString("kuva"));
             }
 
             for(int k = 0; k<ruuat.length();k++)
@@ -72,7 +72,7 @@ public class Kirjastonhoitaja extends AsyncTask <Void,Void,Void> {
             for(int k = 0; k<reseptit.length();k++)
             {
                 JSONObject JO = reseptit.getJSONObject(k);
-                TK.LaitaResepti(JO.getInt("kantaID"), JO.getInt("ruokaID"), JO.getInt("aineID"),(float)JO.getDouble("kpl"));
+                TK.LaitaResepti(JO.getInt("kantaID"), JO.getInt("ruokaID"), JO.getInt("aineID"),(float)JO.getDouble("kpl"),JO.getInt("aika"),JO.getInt("taso"),JO.getInt("tarvikkeet"));
             }
 
 
