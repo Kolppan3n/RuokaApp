@@ -61,7 +61,7 @@ public class Tietokanta extends SQLiteOpenHelper {
         db.update("AineKanta",tiedot,("aineID is "+aineID),null);
     }
 
-    public void LaitaResepti(int kantaID, int ruokaID, int aineID,float lkm,int aika ,int taso ,int tarvikkeet)
+    public void LaitaResepti(int kantaID, int ruokaID, int aineID,float lkm)
     {
         ContentValues tiedot = new ContentValues();
         tiedot.put("kantaID",kantaID);
@@ -69,19 +69,20 @@ public class Tietokanta extends SQLiteOpenHelper {
         tiedot.put("aineID",aineID);
         tiedot.put("lkm",lkm);
         Log.d("asdasd", String.valueOf(lkm));
-        tiedot.put("aika",aika);
-        tiedot.put("taso",taso);
-        tiedot.put("tarvikkeet",tarvikkeet);
+
         db.insert("ReseptiKanta",null,tiedot);
         db.update("ReseptiKanta",tiedot,("kantaID is "+kantaID),null);
     }
 
-    public void LaitaRuoka(String ruoka, int ruokaID, String resepti)
+    public void LaitaRuoka(String ruoka, int ruokaID, String resepti,int aika ,int taso ,int tarvikkeet)
     {
         ContentValues tiedot = new ContentValues();
         tiedot.put("ruoka",ruoka);
         tiedot.put("ruokaID",ruokaID);
         tiedot.put("resepti",resepti);
+        tiedot.put("aika",aika);
+        tiedot.put("taso",taso);
+        tiedot.put("tarvikkeet",tarvikkeet);
         db.insert("RuokaKanta",null,tiedot);
         db.update("RuokaKanta",tiedot,("ruokaID is "+ruokaID),null);
     }

@@ -2,6 +2,7 @@ package com.example.co1200679.ruokaapp;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -66,13 +67,13 @@ public class Kirjastonhoitaja extends AsyncTask <Void,Void,Void> {
             for(int k = 0; k<ruuat.length();k++)
             {
                 JSONObject JO = ruuat.getJSONObject(k);
-                TK.LaitaRuoka(JO.getString("ruoka"), JO.getInt("ruokaID"), JO.getString ("resepti"));
+                TK.LaitaRuoka(JO.getString("ruoka"), JO.getInt("ruokaID"), JO.getString ("resepti"),JO.getInt("aika"),JO.getInt("taso"),JO.getInt("tarvikkeet"));
             }
 
             for(int k = 0; k<reseptit.length();k++)
             {
                 JSONObject JO = reseptit.getJSONObject(k);
-                TK.LaitaResepti(JO.getInt("kantaID"), JO.getInt("ruokaID"), JO.getInt("aineID"),(float)JO.getDouble("kpl"),JO.getInt("aika"),JO.getInt("taso"),JO.getInt("tarvikkeet"));
+                TK.LaitaResepti(JO.getInt("kantaID"), JO.getInt("ruokaID"), JO.getInt("aineID"),(float)JO.getDouble("kpl"));
             }
 
 
