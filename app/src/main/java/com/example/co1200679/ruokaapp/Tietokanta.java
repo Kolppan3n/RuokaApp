@@ -23,12 +23,12 @@ public class Tietokanta extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table RuokaKanta (ruoka TEXT NOT NULL,ruokaID INTEGER PRIMARY KEY, resepti TEXT)");
+        db.execSQL("create table RuokaKanta (ruoka TEXT NOT NULL,ruokaID INTEGER PRIMARY KEY, resepti TEXT,aika INTEGER,taso INTEGER,tarvikkeet INTEGER)");
         db.execSQL("create table ReseptiKanta (kantaID INTEGER PRIMARY KEY,ruokaID INTEGER NOT NULL, aineID INTEGER NOT NULL,lkm FLOAT NOT NULL)");
-        db.execSQL("create table AineKanta (aine TEXT NOT NULL, aineID INTEGER PRIMARY KEY,edellinenID INTEGER NOT NULL,mitta TEXT)");
+        db.execSQL("create table AineKanta (aine TEXT NOT NULL, aineID INTEGER PRIMARY KEY,edellinenID INTEGER NOT NULL,mitta TEXT,kuva TEXT)");
 
-        db.execSQL("create table KaappiKanta (aine TEXT UNIQUE)");
-        db.execSQL("create table OstosKanta (aine TEXT UNIQUE)");
+        db.execSQL("create table KaappiKanta (aineID INTEGER UNIQUE)");
+        db.execSQL("create table OstosKanta (aineID INTEGER UNIQUE)");
     }
 
 
@@ -49,13 +49,14 @@ public class Tietokanta extends SQLiteOpenHelper {
         return tulos;
     }
 
-    public void LaitaAine(String aine, int aineID, int edellinenID,String mitta)
+    public void LaitaAine(String aine, int aineID, int edellinenID,String mitta,String kuva)
     {
         ContentValues tiedot = new ContentValues();
         tiedot.put("aine",aine);
         tiedot.put("aineID",aineID);
         tiedot.put("edellinenID",edellinenID);
         tiedot.put("mitta",mitta);
+        tiedot.put("kuva",kuva);
         db.insert("AineKanta",null,tiedot);
         db.update("AineKanta",tiedot,("aineID is "+aineID),null);
     }
@@ -68,16 +69,20 @@ public class Tietokanta extends SQLiteOpenHelper {
         tiedot.put("aineID",aineID);
         tiedot.put("lkm",lkm);
         Log.d("asdasd", String.valueOf(lkm));
+
         db.insert("ReseptiKanta",null,tiedot);
         db.update("ReseptiKanta",tiedot,("kantaID is "+kantaID),null);
     }
 
-    public void LaitaRuoka(String ruoka, int ruokaID, String resepti)
+    public void LaitaRuoka(String ruoka, int ruokaID, String resepti,int aika ,int taso ,int tarvikkeet)
     {
         ContentValues tiedot = new ContentValues();
         tiedot.put("ruoka",ruoka);
         tiedot.put("ruokaID",ruokaID);
         tiedot.put("resepti",resepti);
+        tiedot.put("aika",aika);
+        tiedot.put("taso",taso);
+        tiedot.put("tarvikkeet",tarvikkeet);
         db.insert("RuokaKanta",null,tiedot);
         db.update("RuokaKanta",tiedot,("ruokaID is "+ruokaID),null);
     }
