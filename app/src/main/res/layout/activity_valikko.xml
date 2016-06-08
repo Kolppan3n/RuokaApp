@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/rela"
+    tools:context="com.example.co1200679.ruokaapp.Valikko"
+    android:weightSum="1"
+    android:background="@color/colorBackground">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Fish 'n' Chips"
+        android:id="@+id/otsikko"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:layout_marginBottom="12dp"
+        android:background="@color/colorPrimary"
+        android:textColor="#FFFFFF"
+        android:textSize="30dp"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="7"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_below="@id/otsikko">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:id="@+id/ainesLayout"
+            android:layout_weight="2">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Ainesosat"
+                android:id="@+id/ainesOtsikko" />
+
+            <HorizontalScrollView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/horizontalScrollView" >
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:id="@+id/rullakontti1"/>
+            </HorizontalScrollView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:id="@+id/välineLayout"
+            android:layout_weight="2">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Valmistus Välineet"
+                android:id="@+id/textView2" />
+
+            <HorizontalScrollView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/horizontalScrollView2" >
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:id="@+id/rullakontti2"/>
+            </HorizontalScrollView>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:text="tähän tulee ihan kauhea määrä semmosta hyvää tekstiä tiäkköniinku semmosta tekstiä mitä on hyvä lukea joo. Toivottavasti kaikki teksti mahtuu tähän koska tää on vaa 1/3 sen parentista. Joo joo joo joo joo joo joo joo joo joo joo joo joo joo joo joo joo joo joo joo joo joo joo joo joo joo joo joo joo joo joo joo joo joo joo joo joo joo joo joo joo joo joo joo joo joo joo joo joo joo."
+            android:id="@+id/nippelitieto"
+            android:layout_weight="3"/>
+
+        <GridLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/navigointi"
+            android:layout_gravity="center">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/navicon1"
+                android:layout_row="0"
+                android:layout_column="0"
+                android:layout_margin="6dp"
+                android:src="@drawable/lisaakaappiin" />
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/navicon2"
+                android:layout_row="0"
+                android:layout_column="1"
+                android:layout_margin="6dp"
+                android:src="@drawable/lisaalistaan" />
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/navicon3"
+                android:layout_row="0"
+                android:layout_column="3"
+                android:layout_margin="6dp"
+                android:src="@drawable/resepti" />
+
+            <!--<TextView
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:text="@string/lis_kaappiin"
+                android:id="@+id/navtext1"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:layout_row="1"
+                android:layout_column="0" />
+
+            <TextView
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:text="@string/lis_ostoslistalle"
+                android:id="@+id/navtext2"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:layout_row="1"
+                android:layout_column="1" />
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="@string/n_yt_resepti"
+                android:id="@+id/navtext3"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:layout_row="1"
+                android:layout_column="3" />-->
+        </GridLayout>
+    </LinearLayout>
+
+</LinearLayout>

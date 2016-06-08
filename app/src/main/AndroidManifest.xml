@@ -20,7 +20,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".Liukuvalikko" />
-        <activity android:name=".Kokkausohjeet"></activity>
+        <activity android:name=".Kokkausohjeet" />
+        <activity android:name=".Valikko"></activity>
     </application>
 
 </manifest>

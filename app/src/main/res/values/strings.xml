@@ -2,4 +2,7 @@
     <string name="app_name">RuokaApp</string>
     <string name="action_settings">Settings</string>
     <string name="LiukuvalikkoButton">Liukuvalikko</string>
+    <string name="lis_kaappiin">Lisää Kaappiin</string>
+    <string name="lis_ostoslistalle">Lisää Ostoslistalle</string>
+    <string name="n_yt_resepti">Näytä Resepti</string>
 </resources>

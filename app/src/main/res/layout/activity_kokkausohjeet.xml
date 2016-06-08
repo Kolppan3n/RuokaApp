@@ -31,7 +31,7 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="50dp"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Ainesosat"
                 android:id="@+id/ainesOtsikko"
@@ -50,7 +50,7 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="50dp"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Ohje"
                 android:id="@+id/ohjeOtsikko"

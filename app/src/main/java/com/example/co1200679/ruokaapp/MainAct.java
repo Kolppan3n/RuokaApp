@@ -40,4 +40,8 @@ public class MainAct extends AppCompatActivity {
     public void KaappiBtnClick(View view){
     }
 
+    public void Testi(View view){
+        startActivity(new Intent(this, Valikko.class));
+    }
+
 }
