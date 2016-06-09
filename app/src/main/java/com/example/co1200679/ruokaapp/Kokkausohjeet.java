@@ -1,16 +1,12 @@
 package com.example.co1200679.ruokaapp;
 
-import android.app.ActionBar;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -26,6 +22,7 @@ public class Kokkausohjeet extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_kokkausohjeet);
+
         TK = new Tietokanta(this);
         ruokaID = getIntent().getIntExtra("ruokaID",0);
         String lause = ("SELECT * FROM RuokaKanta WHERE RuokaID IS " + ruokaID);

@@ -1,12 +1,9 @@
 package com.example.co1200679.ruokaapp;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
 
 public class MainAct extends AppCompatActivity {
     Tietokanta TK;
@@ -41,7 +38,7 @@ public class MainAct extends AppCompatActivity {
     }
 
     public void Testi(View view){
-        startActivity(new Intent(this, Valikko.class));
+        /*startActivity(new Intent(this, Valikko.class));*/
     }
 
 }

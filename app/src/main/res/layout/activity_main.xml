@@ -17,8 +17,8 @@
         android:layout_centerHorizontal="true">
 
         <ImageView
-            android:layout_width="140dp"
-            android:layout_height="140dp"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
             android:id="@+id/aineBtn"
             android:src="@drawable/vihannekset"
             android:onClick="LiukuvalikkoBtnClick"
@@ -27,8 +27,8 @@
             android:layout_margin="10dp"/>
 
         <ImageView
-            android:layout_width="140dp"
-            android:layout_height="140dp"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
             android:id="@+id/ruokaBtn"
             android:src="@drawable/ateriat"
             android:onClick="RuokaBtnClick"
@@ -37,8 +37,8 @@
             android:layout_margin="10dp"/>
 
         <ImageView
-            android:layout_width="140dp"
-            android:layout_height="140dp"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
             android:id="@+id/kaappiBtn"
             android:src="@drawable/kaappi"
             android:layout_row="1"
@@ -46,8 +46,8 @@
             android:layout_margin="10dp"/>
 
         <ImageView
-            android:layout_width="140dp"
-            android:layout_height="140dp"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
             android:id="@+id/listaBtn"
             android:src="@drawable/lista"
             android:layout_row="1"

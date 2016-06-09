@@ -21,11 +21,12 @@ public class Liukuvalikko extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_liukuvalikko);
+
         TK = new Tietokanta(this);
         String lause = getIntent().getStringExtra("sqlqry");
         moodi = getIntent().getIntExtra("moodi",0);
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_liukuvalikko);
         fillScrollView(lause);
     }
 
@@ -105,8 +106,8 @@ public class Liukuvalikko extends AppCompatActivity {
         }
         if(v.getMoodi()==1)
         {
-            Intent intent = new Intent(this, Kokkausohjeet.class);
-            intent.putExtra("ruokaID",v.getID());
+            Intent intent = new Intent(this, Valikko.class);
+            intent.putExtra("ruokaID", v.getID());
             startActivity(intent);
         }
 

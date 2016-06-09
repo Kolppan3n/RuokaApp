@@ -5,4 +5,8 @@
     <string name="lis_kaappiin">Lisää Kaappiin</string>
     <string name="lis_ostoslistalle">Lisää Ostoslistalle</string>
     <string name="n_yt_resepti">Näytä Resepti</string>
+    <string name="valmistusaika">Valmistusaika:</string>
+    <string name="vaikeusaste">Vaikeusaste:</string>
+    <string name="tyyppi">Tyyppi:</string>
+    <string name="muuta">Muuta:</string>
 </resources>
