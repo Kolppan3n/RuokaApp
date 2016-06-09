@@ -9,8 +9,8 @@
         android:id="@+id/imageButton"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:src="@drawable/puukko"
+        android:src="@drawable/makaroni"
         android:scaleType="fitXY"
-        android:padding="0dp"
-        android:cropToPadding="false" />
+        android:padding="7dp"
+        android:cropToPadding="true" />
 </RelativeLayout>
