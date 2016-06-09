@@ -67,11 +67,21 @@ public class Valikko extends AppCompatActivity {
         }
 
         //Välineitten täyttäminen
-        for(int k = 0; k < 42; k++){
-            temp = getLayoutInflater().inflate(R.layout.ikoni, rulla2, false);
-            ibu = (ImageButton) temp.findViewById(R.id.imageButton);
-            ibu.setImageResource(R.drawable.makaroni);
-            rulla2.addView(temp);
+        int testiarvo = 1;
+        int tarvikearvo = ruokatiedot.getInt(5);
+        String tarvikenimet[] =
+                {"Paistinpannu","Kattila","Uuni","Kulho","Veitsi","Uunivuoka","Piirakkavuoka","Kakkuvuoka","Irtopohjavuoka","Sauvasekoitin","Sähkövatkain","Tehosekoitin","Yleiskone","Vispilä","Kaulin","Siivilä","Raastinrauta","Grilli","Lihanuija","Avotuli","Mehustin","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""};
+        String muutatietoa ="";
+        for(int k = 0; k < 33; k++)
+        {
+            if((testiarvo & tarvikearvo) != 0) {
+                temp = getLayoutInflater().inflate(R.layout.ikoni, rulla2, false);
+                ibu = (ImageButton) temp.findViewById(R.id.imageButton);
+                ibu.setImageResource(R.drawable.makaroni);
+                rulla2.addView(temp);
+                muutatietoa += tarvikenimet[k] + "\n";
+            }
+        testiarvo *= 2;
         }
 
         //Nippelitiedon täyttäminen
@@ -90,6 +100,11 @@ public class Valikko extends AppCompatActivity {
         String vaikeusmerkit = "";
         for(int M = 0;M<ruokatiedot.getInt(4);M++) vaikeusmerkit += "\uD83C\uDF5D";
         vaikeusaste.setText(vaikeusmerkit);
+
+        TextView muuta = (TextView) findViewById(R.id.muutaTxt);
+
+        for(int M = 0;M<ruokatiedot.getInt(4);M++) vaikeusmerkit += "\uD83C\uDF5D";
+        muuta.setText(muutatietoa);
 
         //Nappien alustaminen
         reseptiBtn = (ImageView) findViewById(R.id.navicon3);
