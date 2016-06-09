@@ -12,5 +12,6 @@
         android:src="@drawable/makaroni"
         android:scaleType="fitXY"
         android:padding="7dp"
+        android:background="@null"
         android:cropToPadding="true" />
 </RelativeLayout>

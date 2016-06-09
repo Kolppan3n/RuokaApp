@@ -62,7 +62,7 @@ public class Valikko extends AppCompatActivity {
         for(int k = 0; k < 3; k++){
             temp = getLayoutInflater().inflate(R.layout.ikoni, rulla1, false);
             ibu = (ImageButton) temp.findViewById(R.id.imageButton);
-            ibu.setImageResource(R.drawable.jauheliha);
+            ibu.setImageResource(R.drawable.kattila);
             rulla1.addView(temp);
         }
 
@@ -77,7 +77,7 @@ public class Valikko extends AppCompatActivity {
             if((testiarvo & tarvikearvo) != 0) {
                 temp = getLayoutInflater().inflate(R.layout.ikoni, rulla2, false);
                 ibu = (ImageButton) temp.findViewById(R.id.imageButton);
-                ibu.setImageResource(R.drawable.makaroni);
+                ibu.setImageResource(R.drawable.paistinpannu);
                 rulla2.addView(temp);
                 muutatietoa += tarvikenimet[k] + "\n";
             }
