@@ -1,9 +1,12 @@
 package com.example.co1200679.ruokaapp;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.database.Cursor;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -23,7 +26,7 @@ public class Valikko extends AppCompatActivity {
 
         //Tietokannan ja kursorin luominen
         TK = new Tietokanta(this);
-        ruokaID = getIntent().getIntExtra("ruokaID",0);
+        ruokaID = getIntent().getIntExtra("ruokaID", 0);
         String lause = ("SELECT * FROM RuokaKanta WHERE RuokaID IS " + ruokaID);
         Cursor ruokatiedot = TK.HaeTiedot(lause);
         ruokatiedot.moveToNext();
@@ -37,7 +40,7 @@ public class Valikko extends AppCompatActivity {
         alustus(ruokatiedot);
     }
 
-    public void alustus(Cursor ruokatiedot){
+    public void alustus(Cursor ruokatiedot) {
 
         String lause = ("SELECT * FROM AineKanta AK, ReseptiKanta RK WHERE AK.aineID IS RK.aineID AND RK.RuokaID IS " + ruokaID);
         Cursor ainetiedot = TK.HaeTiedot(lause);
@@ -59,29 +62,29 @@ public class Valikko extends AppCompatActivity {
             rulla2.removeAllViews();
 
         //Ainesten täyttäminen
-        for(int k = 0; k < 3; k++){
+
+        while(ainetiedot.moveToNext()) {
             temp = getLayoutInflater().inflate(R.layout.ikoni, rulla1, false);
             ibu = (ImageButton) temp.findViewById(R.id.imageButton);
-            ibu.setImageResource(R.drawable.kattila);
+            Log.d("Stringieitoimi",ainetiedot.getString(4));
+            ibu.setImageResource(getResources().getIdentifier(ainetiedot.getString(4),"drawable",getPackageName()));
             rulla1.addView(temp);
         }
 
         //Välineitten täyttäminen
         int testiarvo = 1;
         int tarvikearvo = ruokatiedot.getInt(5);
-        String tarvikenimet[] =
-                {"Paistinpannu","Kattila","Uuni","Kulho","Veitsi","Uunivuoka","Piirakkavuoka","Kakkuvuoka","Irtopohjavuoka","Sauvasekoitin","Sähkövatkain","Tehosekoitin","Yleiskone","Vispilä","Kaulin","Siivilä","Raastinrauta","Grilli","Lihanuija","Avotuli","Mehustin","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""};
-        String muutatietoa ="";
-        for(int k = 0; k < 33; k++)
-        {
-            if((testiarvo & tarvikearvo) != 0) {
+        String tarvikenimet[] = {"Paistinpannu", "Kattila", "Uuni", "Kulho", "puukko", "Uunivuoka", "Piirakkavuoka", "Kakkuvuoka", "Irtopohjavuoka", "Sauvasekoitin", "Sähkövatkain", "Tehosekoitin", "Yleiskone", "Vispilä", "Kaulin", "Siivilä", "Raastinrauta", "Grilli", "Lihanuija", "Avotuli", "Mehustin", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""};
+
+
+        for (int k = 0; k < 33; k++) {
+            if ((testiarvo & tarvikearvo) != 0) {
                 temp = getLayoutInflater().inflate(R.layout.ikoni, rulla2, false);
                 ibu = (ImageButton) temp.findViewById(R.id.imageButton);
-                ibu.setImageResource(R.drawable.paistinpannu);
+                ibu.setImageResource(getResources().getIdentifier(tarvikenimet[k],"drawable",getPackageName()));
                 rulla2.addView(temp);
-                muutatietoa += tarvikenimet[k] + "\n";
             }
-        testiarvo *= 2;
+            testiarvo *= 2;
         }
 
         //Nippelitiedon täyttäminen
@@ -89,16 +92,16 @@ public class Valikko extends AppCompatActivity {
         TextView aika = (TextView) findViewById(R.id.aikaTxt);
 
         int Valmistusminuutit = ruokatiedot.getInt(3) % 60;
-        int Valmistustunnit = ruokatiedot.getInt(3)/60;
+        int Valmistustunnit = ruokatiedot.getInt(3) / 60;
         String kokoaika = "";
-        if(Valmistustunnit>0) kokoaika = Valmistustunnit + " Tuntia ";
-        if(Valmistusminuutit>0)kokoaika += Valmistusminuutit + " min";
+        if (Valmistustunnit > 0) kokoaika = Valmistustunnit + " Tuntia ";
+        if (Valmistusminuutit > 0) kokoaika += Valmistusminuutit + " min";
 
         aika.setText(kokoaika);
 
         TextView vaikeusaste = (TextView) findViewById(R.id.vaikeusTxt);
         String vaikeusmerkit = "";
-        for(int M = 0;M<ruokatiedot.getInt(4);M++) vaikeusmerkit += "\uD83C\uDF5D";
+        for (int M = 0; M < ruokatiedot.getInt(4); M++) vaikeusmerkit += "\uD83C\uDF5D";
         vaikeusaste.setText(vaikeusmerkit);
 
         TextView muuta = (TextView) findViewById(R.id.muutaTxt);
@@ -117,9 +120,10 @@ public class Valikko extends AppCompatActivity {
 
     }
 
-    public void avaaResepti(){
+    public void avaaResepti() {
         Intent intent = new Intent(this, Kokkausohjeet.class);
-        intent.putExtra("ruokaID",ruokaID);
+        intent.putExtra("ruokaID", ruokaID);
         startActivity(intent);
     }
+
 }

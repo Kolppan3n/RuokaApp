@@ -68,8 +68,6 @@ public class Tietokanta extends SQLiteOpenHelper {
         tiedot.put("ruokaID",ruokaID);
         tiedot.put("aineID",aineID);
         tiedot.put("lkm",lkm);
-        Log.d("asdasd", String.valueOf(lkm));
-
         db.insert("ReseptiKanta",null,tiedot);
         db.update("ReseptiKanta",tiedot,("kantaID is "+kantaID),null);
     }
