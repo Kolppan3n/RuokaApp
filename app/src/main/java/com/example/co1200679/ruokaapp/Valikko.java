@@ -25,22 +25,22 @@ public class Valikko extends AppCompatActivity {
         TK = new Tietokanta(this);
         ruokaID = getIntent().getIntExtra("ruokaID",0);
         String lause = ("SELECT * FROM RuokaKanta WHERE RuokaID IS " + ruokaID);
-        Cursor tiedot = TK.HaeTiedot(lause);
-        tiedot.moveToNext();
+        Cursor ruokatiedot = TK.HaeTiedot(lause);
+        ruokatiedot.moveToNext();
 
         //Aineen otsikko
         TextView otsikko;
         otsikko = (TextView) findViewById(R.id.otsikko);
-        otsikko.setText(tiedot.getString(0));
+        otsikko.setText(ruokatiedot.getString(0));
 
         //Alustaa sisällön
-        alustus();
+        alustus(ruokatiedot);
     }
 
-    public void alustus(){
+    public void alustus(Cursor ruokatiedot){
 
         String lause = ("SELECT * FROM AineKanta AK, ReseptiKanta RK WHERE AK.aineID IS RK.aineID AND RK.RuokaID IS " + ruokaID);
-        Cursor tiedot = TK.HaeTiedot(lause);
+        Cursor ainetiedot = TK.HaeTiedot(lause);
 
         //Muuttujien alustaminen
         View temp;
@@ -75,6 +75,21 @@ public class Valikko extends AppCompatActivity {
         }
 
         //Nippelitiedon täyttäminen
+
+        TextView aika = (TextView) findViewById(R.id.aikaTxt);
+
+        int Valmistusminuutit = ruokatiedot.getInt(3) % 60;
+        int Valmistustunnit = ruokatiedot.getInt(3)/60;
+        String kokoaika = "";
+        if(Valmistustunnit>0) kokoaika = Valmistustunnit + " Tuntia ";
+        if(Valmistusminuutit>0)kokoaika += Valmistusminuutit + " min";
+
+        aika.setText(kokoaika);
+
+        TextView vaikeusaste = (TextView) findViewById(R.id.vaikeusTxt);
+        String vaikeusmerkit = "";
+        for(int M = 0;M<ruokatiedot.getInt(4);M++) vaikeusmerkit += "\uD83C\uDF5D";
+        vaikeusaste.setText(vaikeusmerkit);
 
         //Nappien alustaminen
         reseptiBtn = (ImageView) findViewById(R.id.navicon3);
