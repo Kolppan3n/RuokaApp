@@ -74,7 +74,7 @@ public class Valikko extends AppCompatActivity {
         //Välineitten täyttäminen
         int testiarvo = 1;
         int tarvikearvo = ruokatiedot.getInt(5);
-        String tarvikenimet[] = {"Paistinpannu", "Kattila", "Uuni", "Kulho", "puukko", "Uunivuoka", "Piirakkavuoka", "Kakkuvuoka", "Irtopohjavuoka", "Sauvasekoitin", "Sähkövatkain", "Tehosekoitin", "Yleiskone", "Vispilä", "Kaulin", "Siivilä", "Raastinrauta", "Grilli", "Lihanuija", "Avotuli", "Mehustin", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""};
+        String tarvikenimet[] = {"paistinpannu", "kattila", "Uuni", "Kulho", "puukko", "Uunivuoka", "Piirakkavuoka", "Kakkuvuoka", "Irtopohjavuoka", "Sauvasekoitin", "Sähkövatkain", "Tehosekoitin", "Yleiskone", "Vispilä", "Kaulin", "Siivilä", "Raastinrauta", "Grilli", "Lihanuija", "Avotuli", "Mehustin", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""};
 
 
         for (int k = 0; k < 33; k++) {
@@ -103,11 +103,6 @@ public class Valikko extends AppCompatActivity {
         String vaikeusmerkit = "";
         for (int M = 0; M < ruokatiedot.getInt(4); M++) vaikeusmerkit += "\uD83C\uDF5D";
         vaikeusaste.setText(vaikeusmerkit);
-
-        TextView muuta = (TextView) findViewById(R.id.muutaTxt);
-
-        for(int M = 0;M<ruokatiedot.getInt(4);M++) vaikeusmerkit += "\uD83C\uDF5D";
-        muuta.setText(muutatietoa);
 
         //Nappien alustaminen
         reseptiBtn = (ImageView) findViewById(R.id.navicon3);
