@@ -55,15 +55,11 @@ public class Kokkausohjeet extends AppCompatActivity {
 
         Cursor tiedot = TK.HaeTiedot(lause);
 
-        Log.d("Reseptinainekset", DatabaseUtils.dumpCursorToString(tiedot));
-
         while(tiedot.moveToNext()) {
-            Log.d("dumpaa",tiedot.getString(0));
             temp = getLayoutInflater().inflate(R.layout.ainesosa, kontti, false);
             item = (ItemInfo) temp.findViewById(R.id.aine);
             item.setNimi(tiedot.getString(0));
             item = (ItemInfo) temp.findViewById(R.id.lkm);
-            Log.d("asdasdasd", DatabaseUtils.dumpCursorToString(tiedot));
             item.setText(tiedot.getFloat(8) + " " + tiedot.getString(3));
             item.setKpl("kaksisataa");
             kontti.addView(temp);
