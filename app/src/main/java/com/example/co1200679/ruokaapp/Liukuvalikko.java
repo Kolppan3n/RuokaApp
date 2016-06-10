@@ -81,11 +81,19 @@ public class Liukuvalikko extends AppCompatActivity {
     }
 
     public void avaaRuuat(ItemInfo v){
-        Intent intent = new Intent(this, Liukuvalikko.class);
-        String lause = ("SELECT * FROM RuokaKanta RU, ReseptiKanta RE WHERE RU.ruokaID IS RE.ruokaID AND RE.aineID IS "+ v.getID());
-        intent.putExtra("sqlqry", lause);
-        intent.putExtra("moodi", 1);
-        startActivity(intent);
+
+        if(v.getMoodi()==0) {
+            Cursor lasku = TK.HaeTiedot("SELECT count(ruokaID) AS luku FROM ReseptiKanta WHERE aineID IS " + v.getID());
+            lasku.moveToNext();
+
+            if (lasku.getInt(0) != 0) {
+                Intent intent = new Intent(this, Liukuvalikko.class);
+                String lause = ("SELECT * FROM RuokaKanta RU, ReseptiKanta RE WHERE RU.ruokaID IS RE.ruokaID AND RE.aineID IS " + v.getID());
+                intent.putExtra("sqlqry", lause);
+                intent.putExtra("moodi", 1);
+                startActivity(intent);
+            }
+        }
     }
 
     public void whatthesht(ItemInfo v){
