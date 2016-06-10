@@ -61,11 +61,12 @@ public class Liukuvalikko extends AppCompatActivity {
 
             item.setOnTouchListener(new OnSwipeTouchListener(item) {
                 public boolean onSwipeRight() {
+                    avaaRuuat(i);
                     Toast.makeText(Liukuvalikko.this, i.getText(), Toast.LENGTH_SHORT).show();
                     return true;
                 }
                 public boolean onSwipeLeft() {
-                    Toast.makeText(Liukuvalikko.this, "left", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Liukuvalikko.this, "LoL", Toast.LENGTH_SHORT).show();
                     return true;
                 }
             });
@@ -79,6 +80,14 @@ public class Liukuvalikko extends AppCompatActivity {
         }
     }
 
+    public void avaaRuuat(ItemInfo v){
+        Intent intent = new Intent(this, Liukuvalikko.class);
+        String lause = ("SELECT * FROM RuokaKanta RU, ReseptiKanta RE WHERE RU.ruokaID IS RE.ruokaID AND RE.aineID IS "+ v.getID());
+        intent.putExtra("sqlqry", lause);
+        intent.putExtra("moodi", 1);
+        startActivity(intent);
+    }
+
     public void whatthesht(ItemInfo v){
 
         if(v.getMoodi()==0) {
@@ -88,12 +97,7 @@ public class Liukuvalikko extends AppCompatActivity {
 
             if(lasku.getInt(0)==0)
             {
-                Intent intent = new Intent(this, Liukuvalikko.class);
-                String lause = ("SELECT * FROM RuokaKanta RU, ReseptiKanta RE WHERE RU.ruokaID IS RE.ruokaID AND RE.aineID IS "+ v.getID());
-                intent.putExtra("sqlqry", lause);
-                intent.putExtra("moodi", 1);
-                startActivity(intent);
-
+                avaaRuuat(v);
             }
             else {
                 Intent intent = new Intent(this, Liukuvalikko.class);
