@@ -63,6 +63,9 @@ public class Tietokanta extends SQLiteOpenHelper {
 
     public void LaitaResepti(int kantaID, int ruokaID, int aineID,float lkm)
     {
+        if(lkm==0.0F) {
+            db.delete("ReseptiKanta",("kantaID is "+kantaID),null);
+        }
         ContentValues tiedot = new ContentValues();
         tiedot.put("kantaID",kantaID);
         tiedot.put("ruokaID",ruokaID);
@@ -70,6 +73,10 @@ public class Tietokanta extends SQLiteOpenHelper {
         tiedot.put("lkm",lkm);
         db.insert("ReseptiKanta",null,tiedot);
         db.update("ReseptiKanta",tiedot,("kantaID is "+kantaID),null);
+        if(lkm==0.0F)
+        {
+            db.delete("ReseptiKanta",("kantaID is "+kantaID),null);
+        }
     }
 
     public void LaitaRuoka(String ruoka, int ruokaID, String resepti,int aika ,int taso ,int tarvikkeet)

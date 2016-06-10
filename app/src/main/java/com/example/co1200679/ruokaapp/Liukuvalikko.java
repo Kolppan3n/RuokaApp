@@ -59,9 +59,9 @@ public class Liukuvalikko extends AppCompatActivity {
             });
 
 
-            item.setOnTouchListener(new OnSwipeTouchListener() {
+            item.setOnTouchListener(new OnSwipeTouchListener(item) {
                 public boolean onSwipeRight() {
-                    Toast.makeText(Liukuvalikko.this, "right", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Liukuvalikko.this, i.getText(), Toast.LENGTH_SHORT).show();
                     return true;
                 }
                 public boolean onSwipeLeft() {
