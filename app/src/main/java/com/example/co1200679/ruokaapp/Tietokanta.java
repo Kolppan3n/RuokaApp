@@ -79,7 +79,7 @@ public class Tietokanta extends SQLiteOpenHelper {
         }
     }
 
-    public void LaitaRuoka(String ruoka, int ruokaID, String resepti,int aika ,int taso ,int tarvikkeet)
+    public void LaitaRuoka(String ruoka, int ruokaID, String resepti,int aika ,int taso ,int tarvikkeet, String kuva)
     {
         ContentValues tiedot = new ContentValues();
         tiedot.put("ruoka",ruoka);
@@ -88,6 +88,7 @@ public class Tietokanta extends SQLiteOpenHelper {
         tiedot.put("aika",aika);
         tiedot.put("taso",taso);
         tiedot.put("tarvikkeet",tarvikkeet);
+        tiedot.put("kuva",kuva);
         db.insert("RuokaKanta",null,tiedot);
         db.update("RuokaKanta",tiedot,("ruokaID is "+ruokaID),null);
     }
