@@ -74,6 +74,12 @@ public class Liukuvalikko extends AppCompatActivity {
 
             icon = (ImageView) temp.findViewById(R.id.imageView);
             Bitmap bm = BitmapFactory.decodeResource(getResources(),R.drawable.tomaatti);
+
+            if(getResources().getIdentifier(tiedot.getString(3),"drawable",getPackageName())!=0)
+            {
+                    bm = BitmapFactory.decodeResource(getResources(),(getResources().getIdentifier(tiedot.getString(3),"drawable",getPackageName())));
+            }
+
             roi = new RoundImage(bm);
             icon.setImageDrawable(roi);
             content.addView(temp);
@@ -88,6 +94,7 @@ public class Liukuvalikko extends AppCompatActivity {
 
             if (lasku.getInt(0) != 0) {
                 Intent intent = new Intent(this, Liukuvalikko.class);
+                Log.d("asdasdasd","ei toimi");
                 String lause = ("SELECT * FROM RuokaKanta RU, ReseptiKanta RE WHERE RU.ruokaID IS RE.ruokaID AND RE.aineID IS " + v.getID());
                 intent.putExtra("sqlqry", lause);
                 intent.putExtra("moodi", 1);

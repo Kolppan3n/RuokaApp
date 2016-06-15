@@ -60,7 +60,7 @@ public class Kokkausohjeet extends AppCompatActivity {
             item = (ItemInfo) temp.findViewById(R.id.aine);
             item.setNimi(tiedot.getString(0));
             item = (ItemInfo) temp.findViewById(R.id.lkm);
-            item.setText(tiedot.getFloat(8) + " " + tiedot.getString(3));
+            item.setText(tiedot.getFloat(8) + " " + tiedot.getString(4));
             item.setKpl("kaksisataa");
             kontti.addView(temp);
         }

@@ -67,13 +67,13 @@ public class Valikko extends AppCompatActivity {
             temp = getLayoutInflater().inflate(R.layout.ikoni, rulla1, false);
             ibu = (ImageButton) temp.findViewById(R.id.imageButton);
             Log.d("Stringieitoimi",ainetiedot.getString(4));
-            ibu.setImageResource(getResources().getIdentifier(ainetiedot.getString(4),"drawable",getPackageName()));
+            ibu.setImageResource(getResources().getIdentifier(ainetiedot.getString(3),"drawable",getPackageName()));
             rulla1.addView(temp);
         }
 
         //Välineitten täyttäminen
         int testiarvo = 1;
-        int tarvikearvo = ruokatiedot.getInt(5);
+        int tarvikearvo = ruokatiedot.getInt(6);
         String tarvikenimet[] = {"paistinpannu", "kattila", "uuni", "kulho", "puukko", "uunivuoka", "piirakkavuoka", "kakkuvuoka", "irtopohjavuoka", "sauvasekoitin", "Sähkövatkain", "Tehosekoitin", "Yleiskone", "Vispilä", "Kaulin", "Siivilä", "Raastinrauta", "Grilli", "Lihanuija", "Avotuli", "Mehustin", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""};
 
 
@@ -91,8 +91,8 @@ public class Valikko extends AppCompatActivity {
 
         TextView aika = (TextView) findViewById(R.id.aikaTxt);
 
-        int Valmistusminuutit = ruokatiedot.getInt(3) % 60;
-        int Valmistustunnit = ruokatiedot.getInt(3) / 60;
+        int Valmistusminuutit = ruokatiedot.getInt(4) % 60;
+        int Valmistustunnit = ruokatiedot.getInt(4) / 60;
         String kokoaika = "";
         if (Valmistustunnit > 0) kokoaika = Valmistustunnit + " Tuntia ";
         if (Valmistusminuutit > 0) kokoaika += Valmistusminuutit + " min";
@@ -101,7 +101,7 @@ public class Valikko extends AppCompatActivity {
 
         TextView vaikeusaste = (TextView) findViewById(R.id.vaikeusTxt);
         String vaikeusmerkit = "";
-        for (int M = 0; M < ruokatiedot.getInt(4); M++) vaikeusmerkit += "\uD83C\uDF5D";
+        for (int M = 0; M < ruokatiedot.getInt(5); M++) vaikeusmerkit += "\uD83C\uDF5D";
         vaikeusaste.setText(vaikeusmerkit);
 
         //Nappien alustaminen
