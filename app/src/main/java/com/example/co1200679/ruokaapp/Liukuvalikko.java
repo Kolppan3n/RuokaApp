@@ -108,7 +108,6 @@ public class Liukuvalikko extends AppCompatActivity {
         if(v.getMoodi()==0) {
             Cursor lasku = TK.HaeTiedot("SELECT count(aineID) AS luku FROM AineKanta WHERE edellinenID IS " + v.getID());
             lasku.moveToNext();
-            //Log.d("asdasdasd",DatabaseUtils.dumpCursorToString(lasku));
 
             if(lasku.getInt(0)==0)
             {

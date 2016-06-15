@@ -12,7 +12,7 @@
         android:layout_height="60dp"
         android:id="@+id/imageView"
         android:padding="3dp"
-        android:src="@drawable/tomaatti2"
+        android:src="@drawable/tomaatti"
         android:background="@color/colorAccentDark"/>
 
     <com.example.co1200679.ruokaapp.ItemInfo

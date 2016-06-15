@@ -74,7 +74,7 @@ public class Valikko extends AppCompatActivity {
         //Välineitten täyttäminen
         int testiarvo = 1;
         int tarvikearvo = ruokatiedot.getInt(6);
-        String tarvikenimet[] = {"paistinpannu", "kattila", "uuni", "kulho", "puukko", "uunivuoka", "piirakkavuoka", "kakkuvuoka", "irtopohjavuoka", "sauvasekoitin", "Sähkövatkain", "Tehosekoitin", "Yleiskone", "Vispilä", "Kaulin", "Siivilä", "Raastinrauta", "Grilli", "Lihanuija", "Avotuli", "Mehustin", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""};
+        String tarvikenimet[] = {"paistinpannu", "kattila", "uuni", "kulho", "puukko", "uunivuoka", "piirakkavuoka", "kakkuvuoka", "irtopohjavuoka", "sauvasekoitin", "sahkovatkain", "tehosekoitin", "yleiskone", "vispila", "kaulin", "siivila", "raastinrauta", "grilli", "lihanuija", "avotuli", "mehustin", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""};
 
 
         for (int k = 0; k < 33; k++) {
