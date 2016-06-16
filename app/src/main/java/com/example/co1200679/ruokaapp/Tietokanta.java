@@ -93,6 +93,20 @@ public class Tietokanta extends SQLiteOpenHelper {
         db.update("RuokaKanta",tiedot,("ruokaID is "+ruokaID),null);
     }
 
+    public void LaitaKaappiin(int aineID)
+    {
+        ContentValues tiedot = new ContentValues();
+        tiedot.put("aineID",aineID);
+        db.insert("RuokaKanta",null,tiedot);
+    }
+
+    public void LaitaListaan(int aineID)
+    {
+        ContentValues tiedot = new ContentValues();
+        tiedot.put("aineID",aineID);
+        db.insert("RuokaKanta",null,tiedot);
+    }
+
 
 
 }
