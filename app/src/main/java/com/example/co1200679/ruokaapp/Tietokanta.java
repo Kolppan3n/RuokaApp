@@ -27,7 +27,7 @@ public class Tietokanta extends SQLiteOpenHelper {
         db.execSQL("create table ReseptiKanta (kantaID INTEGER PRIMARY KEY,ruokaID INTEGER NOT NULL, aineID INTEGER NOT NULL,lkm FLOAT NOT NULL)");
         db.execSQL("create table AineKanta (aine TEXT NOT NULL, aineID INTEGER PRIMARY KEY,edellinenID INTEGER NOT NULL ,kuva TEXT ,mitta TEXT)");
 
-        db.execSQL("create table KaappiKanta (aineID INTEGER UNIQUE)");
+        db.execSQL("create table KaappiKanta (aineID INTEGER UNIQUE, prosentti INTEGER)");
         db.execSQL("create table OstosKanta (aineID INTEGER UNIQUE)");
     }
 
@@ -97,7 +97,15 @@ public class Tietokanta extends SQLiteOpenHelper {
     {
         ContentValues tiedot = new ContentValues();
         tiedot.put("aineID",aineID);
+        tiedot.put("prosentti",100);
         db.insert("KaappiKanta",null,tiedot);
+    }
+
+    public void KulutaAinetta(int aineID,int uusi)
+    {
+        ContentValues tiedot = new ContentValues();
+        tiedot.put("prosentti",uusi);
+        db.update("KaappiKanta",tiedot,("aineID is "+aineID),null);
     }
 
     public void LaitaListaan(int aineID)
