@@ -6,6 +6,7 @@ import android.database.DatabaseUtils;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.annotation.ColorRes;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -49,6 +50,11 @@ public class Liukuvalikko extends AppCompatActivity {
             item.setID(tiedot.getInt(1));
             item.setMoodi(moodi);
             item.setText(item.getNimi());
+            if(moodi==2)
+            {
+                item.setKpl("" + (tiedot.getInt(3)+ 10));
+                VariAine(item);
+            }
             item.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -67,7 +73,11 @@ public class Liukuvalikko extends AppCompatActivity {
                 public boolean onSwipeLeft() {
                     if(i.getMoodi()==0)
                     {
-                        laitaListaan(i);
+                        laitaKaappiin(i);
+                    }
+                    if(i.getMoodi()==2)
+                    {
+                        VariAine(i);
                     }
                     Toast.makeText(Liukuvalikko.this, i.getText() + " lisättiin kaappiin", Toast.LENGTH_SHORT).show();
                     return true;
@@ -98,7 +108,7 @@ public class Liukuvalikko extends AppCompatActivity {
             if (lasku.getInt(0) != 0) {
                 Intent intent = new Intent(this, Liukuvalikko.class);
                 Log.d("asdasdasd","ei toimi");
-                String lause = ("SELECT ruoka, RU.ruokaID, kuva, RE.ruokaID, aineID FROM RuokaKanta RU, ReseptiKanta RE WHERE aineID IS " + v.getID());
+                String lause = ("SELECT ruoka, RU.ruokaID, kuva FROM RuokaKanta RU, ReseptiKanta RE WHERE RU.ruokaID IS RE.ruokaID AND RE.aineID IS " + v.getID());
                 intent.putExtra("sqlqry", lause);
                 intent.putExtra("moodi", 1);
                 startActivity(intent);
@@ -106,7 +116,7 @@ public class Liukuvalikko extends AppCompatActivity {
         }
     }
 
-    public void laitaListaan(ItemInfo v){
+    public void laitaKaappiin(ItemInfo v){
         TK.LaitaKaappiin(v.getID());
     }
 
@@ -122,7 +132,7 @@ public class Liukuvalikko extends AppCompatActivity {
             }
             else {
                 Intent intent = new Intent(this, Liukuvalikko.class);
-                String lause = ("SELECT aine, aineID, kuva,edellinenID FROM AineKanta WHERE edellinenID is " + v.getID());
+                String lause = ("SELECT aine, aineID, kuva FROM AineKanta WHERE edellinenID is " + v.getID());
                 intent.putExtra("sqlqry", lause);
                 intent.putExtra("moodi", 0);
                 startActivity(intent);
@@ -133,6 +143,35 @@ public class Liukuvalikko extends AppCompatActivity {
             Intent intent = new Intent(this, Valikko.class);
             intent.putExtra("ruokaID", v.getID());
             startActivity(intent);
+        }
+
+    }
+
+    public void VariAine(ItemInfo v)
+    {
+        if(v.getMoodi() == 2) {
+            int color = getResources().getColor(R.color.colorRed);
+            int prosentti = Integer.parseInt(v.getKpl());
+            prosentti -=10;
+            v.setKpl(""+ prosentti);
+            TK.KulutaAinetta(v.getID(),prosentti);
+            if (prosentti>25)
+            {
+                if (prosentti>50)
+                {
+                    if (prosentti>75)
+                    {
+                        if (prosentti>99)
+                        {
+                            color = getResources().getColor(R.color.colorGreen);
+                        }
+                        else color = getResources().getColor(R.color.colorYellowGreen);
+                    }
+                    else color = getResources().getColor(R.color.colorYellow);
+                }
+                else color = getResources().getColor(R.color.colorOrange);
+            }
+            v.setBackgroundColor(color);
         }
 
     }

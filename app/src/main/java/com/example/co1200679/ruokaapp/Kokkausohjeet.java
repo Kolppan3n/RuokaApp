@@ -44,7 +44,7 @@ public class Kokkausohjeet extends AppCompatActivity {
 
     public void fillScrollView() {
 
-        String lause = ("SELECT aine, lkm, mitta,AK.aineID,RK.aineID, ruokaID   FROM AineKanta AK, ReseptiKanta RK WHERE AK.aineID IS RK.aineID AND RK.RuokaID IS " + ruokaID);
+        String lause = ("SELECT aine, lkm, mitta FROM AineKanta AK, ReseptiKanta RK WHERE AK.aineID IS RK.aineID AND RK.RuokaID IS " + ruokaID);
         Cursor tiedot = TK.HaeTiedot(lause);
 
         LinearLayout kontti = (LinearLayout) findViewById(R.id.ainesKontti);
