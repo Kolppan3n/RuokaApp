@@ -20,7 +20,7 @@ public class MainAct extends AppCompatActivity {
 
     public void AineBtnClick(View view){
         Intent intent = new Intent(this, Liukuvalikko.class);
-        String lause = "SELECT aine, aineID, kuva,edellinenID FROM AineKanta WHERE edellinenID is 0";
+        String lause = "SELECT aine, aineID, kuva FROM AineKanta WHERE edellinenID is 0";
         intent.putExtra("sqlqry", lause);
         intent.putExtra("moodi", 0);
         startActivity(intent);
@@ -36,7 +36,7 @@ public class MainAct extends AppCompatActivity {
 
     public void KaappiBtnClick(View view){
         Intent intent = new Intent(this, Liukuvalikko.class);
-        String lause = "SELECT aine, AK.aineID, kuva, prosentti, KK.aineID FROM AineKanta AK, KaappiKanta KK WHERE AK.aineID IS KK.aineID";
+        String lause = "SELECT aine, AK.aineID, kuva, prosentti FROM AineKanta AK, KaappiKanta KK WHERE AK.aineID IS KK.aineID";
         intent.putExtra("sqlqry", lause);
         intent.putExtra("moodi", 2);
         startActivity(intent);
@@ -44,7 +44,7 @@ public class MainAct extends AppCompatActivity {
 
     public void ListaBtnClick(View view){
         Intent intent = new Intent(this, Liukuvalikko.class);
-        String lause = "SELECT aine, AK.aineID, kuva, OK.aineID FROM AineKanta AK, OstosKanta OK WHERE AK.aineID IS OK.aineID";
+        String lause = "SELECT aine, AK.aineID, kuva FROM AineKanta AK, OstosKanta OK WHERE AK.aineID IS OK.aineID";
         intent.putExtra("sqlqry", lause);
         intent.putExtra("moodi", 3);
         startActivity(intent);

@@ -43,7 +43,7 @@ public class Valikko extends AppCompatActivity {
 
     public void alustus(Cursor ruokatiedot) {
 
-        String lause = ("SELECT kuva, AK.aineID, RK.aineID, RuokaID FROM AineKanta AK, ReseptiKanta RK WHERE AK.aineID IS RK.aineID AND RK.RuokaID IS " + ruokaID);
+        String lause = ("SELECT kuva FROM AineKanta AK, ReseptiKanta RK WHERE AK.aineID IS RK.aineID AND RK.RuokaID IS " + ruokaID);
         Cursor ainetiedot = TK.HaeTiedot(lause);
 
         //Muuttujien alustaminen
@@ -118,7 +118,7 @@ public class Valikko extends AppCompatActivity {
     }
 
     public void LisaaListaanBtnClick(View view){
-        String lause = ("SELECT aineID, ruokaID FROM ReseptiKanta WHERE aineID NOT IN (SELECT aineID FROM KaappiKanta) AND  RuokaID IS " + ruokaID);
+        String lause = ("SELECT aineID, ruokaID FROM ReseptiKanta WHERE aineID NOT IN (SELECT aineID FROM KaappiKanta WHERE prosentti > 10) AND  RuokaID IS " + ruokaID);
         Cursor listatiedot = TK.HaeTiedot(lause);
         Log.d("papapapappa", DatabaseUtils.dumpCursorToString(listatiedot));
         while(listatiedot.moveToNext())
