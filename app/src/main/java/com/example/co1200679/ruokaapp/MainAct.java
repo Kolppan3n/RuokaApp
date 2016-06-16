@@ -18,9 +18,9 @@ public class MainAct extends AppCompatActivity {
         kirja.execute();
     }
 
-    public void LiukuvalikkoBtnClick(View view){
+    public void AineBtnClick(View view){
         Intent intent = new Intent(this, Liukuvalikko.class);
-        String lause = "SELECT * FROM AineKanta WHERE edellinenID is 0";
+        String lause = "SELECT aine, aineID, kuva,edellinenID FROM AineKanta WHERE edellinenID is 0";
         intent.putExtra("sqlqry", lause);
         intent.putExtra("moodi", 0);
         startActivity(intent);
@@ -28,17 +28,27 @@ public class MainAct extends AppCompatActivity {
 
     public void RuokaBtnClick(View view){
         Intent intent = new Intent(this, Liukuvalikko.class);
-        String lause = "SELECT * FROM RuokaKanta";
+        String lause = "SELECT ruoka, ruokaID, kuva FROM RuokaKanta";
         intent.putExtra("sqlqry", lause);
         intent.putExtra("moodi", 1);
         startActivity(intent);
     }
 
     public void KaappiBtnClick(View view){
+        Intent intent = new Intent(this, Liukuvalikko.class);
+        String lause = "SELECT aine, AK.aineID, kuva, KK.aineID FROM AineKanta AK, KaappiKanta KK WHERE AK.aineID IS KK.aineID";
+        intent.putExtra("sqlqry", lause);
+        intent.putExtra("moodi", 2);
+        startActivity(intent);
     }
 
-    public void Testi(View view){
-        /*startActivity(new Intent(this, Valikko.class));*/
+    public void ListaBtnClick(View view){
+        Intent intent = new Intent(this, Liukuvalikko.class);
+        String lause = "SELECT aine, AK.aineID, kuva, OK.aineID FROM AineKanta AK, OstosKanta OK WHERE AK.aineID IS OK.aineID";
+        intent.putExtra("sqlqry", lause);
+        intent.putExtra("moodi", 3);
+        startActivity(intent);
     }
+
 
 }

@@ -25,7 +25,7 @@ public class Kokkausohjeet extends AppCompatActivity {
 
         TK = new Tietokanta(this);
         ruokaID = getIntent().getIntExtra("ruokaID",0);
-        String lause = ("SELECT * FROM RuokaKanta WHERE RuokaID IS " + ruokaID);
+        String lause = ("SELECT ruoka, ruokaID, resepti FROM RuokaKanta WHERE RuokaID IS " + ruokaID);
         Cursor tiedot = TK.HaeTiedot(lause);
         tiedot.moveToNext();
         loadRecipe(tiedot);
@@ -44,7 +44,8 @@ public class Kokkausohjeet extends AppCompatActivity {
 
     public void fillScrollView() {
 
-        String lause = ("SELECT * FROM AineKanta AK, ReseptiKanta RK WHERE AK.aineID IS RK.aineID AND RK.RuokaID IS " + ruokaID);
+        String lause = ("SELECT aine, lkm, mitta,AK.aineID,RK.aineID, ruokaID   FROM AineKanta AK, ReseptiKanta RK WHERE AK.aineID IS RK.aineID AND RK.RuokaID IS " + ruokaID);
+        Cursor tiedot = TK.HaeTiedot(lause);
 
         LinearLayout kontti = (LinearLayout) findViewById(R.id.ainesKontti);
         View temp;
@@ -53,14 +54,14 @@ public class Kokkausohjeet extends AppCompatActivity {
         if(kontti.getChildCount() > 0)
             kontti.removeAllViews();
 
-        Cursor tiedot = TK.HaeTiedot(lause);
+
 
         while(tiedot.moveToNext()) {
             temp = getLayoutInflater().inflate(R.layout.ainesosa, kontti, false);
             item = (ItemInfo) temp.findViewById(R.id.aine);
             item.setNimi(tiedot.getString(0));
             item = (ItemInfo) temp.findViewById(R.id.lkm);
-            item.setText(tiedot.getFloat(8) + " " + tiedot.getString(4));
+            item.setText(tiedot.getFloat(1) + " " + tiedot.getString(2));
             item.setKpl("kaksisataa");
             kontti.addView(temp);
         }

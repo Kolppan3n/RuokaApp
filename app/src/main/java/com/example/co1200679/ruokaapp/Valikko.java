@@ -3,6 +3,7 @@ package com.example.co1200679.ruokaapp;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -66,7 +67,6 @@ public class Valikko extends AppCompatActivity {
         while(ainetiedot.moveToNext()) {
             temp = getLayoutInflater().inflate(R.layout.ikoni, rulla1, false);
             ibu = (ImageButton) temp.findViewById(R.id.imageButton);
-            Log.d("Stringieitoimi",ainetiedot.getString(4));
             ibu.setImageResource(getResources().getIdentifier(ainetiedot.getString(3),"drawable",getPackageName()));
             rulla1.addView(temp);
         }
@@ -120,5 +120,18 @@ public class Valikko extends AppCompatActivity {
         intent.putExtra("ruokaID", ruokaID);
         startActivity(intent);
     }
+
+    public void LisaaListaanBtnClick(View view){
+        String lause = ("SELECT RK.aineID, ruokaID, KK.aineID FROM ReseptiKanta RK, KaappiKanta KK WHERE NOT RK.aineID IS KK.aineID AND RuokaID IS " + ruokaID);
+        Cursor listatiedot = TK.HaeTiedot(lause);
+        Log.d("papapapappa", DatabaseUtils.dumpCursorToString(listatiedot));
+        while(listatiedot.moveToNext())
+        {
+         TK.LaitaListaan(listatiedot.getInt(0));
+        }
+
+    }
+
+
 
 }

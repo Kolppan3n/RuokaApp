@@ -41,8 +41,6 @@ public class Liukuvalikko extends AppCompatActivity {
             content.removeAllViews();
 
         Cursor tiedot = TK.HaeTiedot(lause);
-        Log.d("asdasdasd", DatabaseUtils.dumpCursorToString(tiedot));
-
 
         while(tiedot.moveToNext()) {
             temp = getLayoutInflater().inflate(R.layout.item, content, false);
@@ -66,6 +64,10 @@ public class Liukuvalikko extends AppCompatActivity {
                     return true;
                 }
                 public boolean onSwipeLeft() {
+                    if(i.getMoodi()==0)
+                    {
+                        laitaListaan(i);
+                    }
                     Toast.makeText(Liukuvalikko.this, "LoL", Toast.LENGTH_SHORT).show();
                     return true;
                 }
@@ -75,9 +77,9 @@ public class Liukuvalikko extends AppCompatActivity {
             icon = (ImageView) temp.findViewById(R.id.imageView);
             Bitmap bm = BitmapFactory.decodeResource(getResources(),R.drawable.tomaatti);
 
-            if(getResources().getIdentifier(tiedot.getString(3),"drawable",getPackageName())!=0)
+            if(getResources().getIdentifier(tiedot.getString(2),"drawable",getPackageName())!=0)
             {
-                    bm = BitmapFactory.decodeResource(getResources(),(getResources().getIdentifier(tiedot.getString(3),"drawable",getPackageName())));
+                    bm = BitmapFactory.decodeResource(getResources(),(getResources().getIdentifier(tiedot.getString(2),"drawable",getPackageName())));
             }
 
             roi = new RoundImage(bm);
@@ -95,12 +97,16 @@ public class Liukuvalikko extends AppCompatActivity {
             if (lasku.getInt(0) != 0) {
                 Intent intent = new Intent(this, Liukuvalikko.class);
                 Log.d("asdasdasd","ei toimi");
-                String lause = ("SELECT * FROM RuokaKanta RU, ReseptiKanta RE WHERE RU.ruokaID IS RE.ruokaID AND RE.aineID IS " + v.getID());
+                String lause = ("SELECT ruoka, RU.ruokaID, kuva, RE.ruokaID, aineID FROM RuokaKanta RU, ReseptiKanta RE WHERE aineID IS " + v.getID());
                 intent.putExtra("sqlqry", lause);
                 intent.putExtra("moodi", 1);
                 startActivity(intent);
             }
         }
+    }
+
+    public void laitaListaan(ItemInfo v){
+        TK.LaitaKaappiin(v.getID());
     }
 
     public void whatthesht(ItemInfo v){
@@ -115,7 +121,7 @@ public class Liukuvalikko extends AppCompatActivity {
             }
             else {
                 Intent intent = new Intent(this, Liukuvalikko.class);
-                String lause = ("SELECT * FROM AineKanta WHERE edellinenID IS " + v.getID());
+                String lause = ("SELECT aine, aineID, kuva,edellinenID FROM AineKanta WHERE edellinenID is " + v.getID());
                 intent.putExtra("sqlqry", lause);
                 intent.putExtra("moodi", 0);
                 startActivity(intent);
@@ -129,4 +135,5 @@ public class Liukuvalikko extends AppCompatActivity {
         }
 
     }
+
 }

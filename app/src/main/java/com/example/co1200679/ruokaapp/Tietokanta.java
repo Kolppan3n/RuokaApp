@@ -97,14 +97,14 @@ public class Tietokanta extends SQLiteOpenHelper {
     {
         ContentValues tiedot = new ContentValues();
         tiedot.put("aineID",aineID);
-        db.insert("RuokaKanta",null,tiedot);
+        db.insert("KaappiKanta",null,tiedot);
     }
 
     public void LaitaListaan(int aineID)
     {
         ContentValues tiedot = new ContentValues();
         tiedot.put("aineID",aineID);
-        db.insert("RuokaKanta",null,tiedot);
+        db.insert("OstosKanta",null,tiedot);
     }
 
 
