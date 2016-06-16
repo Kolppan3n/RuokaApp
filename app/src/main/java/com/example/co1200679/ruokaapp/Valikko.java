@@ -104,21 +104,17 @@ public class Valikko extends AppCompatActivity {
         for (int M = 0; M < ruokatiedot.getInt(3); M++) vaikeusmerkit += "\uD83C\uDF5D";
         vaikeusaste.setText(vaikeusmerkit);
 
-        //Nappien alustaminen
-        reseptiBtn = (ImageView) findViewById(R.id.navicon3);
-        reseptiBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                avaaResepti();
-            }
-        });
+
 
     }
 
-    public void avaaResepti() {
+    public void avaaReseptiBtnClick(View view) {
         Intent intent = new Intent(this, Kokkausohjeet.class);
         intent.putExtra("ruokaID", ruokaID);
         startActivity(intent);
+    }
+
+    public void KatsoKaappiinBtnClick(View view) {
     }
 
     public void LisaaListaanBtnClick(View view){
