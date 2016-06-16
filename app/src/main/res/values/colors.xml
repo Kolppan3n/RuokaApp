@@ -8,6 +8,8 @@
     <color name="colorBackground2">#ECF6BB</color>
     <color name="colorTextPrimary">#E61D1D1D</color>
     <color name="colorTextSecondary">#991D1D1D</color>
-    <color name="cherryBlossom">#FFB7DD</color>
-    <color name="cherryWood">#420C07</color>
+    <color name="colorGreen">#81EB6E</color>
+    <color name="colorYellow">#EBE46A</color>
+    <color name="colorOrange">#EB9F6A</color>
+    <color name="colorRed">#EB706A</color>
 </resources>
