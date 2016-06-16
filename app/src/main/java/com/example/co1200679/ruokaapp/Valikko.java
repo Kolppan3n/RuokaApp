@@ -8,12 +8,14 @@ import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class Valikko extends AppCompatActivity {
 
@@ -120,12 +122,20 @@ public class Valikko extends AppCompatActivity {
     public void LisaaListaanBtnClick(View view){
         String lause = ("SELECT aineID, ruokaID FROM ReseptiKanta WHERE aineID NOT IN (SELECT aineID FROM KaappiKanta) AND  RuokaID IS " + ruokaID);
         Cursor listatiedot = TK.HaeTiedot(lause);
-        Log.d("papapapappa", DatabaseUtils.dumpCursorToString(listatiedot));
+        Log.d("popopopo",lause);
+        Log.d("pappapa", DatabaseUtils.dumpCursorToString(listatiedot));
         while(listatiedot.moveToNext())
         {
          TK.LaitaListaan(listatiedot.getInt(0));
         }
 
+        String toasti = "Tarvittavat aineet\nlisätty Ostoslistaan";
+        Toast.makeText(Valikko.this, toasti, Toast.LENGTH_SHORT).show();
+
+    }
+
+    public void palaaKotiin(View view){
+        startActivity(new Intent(this, MainAct.class));
     }
 
 

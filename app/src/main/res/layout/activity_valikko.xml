@@ -181,7 +181,7 @@
                 android:layout_column="0"
                 android:layout_margin="6dp"
                 android:onClick="KatsoKaappiinBtnClick"
-                android:src="@drawable/lisaakaappiin" />
+                android:src="@drawable/katsokaappiin" />
 
             <ImageView
                 android:layout_width="50dp"
@@ -203,6 +203,23 @@
                 android:layout_margin="6dp"
                 android:src="@drawable/resepti" />
 
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/navicon4"
+                android:layout_row="0"
+                android:layout_column="4"
+                android:onClick="palaaKotiin"
+                android:layout_margin="6dp"
+                android:src="@drawable/koti" />
+
         </GridLayout>
     </LinearLayout>
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar"
+        android:layout_gravity="right" />
 </LinearLayout>

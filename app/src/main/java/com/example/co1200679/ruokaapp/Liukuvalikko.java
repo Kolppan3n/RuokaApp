@@ -60,7 +60,8 @@ public class Liukuvalikko extends AppCompatActivity {
             item.setOnTouchListener(new OnSwipeTouchListener(item) {
                 public boolean onSwipeRight() {
                     avaaRuuat(i);
-                    Toast.makeText(Liukuvalikko.this, i.getText(), Toast.LENGTH_SHORT).show();
+                    if (moodi == 0)
+                        Toast.makeText(Liukuvalikko.this, "Ateriat joissa tarvitaan " + i.getText(), Toast.LENGTH_SHORT).show();
                     return true;
                 }
                 public boolean onSwipeLeft() {
@@ -68,7 +69,7 @@ public class Liukuvalikko extends AppCompatActivity {
                     {
                         laitaListaan(i);
                     }
-                    Toast.makeText(Liukuvalikko.this, "LoL", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Liukuvalikko.this, i.getText() + " lisättiin kaappiin", Toast.LENGTH_SHORT).show();
                     return true;
                 }
             });
