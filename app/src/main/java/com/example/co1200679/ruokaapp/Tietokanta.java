@@ -25,10 +25,11 @@ public class Tietokanta extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table RuokaKanta (ruoka TEXT NOT NULL,ruokaID INTEGER PRIMARY KEY, resepti TEXT ,kuva TEXT,aika INTEGER,taso INTEGER,tarvikkeet INTEGER)");
         db.execSQL("create table ReseptiKanta (kantaID INTEGER PRIMARY KEY,ruokaID INTEGER NOT NULL, aineID INTEGER NOT NULL,lkm FLOAT NOT NULL)");
-        db.execSQL("create table AineKanta (aine TEXT NOT NULL, aineID INTEGER PRIMARY KEY,edellinenID INTEGER NOT NULL ,kuva TEXT ,mitta TEXT)");
+        db.execSQL("create table AineKanta (aine TEXT NOT NULL, aineID INTEGER PRIMARY KEY,edellinenID INTEGER NOT NULL ,kuva TEXT ,mitta TEXT,pakkauskoko FLOAT)");
 
-        db.execSQL("create table KaappiKanta (aineID INTEGER UNIQUE, prosentti INTEGER)");
-        db.execSQL("create table OstosKanta (aineID INTEGER UNIQUE)");
+        db.execSQL("create table KaappiKanta (aineID INTEGER UNIQUE, maara INTEGER)");
+        db.execSQL("create table OstosKanta (aineID INTEGER UNIQUE, maara INTEGER)");
+        db.execSQL("create table VarausKanta (aineID INTEGER UNIQUE, kpl INTEGER)");
     }
 
 
@@ -41,6 +42,7 @@ public class Tietokanta extends SQLiteOpenHelper {
 
         db.execSQL("DROP TABLE IF EXISTS OstosKanta");
         db.execSQL("DROP TABLE IF EXISTS KaappiKanta");
+        db.execSQL("DROP TABLE IF EXISTS VarausKanta");
         onCreate(db);
     }
 
@@ -97,14 +99,22 @@ public class Tietokanta extends SQLiteOpenHelper {
     {
         ContentValues tiedot = new ContentValues();
         tiedot.put("aineID",aineID);
-        tiedot.put("prosentti",100);
+        tiedot.put("maara",100);
         db.insert("KaappiKanta",null,tiedot);
+    }
+
+    public void LisaaKaappiin(int aineID, int uusiprosentti)
+    {
+        ContentValues tiedot = new ContentValues();
+        tiedot.put("aineID",aineID);
+        tiedot.put("maara",uusiprosentti);
+        db.update("KaappiKanta",tiedot,("aineID is "+aineID),null);
     }
 
     public void KulutaAinetta(int aineID,int uusi)
     {
         ContentValues tiedot = new ContentValues();
-        tiedot.put("prosentti",uusi);
+        tiedot.put("maara",uusi);
         db.update("KaappiKanta",tiedot,("aineID is "+aineID),null);
     }
 
@@ -113,6 +123,14 @@ public class Tietokanta extends SQLiteOpenHelper {
         ContentValues tiedot = new ContentValues();
         tiedot.put("aineID",aineID);
         db.insert("OstosKanta",null,tiedot);
+    }
+    public void PoistaListasta(int aineID)
+    {
+        db.delete("OstosKanta",("aineID is "+aineID),null);
+    }
+    public void PoistaKaapista(int aineID)
+    {
+        db.delete("KaappiKanta",("aineID is "+aineID),null);
     }
 
 

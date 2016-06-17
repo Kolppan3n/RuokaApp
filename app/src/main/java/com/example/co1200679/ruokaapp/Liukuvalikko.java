@@ -17,7 +17,7 @@ import android.widget.Toast;
 public class Liukuvalikko extends AppCompatActivity {
 
     Tietokanta TK;
-    int moodi;
+    int moodi;// AINE = 0 RUUAT = 1 KAAPPI = 2 LISTA = 3
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +53,7 @@ public class Liukuvalikko extends AppCompatActivity {
             if(moodi==2)
             {
                 item.setKpl("" + (tiedot.getInt(3)+ 10));
-                VariAine(item);
+                RuokaaKuluu(item); //vähentää 10% ruuan määrästä ja laittaa värin, joten lisätään 10% ennen tätä niin ruuan määrä pysyy ennallaan
             }
             item.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -61,7 +61,6 @@ public class Liukuvalikko extends AppCompatActivity {
                     whatthesht((ItemInfo) v);
                 }
             });
-
 
             item.setOnTouchListener(new OnSwipeTouchListener(item) {
                 public boolean onSwipeRight() {
@@ -73,17 +72,20 @@ public class Liukuvalikko extends AppCompatActivity {
                 public boolean onSwipeLeft() {
                     if(i.getMoodi()==0)
                     {
-                        laitaKaappiin(i);
+                        laitaListaan(i);
+                        Toast.makeText(Liukuvalikko.this, i.getText() + " lisättiin ostoslistalle", Toast.LENGTH_SHORT).show();
+                    }
+                    if(i.getMoodi()==1)
+                    {
+                        laitaRuokaListaan(i);
                     }
                     if(i.getMoodi()==2)
                     {
-                        VariAine(i);
+                        RuokaaKuluu(i);//vähentää 10% ruuan määrästä ja laittaa värin
                     }
-                    Toast.makeText(Liukuvalikko.this, i.getText() + " lisättiin kaappiin", Toast.LENGTH_SHORT).show();
                     return true;
                 }
             });
-
 
             icon = (ImageView) temp.findViewById(R.id.imageView);
             Bitmap bm = BitmapFactory.decodeResource(getResources(),R.drawable.tomaatti);
@@ -97,6 +99,27 @@ public class Liukuvalikko extends AppCompatActivity {
             icon.setImageDrawable(roi);
             content.addView(temp);
         }
+        if(moodi == 3)
+        {
+            temp = getLayoutInflater().inflate(R.layout.item, content, false);
+            item = (ItemInfo) temp.findViewById(R.id.itemView);
+            item.setNimi("Laita kaikki ostokset kaappiin");
+            item.setMoodi(moodi);
+            item.setText(item.getNimi());
+
+            item.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ostoksetKaappiin();
+                }
+            });
+            icon = (ImageView) temp.findViewById(R.id.imageView);
+            Bitmap bm = BitmapFactory.decodeResource(getResources(),R.drawable.tomaatti);//tähän joku hyvä kuva
+            roi = new RoundImage(bm);
+            icon.setImageDrawable(roi);
+            content.addView(temp);
+
+        }
     }
 
     public void avaaRuuat(ItemInfo v){
@@ -107,7 +130,6 @@ public class Liukuvalikko extends AppCompatActivity {
 
             if (lasku.getInt(0) != 0) {
                 Intent intent = new Intent(this, Liukuvalikko.class);
-                Log.d("asdasdasd","ei toimi");
                 String lause = ("SELECT ruoka, RU.ruokaID, kuva FROM RuokaKanta RU, ReseptiKanta RE WHERE RU.ruokaID IS RE.ruokaID AND RE.aineID IS " + v.getID());
                 intent.putExtra("sqlqry", lause);
                 intent.putExtra("moodi", 1);
@@ -116,8 +138,22 @@ public class Liukuvalikko extends AppCompatActivity {
         }
     }
 
-    public void laitaKaappiin(ItemInfo v){
-        TK.LaitaKaappiin(v.getID());
+    public void laitaListaan(ItemInfo v){
+        TK.LaitaListaan(v.getID());
+    }
+    public void laitaRuokaListaan(ItemInfo v){
+        String lause = ("SELECT aineID, ruokaID FROM ReseptiKanta WHERE aineID NOT IN (SELECT aineID FROM KaappiKanta WHERE maara > 10) AND  RuokaID IS " + v.getID());
+        Cursor listatiedot = TK.HaeTiedot(lause);
+        Log.d("popopopo",lause);
+        Log.d("pappapa", DatabaseUtils.dumpCursorToString(listatiedot));
+        while(listatiedot.moveToNext())
+        {
+            TK.LaitaListaan(listatiedot.getInt(0));
+        }
+
+        Toast.makeText(Liukuvalikko.this,v.getText() + " ainekset lisättiin ostoslistalle", Toast.LENGTH_SHORT).show();
+
+
     }
 
     public void whatthesht(ItemInfo v){
@@ -147,7 +183,7 @@ public class Liukuvalikko extends AppCompatActivity {
 
     }
 
-    public void VariAine(ItemInfo v)
+    public void RuokaaKuluu(ItemInfo v)
     {
         if(v.getMoodi() == 2) {
             int color = getResources().getColor(R.color.colorRed);
@@ -173,6 +209,39 @@ public class Liukuvalikko extends AppCompatActivity {
             }
             v.setBackgroundColor(color);
         }
+
+    }
+
+    public void ostoksetKaappiin()
+    {
+
+        String lause = ("SELECT aineID, maara FROM KaappiKanta WHERE aineID IN (SELECT aineID FROM OstosKanta)");
+        Cursor listatiedot = TK.HaeTiedot(lause);
+        while(listatiedot.moveToNext())
+        {
+            TK.LisaaKaappiin(listatiedot.getInt(0),listatiedot.getInt(1)+100);
+        }
+
+        lause = ("SELECT aineID FROM OstosKanta WHERE aineID NOT IN (SELECT aineID FROM KaappiKanta)");
+        listatiedot = TK.HaeTiedot(lause);
+
+
+        while(listatiedot.moveToNext())
+        {
+            TK.LaitaKaappiin(listatiedot.getInt(0));
+        }
+
+        lause = ("SELECT aineID FROM OstosKanta");
+        listatiedot = TK.HaeTiedot(lause);
+
+
+        while(listatiedot.moveToNext())
+        {
+            TK.PoistaListasta(listatiedot.getInt(0));
+        }
+
+        Toast.makeText(Liukuvalikko.this,"Ostokset laitettu kaappiin ja poistettu listasta" , Toast.LENGTH_SHORT).show();
+        fillScrollView("SELECT aine, AK.aineID, kuva FROM AineKanta AK, OstosKanta OK WHERE AK.aineID IS OK.aineID");
 
     }
 

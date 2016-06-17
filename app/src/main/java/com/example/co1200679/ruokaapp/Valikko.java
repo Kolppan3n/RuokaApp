@@ -120,7 +120,7 @@ public class Valikko extends AppCompatActivity {
     }
 
     public void LisaaListaanBtnClick(View view){
-        String lause = ("SELECT aineID, ruokaID FROM ReseptiKanta WHERE aineID NOT IN (SELECT aineID FROM KaappiKanta WHERE prosentti > 10) AND  RuokaID IS " + ruokaID);
+        String lause = ("SELECT aineID, ruokaID FROM ReseptiKanta WHERE aineID NOT IN (SELECT aineID FROM KaappiKanta WHERE maara > 10) AND  RuokaID IS " + ruokaID);
         Cursor listatiedot = TK.HaeTiedot(lause);
         Log.d("popopopo",lause);
         Log.d("pappapa", DatabaseUtils.dumpCursorToString(listatiedot));
