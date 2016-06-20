@@ -51,7 +51,7 @@ public class Tietokanta extends SQLiteOpenHelper {
         return tulos;
     }
 
-    public void LaitaAine(String aine, int aineID, int edellinenID,String mitta,String kuva)
+    public void LaitaAine(String aine, int aineID, int edellinenID,String mitta,String kuva,Float pakkauskoko)
     {
         ContentValues tiedot = new ContentValues();
         tiedot.put("aine",aine);
@@ -59,6 +59,7 @@ public class Tietokanta extends SQLiteOpenHelper {
         tiedot.put("edellinenID",edellinenID);
         tiedot.put("mitta",mitta);
         tiedot.put("kuva",kuva);
+        tiedot.put("pakkauskoko",pakkauskoko);
         db.insert("AineKanta",null,tiedot);
         db.update("AineKanta",tiedot,("aineID is "+aineID),null);
     }
