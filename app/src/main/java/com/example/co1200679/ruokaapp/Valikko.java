@@ -38,6 +38,11 @@ public class Valikko extends AppCompatActivity {
 
         //Alustaa sisällön
         alustus(ruokatiedot);
+
+        //Lähetetään Toolbar:ille muutama muuttuja että nappien funktiot toimis
+        /*Bundle bundle = new Bundle();
+        bundle.putInt("ruokaID", ruokaID);
+        bundle*/
     }
 
     public void alustus(Cursor ruokatiedot) {
