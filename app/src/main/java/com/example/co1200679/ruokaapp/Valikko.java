@@ -122,17 +122,33 @@ public class Valikko extends AppCompatActivity {
     }
 
     public void LisaaListaanBtnClick(View view){
-        String lause = ("SELECT aineID, ruokaID FROM ReseptiKanta WHERE aineID NOT IN (SELECT aineID FROM KaappiKanta WHERE maara > 10) AND  RuokaID IS " + ruokaID);
+        String lause = ("SELECT aineID, ruokaID,lkm FROM ReseptiKanta WHERE RuokaID IS " + ruokaID);
         Cursor listatiedot = TK.HaeTiedot(lause);
         Log.d("popopopo",lause);
         Log.d("pappapa", DatabaseUtils.dumpCursorToString(listatiedot));
         while(listatiedot.moveToNext())
         {
-         TK.LaitaListaan(listatiedot.getInt(0));
+            laitaVaraus(listatiedot.getInt(0),listatiedot.getFloat(2));
         }
 
         String toasti = "Tarvittavat aineet\nlisätty Ostoslistaan";
         Toast.makeText(Valikko.this, toasti, Toast.LENGTH_SHORT).show();
+
+    }
+
+    public void laitaVaraus(int aineID,float maara){
+        Cursor lasku = TK.HaeTiedot("SELECT count(aineID) AS luku, maara FROM VarausKanta WHERE aineID IS " + aineID);
+        lasku.moveToNext();
+
+        if(lasku.getInt(0)==0)
+        {
+            TK.LaitaVaraus(aineID,maara);
+        }
+        else
+        {
+            TK.VaraaLisaa(aineID,lasku.getFloat(1)+maara);
+        }
+
 
     }
 
