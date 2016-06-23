@@ -4,8 +4,8 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:layout_marginBottom="8dp"
-    android:background="@color/colorTextSecondary"
-    android:paddingBottom="3dp">
+    android:background="#16000000"
+    android:paddingBottom="1dp">
 
     <ImageView
         android:layout_width="60dp"
@@ -13,7 +13,7 @@
         android:id="@+id/imageView"
         android:padding="3dp"
         android:src="@drawable/tomaatti"
-        android:background="@color/colorAccentDark"/>
+        android:background="@color/colorBackground"/>
 
     <com.example.co1200679.ruokaapp.ItemInfo
         android:layout_width="match_parent"
@@ -27,6 +27,6 @@
         android:textAlignment="center"
         android:textAllCaps="true"
         android:gravity="center_vertical"
-        android:background="@color/colorAccent"/>
+        android:background="@color/colorBackground"/>
 
 </LinearLayout>

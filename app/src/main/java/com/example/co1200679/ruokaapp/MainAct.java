@@ -8,6 +8,7 @@ import android.view.View;
 public class MainAct extends AppCompatActivity {
     Tietokanta TK;
     Kirjastonhoitaja kirja;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -1,16 +1,12 @@
 package com.example.co1200679.ruokaapp;
 
 import android.content.Intent;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
-import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -19,6 +15,7 @@ import android.widget.Toast;
 
 public class Valikko extends AppCompatActivity {
 
+    String lause;
     Tietokanta TK;
     int ruokaID;
 
@@ -30,7 +27,7 @@ public class Valikko extends AppCompatActivity {
         //Tietokannan ja kursorin luominen
         TK = new Tietokanta(this);
         ruokaID = getIntent().getIntExtra("ruokaID", 0);
-        String lause = ("SELECT ruoka, tarvikkeet, aika, taso FROM RuokaKanta WHERE RuokaID IS " + ruokaID);
+        lause = ("SELECT ruoka, tarvikkeet, aika, taso FROM RuokaKanta WHERE RuokaID IS " + ruokaID);
         Cursor ruokatiedot = TK.HaeTiedot(lause);
         ruokatiedot.moveToNext();
 

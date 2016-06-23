@@ -1,0 +1,17 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.example.co1200679.ruokaapp.MainAct"
+    >
+
+    <item
+        android:id="@+id/koti"
+        android:title="@string/kotiToast"
+        android:orderInCategory="200"
+        android:icon="@drawable/menukoti"
+        app:showAsAction="always"
+        />
+
+
+
+</menu>

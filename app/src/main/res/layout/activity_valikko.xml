@@ -9,6 +9,13 @@
     android:weightSum="1"
     android:background="@color/colorBackground">
 
+    <fragment
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:name="com.example.co1200679.ruokaapp.ToolbarFragment"
+        android:id="@+id/fragment"
+        tools:layout="@layout/toolbar" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="50dp"

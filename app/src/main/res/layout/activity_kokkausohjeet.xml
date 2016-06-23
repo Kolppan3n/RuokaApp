@@ -4,8 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/colorBackground"
     tools:context="com.example.co1200679.ruokaapp.Kokkausohjeet">
+
+    <fragment
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:name="com.example.co1200679.ruokaapp.ToolbarFragment"
+        android:id="@+id/fragment" />
 
     <TextView
         android:layout_width="match_parent"
