@@ -6,8 +6,10 @@ import android.database.DatabaseUtils;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.support.annotation.ColorRes;
+import android.os.SystemClock;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
+import android.text.format.Time;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -36,13 +38,16 @@ public class Liukuvalikko extends AppCompatActivity {
         View temp;
         ItemInfo item;
         ImageView icon;
-        RoundImage roi;
+        long viive;
 
         if(content.getChildCount() > 0)
             content.removeAllViews();
 
+        viive = System.currentTimeMillis();
         Cursor tiedot = TK.HaeTiedot(lause);
+        Log.d("Kursorin luominen", (System.currentTimeMillis() - viive) + " millisekunttia");
 
+        viive = System.currentTimeMillis();
         while(tiedot.moveToNext()) {
             temp = getLayoutInflater().inflate(R.layout.item, content, false);
             item = (ItemInfo) temp.findViewById(R.id.itemView);
@@ -87,18 +92,11 @@ public class Liukuvalikko extends AppCompatActivity {
                 }
             });
 
-            icon = (ImageView) temp.findViewById(R.id.imageView);
-            Bitmap bm = BitmapFactory.decodeResource(getResources(),R.drawable.tomaatti);
-
-            if(getResources().getIdentifier(tiedot.getString(2),"drawable",getPackageName())!=0)
-            {
-                    bm = BitmapFactory.decodeResource(getResources(),(getResources().getIdentifier(tiedot.getString(2),"drawable",getPackageName())));
-            }
-
-            roi = new RoundImage(bm);
-            icon.setImageDrawable(roi);
+            ImageView img = (ImageView) temp.findViewById(R.id.imageView);
+            img.setImageResource(getResources().getIdentifier(tiedot.getString(2), "drawable", getPackageName()));
             content.addView(temp);
         }
+        Log.d("Taulukon täyttäminen", (System.currentTimeMillis() - viive) + " millisekunttia");
         if(moodi == 3)
         {
             temp = getLayoutInflater().inflate(R.layout.item, content, false);
@@ -113,13 +111,13 @@ public class Liukuvalikko extends AppCompatActivity {
                     ostoksetKaappiin();
                 }
             });
-            icon = (ImageView) temp.findViewById(R.id.imageView);
-            Bitmap bm = BitmapFactory.decodeResource(getResources(),R.drawable.tomaatti);//tähän joku hyvä kuva
-            roi = new RoundImage(bm);
-            icon.setImageDrawable(roi);
+            ImageView img = (ImageView) temp.findViewById(R.id.imageView);
+            img.setImageResource(getResources().getIdentifier(tiedot.getString(2), "drawable", getPackageName()));
             content.addView(temp);
 
         }
+
+        tiedot.close();
     }
 
     public void avaaRuuat(ItemInfo v){
@@ -133,6 +131,7 @@ public class Liukuvalikko extends AppCompatActivity {
                 String lause = ("SELECT ruoka, RU.ruokaID, kuva FROM RuokaKanta RU, ReseptiKanta RE WHERE RU.ruokaID IS RE.ruokaID AND RE.aineID IS " + v.getID());
                 intent.putExtra("sqlqry", lause);
                 intent.putExtra("moodi", 1);
+                lasku.close();
                 startActivity(intent);
             }
         }
@@ -141,6 +140,7 @@ public class Liukuvalikko extends AppCompatActivity {
     public void laitaListaan(ItemInfo v){
         TK.LaitaListaan(v.getID());
     }
+
     public void laitaRuokaListaan(ItemInfo v){
         String lause = ("SELECT aineID, ruokaID FROM ReseptiKanta WHERE aineID NOT IN (SELECT aineID FROM KaappiKanta WHERE maara > 10) AND  RuokaID IS " + v.getID());
         Cursor listatiedot = TK.HaeTiedot(lause);
@@ -152,8 +152,7 @@ public class Liukuvalikko extends AppCompatActivity {
         }
 
         Toast.makeText(Liukuvalikko.this,v.getText() + " ainekset lisättiin ostoslistalle", Toast.LENGTH_SHORT).show();
-
-
+        listatiedot.close();
     }
 
     public void whatthesht(ItemInfo v){
@@ -164,6 +163,7 @@ public class Liukuvalikko extends AppCompatActivity {
 
             if(lasku.getInt(0)==0)
             {
+                lasku.close();
                 avaaRuuat(v);
             }
             else {
@@ -171,6 +171,7 @@ public class Liukuvalikko extends AppCompatActivity {
                 String lause = ("SELECT aine, aineID, kuva FROM AineKanta WHERE edellinenID is " + v.getID());
                 intent.putExtra("sqlqry", lause);
                 intent.putExtra("moodi", 0);
+                lasku.close();
                 startActivity(intent);
             }
         }
@@ -242,6 +243,7 @@ public class Liukuvalikko extends AppCompatActivity {
 
         Toast.makeText(Liukuvalikko.this,"Ostokset laitettu kaappiin ja poistettu listasta" , Toast.LENGTH_SHORT).show();
         fillScrollView("SELECT aine, AK.aineID, kuva FROM AineKanta AK, OstosKanta OK WHERE AK.aineID IS OK.aineID");
+        listatiedot.close();
 
     }
 

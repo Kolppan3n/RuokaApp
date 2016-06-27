@@ -22,6 +22,7 @@
         <activity android:name=".Liukuvalikko" />
         <activity android:name=".Kokkausohjeet" />
         <activity android:name=".Valikko" />
+        <activity android:name=".Asetukset"></activity>
     </application>
 
 </manifest>

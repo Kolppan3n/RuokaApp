@@ -51,5 +51,9 @@ public class MainAct extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void AsetuksetBtnClick(View view){
+        startActivity(new Intent(this, Asetukset.class));
+    }
+
 
 }
