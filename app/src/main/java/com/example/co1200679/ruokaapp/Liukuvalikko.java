@@ -233,7 +233,7 @@ public class Liukuvalikko extends AppCompatActivity {
         Log.d("varauslista", DatabaseUtils.dumpCursorToString(listatiedot));
         while(listatiedot.moveToNext())
         {
-            TK.LisaaKaappiin(listatiedot.getInt(0),(listatiedot.getFloat(1)+ (listatiedot.getInt(2)*listatiedot.getFloat(3))));
+            TK.MuutaKaappia(listatiedot.getInt(0),(listatiedot.getFloat(1)+ (listatiedot.getInt(2)*listatiedot.getFloat(3))));
         }
 
         lause = ("SELECT AK.aineID, kpl, pakkauskoko FROM OstosKanta OK, AineKanta AK WHERE OK.aineID is AK.aineID AND OK.aineID NOT IN (SELECT aineID FROM KaappiKanta)");
