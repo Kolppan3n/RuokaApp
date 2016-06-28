@@ -72,7 +72,7 @@ public class ToolbarFragment extends Fragment {
                 Log.d("popopopo",lause);
                 Log.d("pappapa", DatabaseUtils.dumpCursorToString(listatiedot));
                 while(listatiedot.moveToNext()) {
-                    akti.TK.LaitaListaan(listatiedot.getInt(0));
+                    akti.TK.LaitaListaan(listatiedot.getInt(0),1);
                 }
 
                 String toasti = "Tarvittavat aineet\nlisätty Ostoslistaan";

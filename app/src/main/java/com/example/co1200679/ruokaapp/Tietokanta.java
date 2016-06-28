@@ -4,10 +4,13 @@ package com.example.co1200679.ruokaapp;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
 
@@ -15,17 +18,23 @@ public class Tietokanta extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "AppiKanta.db";
     SQLiteDatabase db;
 
+    Context context;
+
+    String aine = "aine";
+    String aineID;
+    String kuva;
 
     public Tietokanta(Context context) {
         super(context, DATABASE_NAME, null, 1);
         db = this.getReadableDatabase();
+        this.context = context;
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table RuokaKanta (ruoka TEXT NOT NULL,ruokaID INTEGER PRIMARY KEY, resepti TEXT ,kuva TEXT,aika INTEGER,taso INTEGER,tarvikkeet INTEGER)");
+        db.execSQL("create table RuokaKanta (ruoka TEXT NOT NULL,ruokaID INTEGER PRIMARY KEY, resepti TEXT ,kuva INT,aika INTEGER,taso INTEGER,tarvikkeet INTEGER)");
         db.execSQL("create table ReseptiKanta (kantaID INTEGER PRIMARY KEY,ruokaID INTEGER NOT NULL, aineID INTEGER NOT NULL,lkm FLOAT NOT NULL)");
-        db.execSQL("create table AineKanta (aine TEXT NOT NULL, aineID INTEGER PRIMARY KEY,edellinenID INTEGER NOT NULL ,kuva TEXT, mitta TEXT, pakkauskoko FLOAT)");
+        db.execSQL("create table AineKanta (aine TEXT NOT NULL, aineID INTEGER PRIMARY KEY,edellinenID INTEGER NOT NULL ,kuva INT ,mitta TEXT,pakkauskoko FLOAT)");
 
         db.execSQL("create table KaappiKanta (aineID INTEGER UNIQUE, maara FLOAT)");
         db.execSQL("create table OstosKanta (aineID INTEGER UNIQUE, kpl INTEGER)");
@@ -59,7 +68,8 @@ public class Tietokanta extends SQLiteOpenHelper {
         tiedot.put("aineID",aineID);
         tiedot.put("edellinenID",edellinenID);
         tiedot.put("mitta",mitta);
-        tiedot.put("kuva",kuva);
+        int kuvaid = this.context.getResources().getIdentifier(kuva,"drawable",this.context.getPackageName());
+        tiedot.put("kuva",kuvaid);
         tiedot.put("pakkauskoko",pakkauskoko);
         db.insert("AineKanta",null,tiedot);
         db.update("AineKanta",tiedot,("aineID is "+aineID),null);
@@ -92,7 +102,8 @@ public class Tietokanta extends SQLiteOpenHelper {
         tiedot.put("aika",aika);
         tiedot.put("taso",taso);
         tiedot.put("tarvikkeet",tarvikkeet);
-        tiedot.put("kuva",kuva);
+        int kuvaid = this.context.getResources().getIdentifier(kuva,"drawable",this.context.getPackageName());
+        tiedot.put("kuva",kuvaid);
         db.insert("RuokaKanta",null,tiedot);
         db.update("RuokaKanta",tiedot,("ruokaID is "+ruokaID),null);
     }

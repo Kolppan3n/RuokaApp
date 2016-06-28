@@ -3,17 +3,16 @@ package com.example.co1200679.ruokaapp;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
-import android.text.format.Time;
 import android.util.Log;
 import android.view.View;
+import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
 public class Liukuvalikko extends AppCompatActivity {
@@ -30,28 +29,56 @@ public class Liukuvalikko extends AppCompatActivity {
         String lause = getIntent().getStringExtra("sqlqry");
         moodi = getIntent().getIntExtra("moodi",0);
         if (moodi==3)varauksetOstoksiksi();
-        fillScrollView(lause);
+        populateList(lause, moodi);
+    }
+
+    public void populateList(String lause, int moodi){
+
+
+            Cursor tiedot = TK.HaeTiedot(lause);
+            startManagingCursor(tiedot);
+            long viive = System.currentTimeMillis();
+
+            String[] columns = new String[]{"nimi", "kuva"};
+            int[] viewIDs = new int[]{R.id.teksti, R.id.ikoni};
+
+            SimpleCursorAdapter filleri = new SimpleCursorAdapter(this, R.layout.valikko_item, tiedot, columns, viewIDs, 0);
+            ListView valikko = (ListView) findViewById(R.id.valikko);
+            valikko.setAdapter(filleri);
+
+
+            Log.d("pappapa", DatabaseUtils.dumpCursorToString(tiedot));
+            Log.d("Listan täyttö kesti", (System.currentTimeMillis() - viive) + " millisekunttia");
+            int kuvaid = getResources().getIdentifier("tomaatti", "drawable", getPackageName());
+            Log.d("Kuvan numero", "" + kuvaid);
+
+
+
+
     }
 
     public void fillScrollView(String lause) {
 
-        LinearLayout content = (LinearLayout) findViewById(R.id.content);
+        /*LinearLayout content = (LinearLayout) findViewById(R.id.content);*/
         View temp;
         ItemInfo item;
-        ImageView icon;
+        ImageView img;
+        int x = 0;
         long viive;
+        long kokohomma;
 
-        if(content.getChildCount() > 0)
-            content.removeAllViews();
+        kokohomma = System.currentTimeMillis();
 
-        viive = System.currentTimeMillis();
+        /*if(content.getChildCount() > 0)
+            content.removeAllViews();*/
+
         Cursor tiedot = TK.HaeTiedot(lause);
-        Log.d("Kursorin luominen", (System.currentTimeMillis() - viive) + " millisekunttia");
-
+        startManagingCursor(tiedot);
         viive = System.currentTimeMillis();
-        Log.d("pappapa", DatabaseUtils.dumpCursorToString(tiedot));
 
-        while(tiedot.moveToNext()) {
+
+
+        /*while(tiedot.moveToNext()) {
             temp = getLayoutInflater().inflate(R.layout.item, content, false);
             item = (ItemInfo) temp.findViewById(R.id.itemView);
             item.setNimi(tiedot.getString(0));
@@ -59,11 +86,14 @@ public class Liukuvalikko extends AppCompatActivity {
             item.setID(tiedot.getInt(1));
             item.setMoodi(moodi);
             item.setText(item.getNimi());
+
             if(moodi==2)
             {
                 item.setKpl("" + (tiedot.getFloat(3)/tiedot.getFloat(4)));
                 KaappiVari(item);
             }
+
+
             item.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -98,12 +128,18 @@ public class Liukuvalikko extends AppCompatActivity {
                 }
             });
 
-            ImageView img = (ImageView) temp.findViewById(R.id.imageView);
+
+
+            img = (ImageView) temp.findViewById(R.id.imageView);
+            img.setImageResource(R.drawable.avotuli);
             img.setImageResource(getResources().getIdentifier(tiedot.getString(2), "drawable", getPackageName()));
             content.addView(temp);
-        }
+            x++;
+        }*/
+
         Log.d("Taulukon täyttäminen", (System.currentTimeMillis() - viive) + " millisekunttia");
-        if(moodi == 3)
+
+        /*if(moodi == 3)
         {
             temp = getLayoutInflater().inflate(R.layout.item, content, false);
             item = (ItemInfo) temp.findViewById(R.id.itemView);
@@ -117,14 +153,18 @@ public class Liukuvalikko extends AppCompatActivity {
                     ostoksetKaappiin();
                 }
             });
-            ImageView img = (ImageView) temp.findViewById(R.id.imageView);
+
+            img = (ImageView) temp.findViewById(R.id.imageView);
             img.setImageResource(getResources().getIdentifier(tiedot.getString(2), "drawable", getPackageName()));
             content.addView(temp);
+        }*/
 
-        }
-
+        Log.d("koko hommaan menee", System.currentTimeMillis() - kokohomma + "millisekunttia");
         tiedot.close();
     }
+
+
+
 
     public void avaaRuuat(ItemInfo v){
 
