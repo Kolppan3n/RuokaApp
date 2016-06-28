@@ -37,7 +37,7 @@ public class MainAct extends AppCompatActivity {
 
     public void KaappiBtnClick(View view){
         Intent intent = new Intent(this, Liukuvalikko.class);
-        String lause = "SELECT aine, AK.aineID, kuva, maara, pakkauskoko FROM AineKanta AK, KaappiKanta KK WHERE AK.aineID IS KK.aineID";
+        String lause = "SELECT aine, KK.aineID, kuva, maara, pakkauskoko FROM AineKanta AK, KaappiKanta KK WHERE AK.aineID IS KK.aineID";
         intent.putExtra("sqlqry", lause);
         intent.putExtra("moodi", 2);
         startActivity(intent);

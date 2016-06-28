@@ -56,8 +56,8 @@ public class Liukuvalikko extends AppCompatActivity {
             item.setText(item.getNimi());
             if(moodi==2)
             {
-                item.setKpl("" + (tiedot.getFloat(3)/tiedot.getFloat(4)+ 0.1));
-                RuokaaKuluu(item); //vähentää 10% ruuan määrästä ja laittaa värin, joten lisätään 10% ennen tätä niin ruuan määrä pysyy ennallaan
+                item.setKpl("" + (tiedot.getFloat(3)/tiedot.getFloat(4)));
+                KaappiVari(item);
             }
             item.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -87,7 +87,7 @@ public class Liukuvalikko extends AppCompatActivity {
                     }
                     if(i.getMoodi()==2)
                     {
-                        RuokaaKuluu(i);//vähentää 10% ruuan määrästä ja laittaa värin
+                        //KaappiVari(i);//vähentää 10% ruuan määrästä ja laittaa värin ei toimi enää kunnolla, koska prosentit muuttui oikeiksi luvuiksi
                     }
                     return true;
                 }
@@ -198,14 +198,11 @@ public class Liukuvalikko extends AppCompatActivity {
 
     }
 
-    public void RuokaaKuluu(ItemInfo v)
+    public void KaappiVari(ItemInfo v)
     {
         if(v.getMoodi() == 2) {
             int color = getResources().getColor(R.color.colorRed);
             float prosentti = Float.parseFloat(v.getKpl());
-            prosentti -=0.10;
-            v.setKpl(""+ prosentti);
-            TK.KulutaAinetta(v.getID(),prosentti);
             if (prosentti>0.25)
             {
                 if (prosentti>0.5)
@@ -224,31 +221,37 @@ public class Liukuvalikko extends AppCompatActivity {
             }
             v.setBackgroundColor(color);
         }
-
     }
 
     public void ostoksetKaappiin()
     {
 
-        String lause = ("SELECT aineID, maara,kpl, pakkauskoko FROM KaappiKanta KK, AineKanta AK , OstosKanta OK WHERE AK.aineID IS KK.aineID AND AK.aineID IS OK.aineID AND aineID IN (SELECT aineID FROM OstosKanta)");
+        String lause = ("SELECT AK.aineID, maara,kpl, pakkauskoko FROM KaappiKanta KK, AineKanta AK , OstosKanta OK WHERE AK.aineID IS KK.aineID AND AK.aineID IS OK.aineID AND OK.aineID IN (SELECT aineID FROM OstosKanta)");
         Cursor listatiedot = TK.HaeTiedot(lause);
+
+        Log.d("varauslaise",lause);
+        Log.d("varauslista", DatabaseUtils.dumpCursorToString(listatiedot));
         while(listatiedot.moveToNext())
         {
-            TK.LisaaKaappiin(listatiedot.getInt(0),(listatiedot.getFloat(1)+(listatiedot.getInt(2)*listatiedot.getFloat(3))));
+            TK.LisaaKaappiin(listatiedot.getInt(0),(listatiedot.getFloat(1)+ (listatiedot.getInt(2)*listatiedot.getFloat(3))));
         }
 
-        lause = ("SELECT aineID, kpl, pakkauskoko FROM OstosKanta OK aineKanta AK WHERE OK.aineID is AK.aineID AND aineID NOT IN (SELECT aineID FROM KaappiKanta)");
+        lause = ("SELECT AK.aineID, kpl, pakkauskoko FROM OstosKanta OK, AineKanta AK WHERE OK.aineID is AK.aineID AND OK.aineID NOT IN (SELECT aineID FROM KaappiKanta)");
         listatiedot = TK.HaeTiedot(lause);
 
+        Log.d("varauslaise",lause);
+        Log.d("varauslista", DatabaseUtils.dumpCursorToString(listatiedot));
 
         while(listatiedot.moveToNext())
         {
             TK.LaitaKaappiin(listatiedot.getInt(0),listatiedot.getInt(1)*listatiedot.getFloat(2));
         }
 
+
+
+
         lause = ("SELECT aineID FROM OstosKanta");
         listatiedot = TK.HaeTiedot(lause);
-
 
         while(listatiedot.moveToNext())
         {
@@ -262,17 +265,29 @@ public class Liukuvalikko extends AppCompatActivity {
 
     public void varauksetOstoksiksi()
     {
-        Log.d("varauksetostoksisksik","asdasfjlasfjkn skdjfnksj dnfkjwsn <kljgnwerklgn <lwkefn öotfgawn goön gjnaerioöjgn aoåerjigo ji");
-        String lause = ("SELECT VK.aineID, VK.maara, pakkauskoko FROM VarausKanta VK, aineKanta AK WHERE VK.aineID IS AK.aineID");
+        //Ostoslistalle sopiva määrä aineita, joita ei ole valmiiksi kaapissa
+        String lause = ("SELECT VK.aineID, VK.maara, pakkauskoko FROM VarausKanta VK, aineKanta AK WHERE VK.aineID IS AK.aineID AND VK.aineID NOT IN (select aineID FROM KaappiKanta)");
         Cursor listatiedot = TK.HaeTiedot(lause);
-
-        Log.d("varauslaise",lause);
-        Log.d("varauslista", DatabaseUtils.dumpCursorToString(listatiedot));
 
         while(listatiedot.moveToNext())
         {
             float pakkauskoko = listatiedot.getFloat(2);
             float tarve = listatiedot.getFloat(1);
+
+            int osto = (int) (tarve / pakkauskoko);
+            if (tarve % pakkauskoko >0) osto++;
+            laitaListaan(listatiedot.getInt(0),osto);
+            TK.PoistaVaraus(listatiedot.getInt(0));
+        }
+
+        //Ostoslistalle sopiva märää aineita, joita löytyy jo valmiiksi kaapista
+        lause = ("SELECT VK.aineID, VK.maara, KK.maara, pakkauskoko FROM VarausKanta VK, aineKanta AK, KaappiKanta KK WHERE VK.aineID IS AK.aineID AND VK.aineID IS KK.aineID AND VK.aineID IN (select aineID FROM KaappiKanta)");
+        listatiedot = TK.HaeTiedot(lause);
+
+        while(listatiedot.moveToNext())
+        {
+            float pakkauskoko = listatiedot.getFloat(3);
+            float tarve = listatiedot.getFloat(1)-listatiedot.getFloat(2);
 
             int osto = (int) (tarve / pakkauskoko);
             if (tarve % pakkauskoko >0) osto++;
@@ -294,7 +309,6 @@ public class Liukuvalikko extends AppCompatActivity {
         {
             TK.VaraaLisaa(aineID,lasku.getFloat(1)+maara);
         }
-
 
     }
 
