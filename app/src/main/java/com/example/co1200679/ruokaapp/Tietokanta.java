@@ -25,11 +25,11 @@ public class Tietokanta extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table RuokaKanta (ruoka TEXT NOT NULL,ruokaID INTEGER PRIMARY KEY, resepti TEXT ,kuva TEXT,aika INTEGER,taso INTEGER,tarvikkeet INTEGER)");
         db.execSQL("create table ReseptiKanta (kantaID INTEGER PRIMARY KEY,ruokaID INTEGER NOT NULL, aineID INTEGER NOT NULL,lkm FLOAT NOT NULL)");
-        db.execSQL("create table AineKanta (aine TEXT NOT NULL, aineID INTEGER PRIMARY KEY,edellinenID INTEGER NOT NULL ,kuva TEXT ,mitta TEXT,pakkauskoko FLOAT)");
+        db.execSQL("create table AineKanta (aine TEXT NOT NULL, aineID INTEGER PRIMARY KEY,edellinenID INTEGER NOT NULL ,kuva TEXT, mitta TEXT, pakkauskoko FLOAT)");
 
-        db.execSQL("create table KaappiKanta (aineID INTEGER UNIQUE, maara INTEGER)");
-        db.execSQL("create table OstosKanta (aineID INTEGER UNIQUE, maara INTEGER)");
-        db.execSQL("create table VarausKanta (aineID INTEGER UNIQUE, kpl INTEGER)");
+        db.execSQL("create table KaappiKanta (aineID INTEGER UNIQUE, maara FLOAT)");
+        db.execSQL("create table OstosKanta (aineID INTEGER UNIQUE, kpl INTEGER)");
+        db.execSQL("create table VarausKanta (aineID INTEGER UNIQUE, maara FLOAT)");
     }
 
 
@@ -51,6 +51,7 @@ public class Tietokanta extends SQLiteOpenHelper {
         return tulos;
     }
 
+    //tietokannan päivitystä netistä
     public void LaitaAine(String aine, int aineID, int edellinenID,String mitta,String kuva,Float pakkauskoko)
     {
         ContentValues tiedot = new ContentValues();
@@ -96,44 +97,71 @@ public class Tietokanta extends SQLiteOpenHelper {
         db.update("RuokaKanta",tiedot,("ruokaID is "+ruokaID),null);
     }
 
-    public void LaitaKaappiin(int aineID)
+
+    //kaapin funktiot
+    public void LaitaKaappiin(int aineID, float maara)
     {
         ContentValues tiedot = new ContentValues();
         tiedot.put("aineID",aineID);
-        tiedot.put("maara",100);
+        tiedot.put("maara",maara);
         db.insert("KaappiKanta",null,tiedot);
     }
 
-    public void LisaaKaappiin(int aineID, int uusiprosentti)
-    {
-        ContentValues tiedot = new ContentValues();
-        tiedot.put("aineID",aineID);
-        tiedot.put("maara",uusiprosentti);
-        db.update("KaappiKanta",tiedot,("aineID is "+aineID),null);
-    }
-
-    public void KulutaAinetta(int aineID,int uusi)
+    public void MuutaKaappia(int aineID,float uusi)
     {
         ContentValues tiedot = new ContentValues();
         tiedot.put("maara",uusi);
         db.update("KaappiKanta",tiedot,("aineID is "+aineID),null);
     }
 
-    public void LaitaListaan(int aineID)
-    {
-        ContentValues tiedot = new ContentValues();
-        tiedot.put("aineID",aineID);
-        db.insert("OstosKanta",null,tiedot);
-    }
-    public void PoistaListasta(int aineID)
-    {
-        db.delete("OstosKanta",("aineID is "+aineID),null);
-    }
     public void PoistaKaapista(int aineID)
     {
         db.delete("KaappiKanta",("aineID is "+aineID),null);
     }
 
+    //listan funktiot
+    public void LaitaListaan(int aineID, int kpl)
+    {
+        ContentValues tiedot = new ContentValues();
+        tiedot.put("aineID",aineID);
+        tiedot.put("kpl",kpl);
+        db.insert("OstosKanta",null,tiedot);
+    }
+
+    public void LisaaListaan(int aineID, int kpl)
+    {
+        ContentValues tiedot = new ContentValues();
+        tiedot.put("kpl",kpl);
+        db.update("OstosKanta",tiedot,("aineID is "+aineID),null);
+    }
+
+    public void PoistaListasta(int aineID)
+    {
+        db.delete("OstosKanta",("aineID is "+aineID),null);
+    }
+
+    //varauslistan funktiot
+    public void LaitaVaraus(int aineID,float maara)
+    {
+        ContentValues tiedot = new ContentValues();
+        tiedot.put("aineID",aineID);
+        tiedot.put("maara",maara);
+        db.insert("VarausKanta",null,tiedot);
+        Log.d("varasu","" + aineID + " " + maara);
+    }
+
+    public void VaraaLisaa(int aineID,float uusi)
+    {
+        ContentValues tiedot = new ContentValues();
+        tiedot.put("maara",uusi);
+        db.update("VarausKanta",tiedot,("aineID is "+aineID),null);
+    }
+
+
+    public void PoistaVaraus(int aineID)
+    {
+        db.delete("VarausKanta",("aineID is "+aineID),null);
+    }
 
 
 }

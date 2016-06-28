@@ -28,7 +28,7 @@ public class Valikko extends AppCompatActivity {
 
         //Tietokannan ja kursorin luominen
         TK = new Tietokanta(this);
-        ruokaID = (int) getIntent().getIntExtra("ruokaID", 0);
+        ruokaID = getIntent().getIntExtra("ruokaID", 0);
         lause = ("SELECT ruoka, tarvikkeet, aika, taso FROM RuokaKanta WHERE RuokaID IS " + ruokaID);
         Cursor ruokatiedot = TK.HaeTiedot(lause);
         ruokatiedot.moveToNext();
@@ -110,5 +110,51 @@ public class Valikko extends AppCompatActivity {
         vaikeusaste.setText(vaikeusmerkit);
 
     }
+
+    public void avaaReseptiBtnClick(View view) {
+        Intent intent = new Intent(this, Kokkausohjeet.class);
+        intent.putExtra("ruokaID", ruokaID);
+        startActivity(intent);
+    }
+
+    public void KatsoKaappiinBtnClick(View view) {
+    }
+
+    public void LisaaListaanBtnClick(View view){
+        String lause = ("SELECT aineID, ruokaID,lkm FROM ReseptiKanta WHERE RuokaID IS " + ruokaID);
+        Cursor listatiedot = TK.HaeTiedot(lause);
+        Log.d("popopopo",lause);
+        Log.d("pappapa", DatabaseUtils.dumpCursorToString(listatiedot));
+        while(listatiedot.moveToNext())
+        {
+            laitaVaraus(listatiedot.getInt(0),listatiedot.getFloat(2));
+        }
+
+        String toasti = "Tarvittavat aineet\nlisätty Ostoslistaan";
+        Toast.makeText(Valikko.this, toasti, Toast.LENGTH_SHORT).show();
+
+    }
+
+    public void laitaVaraus(int aineID,float maara){
+        Cursor lasku = TK.HaeTiedot("SELECT count(aineID) AS luku, maara FROM VarausKanta WHERE aineID IS " + aineID);
+        lasku.moveToNext();
+
+        if(lasku.getInt(0)==0)
+        {
+            TK.LaitaVaraus(aineID,maara);
+        }
+        else
+        {
+            TK.VaraaLisaa(aineID,lasku.getFloat(1)+maara);
+        }
+
+
+    }
+
+    public void palaaKotiin(View view){
+        startActivity(new Intent(this, MainAct.class));
+    }
+
+
 
 }
