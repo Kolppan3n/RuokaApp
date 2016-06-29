@@ -3,19 +3,24 @@ package com.example.co1200679.ruokaapp;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
+import android.media.Image;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
-public class Liukuvalikko extends AppCompatActivity {
+import org.w3c.dom.Text;
+
+public class Liukuvalikko extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     Tietokanta TK;
     int moodi;// AINE = 0 RUUAT = 1 KAAPPI = 2 LISTA = 3
@@ -34,49 +39,40 @@ public class Liukuvalikko extends AppCompatActivity {
 
     public void populateList(String lause, int moodi){
 
+        Cursor tiedot = TK.HaeTiedot(lause);
+        startManagingCursor(tiedot);
+        long viive = System.currentTimeMillis();
 
-            Cursor tiedot = TK.HaeTiedot(lause);
-            startManagingCursor(tiedot);
-            long viive = System.currentTimeMillis();
+        String[] columns = new String[]{"nimi", "kuva", "_id"};
+        int[] viewIDs = new int[]{R.id.teksti, R.id.ikoni};
+        SimpleCursorAdapter filleri = new SimpleCursorAdapter(this, R.layout.valikko_item, tiedot, columns, viewIDs, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
 
-            String[] columns = new String[]{"nimi", "kuva"};
-            int[] viewIDs = new int[]{R.id.teksti, R.id.ikoni};
+        filleri.setViewBinder(new SimpleCursorAdapter.ViewBinder(){
+            @Override
+            public boolean setViewValue(View view, Cursor cursor, int columnIndex){
 
-            SimpleCursorAdapter filleri = new SimpleCursorAdapter(this, R.layout.valikko_item, tiedot, columns, viewIDs, 0);
-            ListView valikko = (ListView) findViewById(R.id.valikko);
-            valikko.setAdapter(filleri);
-
-
-            Log.d("pappapa", DatabaseUtils.dumpCursorToString(tiedot));
-            Log.d("Listan täyttö kesti", (System.currentTimeMillis() - viive) + " millisekunttia");
-            int kuvaid = getResources().getIdentifier("tomaatti", "drawable", getPackageName());
-            Log.d("Kuvan numero", "" + kuvaid);
-
+                int ruokaIndex = cursor.getColumnIndex("_id");
+                int ruokaID = cursor.getInt(ruokaIndex);
+                int moodiIndex = cursor.getColumnIndex("moodi");
+                int moodi = cursor.getInt(moodiIndex);
 
 
+                if(view.getId() == R.id.teksti)
+                    view.setTag("" + moodi);
+                if(view.getId() == R.id.ikoni)
+                    view.setTag("" + ruokaID);
 
+                return false;
+            }
+        });
+
+        ListView valikko = (ListView) findViewById(R.id.valikko);
+        valikko.setOnItemClickListener(this);
+        valikko.setAdapter(filleri);
+        Log.d("Listan täyttö kesti", (System.currentTimeMillis() - viive) + " millisekunttia");
     }
 
     public void fillScrollView(String lause) {
-
-        /*LinearLayout content = (LinearLayout) findViewById(R.id.content);*/
-        View temp;
-        ItemInfo item;
-        ImageView img;
-        int x = 0;
-        long viive;
-        long kokohomma;
-
-        kokohomma = System.currentTimeMillis();
-
-        /*if(content.getChildCount() > 0)
-            content.removeAllViews();*/
-
-        Cursor tiedot = TK.HaeTiedot(lause);
-        startManagingCursor(tiedot);
-        viive = System.currentTimeMillis();
-
-
 
         /*while(tiedot.moveToNext()) {
             temp = getLayoutInflater().inflate(R.layout.item, content, false);
@@ -127,19 +123,8 @@ public class Liukuvalikko extends AppCompatActivity {
                     return true;
                 }
             });
-
-
-
-            img = (ImageView) temp.findViewById(R.id.imageView);
-            img.setImageResource(R.drawable.avotuli);
-            img.setImageResource(getResources().getIdentifier(tiedot.getString(2), "drawable", getPackageName()));
-            content.addView(temp);
-            x++;
-        }*/
-
-        Log.d("Taulukon täyttäminen", (System.currentTimeMillis() - viive) + " millisekunttia");
-
-        /*if(moodi == 3)
+        }
+        if(moodi == 3)
         {
             temp = getLayoutInflater().inflate(R.layout.item, content, false);
             item = (ItemInfo) temp.findViewById(R.id.itemView);
@@ -158,23 +143,19 @@ public class Liukuvalikko extends AppCompatActivity {
             img.setImageResource(getResources().getIdentifier(tiedot.getString(2), "drawable", getPackageName()));
             content.addView(temp);
         }*/
-
-        Log.d("koko hommaan menee", System.currentTimeMillis() - kokohomma + "millisekunttia");
-        tiedot.close();
     }
 
 
 
+    public void avaaRuuat(int moodi, int ID){
 
-    public void avaaRuuat(ItemInfo v){
-
-        if(v.getMoodi()==0) {
-            Cursor lasku = TK.HaeTiedot("SELECT count(ruokaID) AS luku FROM ReseptiKanta WHERE aineID IS " + v.getID());
+        if(moodi==0) {
+            Cursor lasku = TK.HaeTiedot("SELECT count(ruokaID) AS luku FROM ReseptiKanta WHERE aineID IS " + ID);
             lasku.moveToNext();
 
             if (lasku.getInt(0) != 0) {
                 Intent intent = new Intent(this, Liukuvalikko.class);
-                String lause = ("SELECT ruoka, RU.ruokaID, kuva FROM RuokaKanta RU, ReseptiKanta RE WHERE RU.ruokaID IS RE.ruokaID AND RE.aineID IS " + v.getID());
+                String lause = ("SELECT ruoka, RU.ruokaID, kuva FROM RuokaKanta RU, ReseptiKanta RE WHERE RU.ruokaID IS RE.ruokaID AND RE.aineID IS " + ID);
                 intent.putExtra("sqlqry", lause);
                 intent.putExtra("moodi", 1);
                 lasku.close();
@@ -213,34 +194,6 @@ public class Liukuvalikko extends AppCompatActivity {
 
     }
 
-    public void whatthesht(ItemInfo v){
-
-        if(v.getMoodi()==0) {
-            Cursor lasku = TK.HaeTiedot("SELECT count(aineID) AS luku FROM AineKanta WHERE edellinenID IS " + v.getID());
-            lasku.moveToNext();
-
-            if(lasku.getInt(0)==0)
-            {
-                lasku.close();
-                avaaRuuat(v);
-            }
-            else {
-                Intent intent = new Intent(this, Liukuvalikko.class);
-                String lause = ("SELECT aine, aineID, kuva FROM AineKanta WHERE edellinenID is " + v.getID());
-                intent.putExtra("sqlqry", lause);
-                intent.putExtra("moodi", 0);
-                lasku.close();
-                startActivity(intent);
-            }
-        }
-        if(v.getMoodi()==1)
-        {
-            Intent intent = new Intent(this, Valikko.class);
-            intent.putExtra("ruokaID", v.getID());
-            startActivity(intent);
-        }
-
-    }
 
     public void KaappiVari(ItemInfo v)
     {
@@ -355,6 +308,38 @@ public class Liukuvalikko extends AppCompatActivity {
             TK.VaraaLisaa(aineID,lasku.getFloat(1)+maara);
         }
 
+
     }
 
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+        int moodi = Integer.parseInt(view.findViewById(R.id.teksti).getTag().toString());
+        int ID = Integer.parseInt(view.findViewById(R.id.ikoni).getTag().toString());
+
+        if(moodi == 0) {
+            Cursor lasku = TK.HaeTiedot("SELECT count(aineID) AS luku FROM AineKanta WHERE edellinenID IS " + ID);
+            lasku.moveToNext();
+
+            if(lasku.getInt(0)==0)
+            {
+                lasku.close();
+                avaaRuuat(moodi, ID);
+            }
+            else {
+                Intent intent = new Intent(this, Liukuvalikko.class);
+                String lause = ("SELECT aine nimi, aineID _id, kuva, "+moodi+" as moodi FROM AineKanta WHERE edellinenID is " + ID);
+                intent.putExtra("sqlqry", lause);
+                intent.putExtra("moodi", 0);
+                lasku.close();
+                startActivity(intent);
+            }
+        }
+        if(moodi==1)
+        {
+            Intent intent = new Intent(this, Valikko.class);
+            intent.putExtra("ruokaID", ID);
+            startActivity(intent);
+        }
+    }
 }
