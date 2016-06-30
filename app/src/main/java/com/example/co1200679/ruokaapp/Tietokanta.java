@@ -59,6 +59,7 @@ public class Tietokanta extends SQLiteOpenHelper {
         tiedot.put("edellinenID", edellinenID);
         tiedot.put("mitta", mitta);
         int kuvaid = this.context.getResources().getIdentifier(kuva, "drawable", this.context.getPackageName());
+        if(kuvaid==0) kuvaid = this.context.getResources().getIdentifier("errori", "drawable", this.context.getPackageName());
         tiedot.put("kuva", kuvaid);
         tiedot.put("pakkauskoko", pakkauskoko);
         db.insert("AineKanta", null, tiedot);
@@ -90,6 +91,7 @@ public class Tietokanta extends SQLiteOpenHelper {
         tiedot.put("taso", taso);
         tiedot.put("tarvikkeet", tarvikkeet);
         int kuvaid = this.context.getResources().getIdentifier(kuva, "drawable", this.context.getPackageName());
+        if(kuvaid==0)kuvaid = this.context.getResources().getIdentifier("errori", "drawable", this.context.getPackageName());
         tiedot.put("kuva", kuvaid);
         db.insert("RuokaKanta", null, tiedot);
         db.update("RuokaKanta", tiedot, ("ruokaID is " + ruokaID), null);
