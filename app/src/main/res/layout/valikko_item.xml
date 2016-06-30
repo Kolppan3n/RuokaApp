@@ -8,15 +8,14 @@
         android:layout_height="60dp"
         android:id="@+id/ikoni"
         android:layout_margin="8dp"
-        android:src="@drawable/grilli"
-        android:tag="tupla"/>
+        android:src="@drawable/grilli" />
 
-    <TextView
+    <com.example.co1200679.ruokaapp.ItemInfo
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Large Text"
         android:id="@+id/teksti"
-        android:layout_marginTop="8dp"
-        android:tag="juusto"/>
+        android:layout_marginTop="8dp" />
+
 </LinearLayout>
