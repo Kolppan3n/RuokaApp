@@ -182,9 +182,8 @@ public class Liukuvalikko extends AppCompatActivity {
 
             if (lasku.getInt(0) != 0) {
                 Intent intent = new Intent(this, Liukuvalikko.class);
-                String lause = ("SELECT ruoka, RU.ruokaID, kuva FROM RuokaKanta RU, ReseptiKanta RE WHERE RU.ruokaID IS RE.ruokaID AND RE.aineID IS " + ID);
+                String lause = ("SELECT ruoka nimi, RU.ruokaID _id, kuva, 1 AS moodi FROM RuokaKanta RU, ReseptiKanta RE WHERE RU.ruokaID IS RE.ruokaID AND RE.aineID IS " + ID);
                 intent.putExtra("sqlqry", lause);
-                intent.putExtra("moodi", 1);
                 lasku.close();
                 startActivity(intent);
             }
