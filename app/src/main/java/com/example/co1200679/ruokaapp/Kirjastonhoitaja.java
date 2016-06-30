@@ -69,8 +69,6 @@ public class Kirjastonhoitaja extends AsyncTask<Void, Void, Void> {
                 JSONObject JO = reseptit.getJSONObject(k);
                 TK.LaitaResepti(JO.getInt("kantaID"), JO.getInt("ruokaID"), JO.getInt("aineID"), (float) JO.getDouble("kpl"));
             }
-
-
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -78,8 +76,6 @@ public class Kirjastonhoitaja extends AsyncTask<Void, Void, Void> {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
         return null;
     }
-
 }

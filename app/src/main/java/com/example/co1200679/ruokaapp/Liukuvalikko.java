@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CursorAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
@@ -52,6 +53,11 @@ public class Liukuvalikko extends AppCompatActivity {
                     temp.setNimi(nimi);
                     temp.setID(ruokaID);
                     temp.setMoodi(moodi);
+                    if (moodi == 2) {
+                        float prosentti = cursor.getInt(cursor.getColumnIndex("prosentti"));
+                        LinearLayout hermanni = (LinearLayout) temp.getParent();
+                        hermanni.setBackgroundColor(KaappiVari(prosentti));
+                    }
                 }
 
                 return false;
@@ -89,6 +95,9 @@ public class Liukuvalikko extends AppCompatActivity {
                     Intent intent = new Intent(Liukuvalikko.this, Valikko.class);
                     intent.putExtra("ruokaID", ID);
                     startActivity(intent);
+                }
+                if (moodi == 2) {
+                    view.setBackgroundColor(KaappiVari(0.5F));
                 }
             }
         });
@@ -166,21 +175,18 @@ public class Liukuvalikko extends AppCompatActivity {
     }
 
 
-    public void KaappiVari(ItemInfo v) {
-        if (v.getMoodi() == 2) {
-            int color = getResources().getColor(R.color.colorRed);
-            float prosentti = Float.parseFloat(v.getKpl());
-            if (prosentti > 0.25) {
-                if (prosentti > 0.5) {
-                    if (prosentti > 0.75) {
-                        if (prosentti > 0.99) {
-                            color = getResources().getColor(R.color.colorGreen);
-                        } else color = getResources().getColor(R.color.colorYellowGreen);
-                    } else color = getResources().getColor(R.color.colorYellow);
-                } else color = getResources().getColor(R.color.colorOrange);
-            }
-            v.setBackgroundColor(color);
+    public int KaappiVari(float prosentti) {
+        int color = getResources().getColor(R.color.colorRed);
+        if (prosentti > 0.25) {
+            if (prosentti > 0.5) {
+                if (prosentti > 0.75) {
+                    if (prosentti > 0.99) {
+                        color = getResources().getColor(R.color.colorGreen);
+                    } else color = getResources().getColor(R.color.colorYellowGreen);
+                } else color = getResources().getColor(R.color.colorYellow);
+            } else color = getResources().getColor(R.color.colorOrange);
         }
+        return color;
     }
 
     public void ostoksetKaappiin() {

@@ -14,7 +14,7 @@ public class MainAct extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         TK = new Tietokanta(this);
-        TK.onUpgrade(TK.getReadableDatabase(), 1, 1); //Tällä saadaan tehtyä uusi versio tietokannasta, mutta tiedot poistu
+        //TK.onUpgrade(TK.getReadableDatabase(), 1, 1); //Tällä saadaan tehtyä uusi versio tietokannasta, mutta tiedot poistu
         kirja = new Kirjastonhoitaja(this);
         kirja.execute();
     }
@@ -35,8 +35,9 @@ public class MainAct extends AppCompatActivity {
 
     public void KaappiBtnClick(View view) {
         Intent intent = new Intent(this, Liukuvalikko.class);
-        String lause = "SELECT aine nimi, KK.aineID _id, kuva, 2 AS moodi, maara, pakkauskoko FROM AineKanta AK, KaappiKanta KK WHERE AK.aineID IS KK.aineID";
+        String lause = "SELECT aine nimi, KK.aineID _id, kuva, 2 AS moodi, maara / pakkauskoko AS prosentti FROM AineKanta AK, KaappiKanta KK WHERE AK.aineID IS KK.aineID";
         intent.putExtra("sqlqry", lause);
+        intent.putExtra("moodi", 2);
         startActivity(intent);
     }
 
