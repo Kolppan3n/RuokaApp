@@ -1,8 +1,8 @@
 package com.example.co1200679.ruokaapp;
 
-        import android.content.Context;
-        import android.util.AttributeSet;
-        import android.widget.TextView;
+import android.content.Context;
+import android.util.AttributeSet;
+import android.widget.TextView;
 
 public class ItemInfo extends TextView {
 
@@ -23,7 +23,9 @@ public class ItemInfo extends TextView {
         super(context, attrs, defStyleAttr);
     }
 
-    public String getNimi() { return nimi; }
+    public String getNimi() {
+        return nimi;
+    }
 
     public void setNimi(String nimi) {
         this.nimi = nimi;

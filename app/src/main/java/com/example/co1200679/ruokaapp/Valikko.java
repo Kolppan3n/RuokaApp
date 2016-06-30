@@ -25,7 +25,6 @@ public class Valikko extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_valikko);
 
-
         //Tietokannan ja kursorin luominen
         TK = new Tietokanta(this);
         ruokaID = getIntent().getIntExtra("ruokaID", 0);
@@ -33,12 +32,10 @@ public class Valikko extends AppCompatActivity {
         Cursor ruokatiedot = TK.HaeTiedot(lause);
         ruokatiedot.moveToNext();
 
-
         //Aineen otsikko
         TextView otsikko;
         otsikko = (TextView) findViewById(R.id.otsikko);
         otsikko.setText(ruokatiedot.getString(0));
-
 
         //Alustaa sisällön
         alustus(ruokatiedot);
@@ -123,22 +120,18 @@ public class Valikko extends AppCompatActivity {
     public void lisaaListaan(){
         String lause = ("SELECT aineID, ruokaID,lkm FROM ReseptiKanta WHERE RuokaID IS " + ruokaID);
         Cursor listatiedot = TK.HaeTiedot(lause);
-        Log.d("popopopo",lause);
-        Log.d("pappapa", DatabaseUtils.dumpCursorToString(listatiedot));
         while(listatiedot.moveToNext())
         {
             laitaVaraus(listatiedot.getInt(0),listatiedot.getFloat(2));
         }
-
         String toasti = "Tarvittavat aineet\nlisätty Ostoslistaan";
         Toast.makeText(Valikko.this, toasti, Toast.LENGTH_SHORT).show();
-
+        listatiedot.close();
     }
 
     public void laitaVaraus(int aineID,float maara){
         Cursor lasku = TK.HaeTiedot("SELECT count(aineID) AS luku, maara FROM VarausKanta WHERE aineID IS " + aineID);
         lasku.moveToNext();
-
         if(lasku.getInt(0)==0)
         {
             TK.LaitaVaraus(aineID,maara);
@@ -147,14 +140,7 @@ public class Valikko extends AppCompatActivity {
         {
             TK.VaraaLisaa(aineID,lasku.getFloat(1)+maara);
         }
-
-
+        lasku.close();
     }
-
-    public void palaaKotiin(View view){
-        startActivity(new Intent(this, MainAct.class));
-    }
-
-
 
 }

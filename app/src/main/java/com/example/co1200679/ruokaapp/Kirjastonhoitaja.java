@@ -18,7 +18,7 @@ import java.net.URL;
 /**
  * Created by co1300608 on 30.5.2016.
  */
-public class Kirjastonhoitaja extends AsyncTask <Void,Void,Void> {
+public class Kirjastonhoitaja extends AsyncTask<Void, Void, Void> {
     Tietokanta TK;
 
     Context context;
@@ -30,20 +30,18 @@ public class Kirjastonhoitaja extends AsyncTask <Void,Void,Void> {
 
     @Override
     protected Void doInBackground(Void... params) {
-        try
-        {
+        try {
             String osoite = "http://atlantis.passoja.fi/~niiranen/ruokaapp/hae_tiedot.php";
             URL url = new URL(osoite);
-            HttpURLConnection Yhteys = (HttpURLConnection)url.openConnection();
+            HttpURLConnection Yhteys = (HttpURLConnection) url.openConnection();
             InputStream Tietovuoto = Yhteys.getInputStream();
             BufferedReader Lukija = new BufferedReader(new InputStreamReader(Tietovuoto));
 
             StringBuilder StringiRaksa = new StringBuilder();
             String Rivi;
 
-            while((Rivi=Lukija.readLine())!=null)
-            {
-                StringiRaksa.append(Rivi+"\n");
+            while ((Rivi = Lukija.readLine()) != null) {
+                StringiRaksa.append(Rivi + "\n");
             }
 
             Yhteys.disconnect();
@@ -57,22 +55,19 @@ public class Kirjastonhoitaja extends AsyncTask <Void,Void,Void> {
             JSONArray ruuat = tiedot.getJSONObject(1).getJSONArray("ruoka response");
             JSONArray reseptit = tiedot.getJSONObject(2).getJSONArray("resepti response");
 
-            for(int k = 0; k<aineet.length();k++)
-            {
+            for (int k = 0; k < aineet.length(); k++) {
                 JSONObject JO = aineet.getJSONObject(k);
-                TK.LaitaAine(JO.getString("aine"),JO.getInt("aineID"),JO.getInt("edellinenID"),JO.getString("mitta"),JO.getString("kuva"),(float)JO.getDouble("pakkauskoko"));
+                TK.LaitaAine(JO.getString("aine"), JO.getInt("aineID"), JO.getInt("edellinenID"), JO.getString("mitta"), JO.getString("kuva"), (float) JO.getDouble("pakkauskoko"));
             }
 
-            for(int k = 0; k<ruuat.length();k++)
-            {
+            for (int k = 0; k < ruuat.length(); k++) {
                 JSONObject JO = ruuat.getJSONObject(k);
-                TK.LaitaRuoka(JO.getString("ruoka"), JO.getInt("ruokaID"), JO.getString ("resepti"),JO.getInt("aika"),JO.getInt("taso"),JO.getInt("tarvikkeet"),JO.getString("kuva"));
+                TK.LaitaRuoka(JO.getString("ruoka"), JO.getInt("ruokaID"), JO.getString("resepti"), JO.getInt("aika"), JO.getInt("taso"), JO.getInt("tarvikkeet"), JO.getString("kuva"));
             }
 
-            for(int k = 0; k<reseptit.length();k++)
-            {
+            for (int k = 0; k < reseptit.length(); k++) {
                 JSONObject JO = reseptit.getJSONObject(k);
-                TK.LaitaResepti(JO.getInt("kantaID"), JO.getInt("ruokaID"), JO.getInt("aineID"),(float)JO.getDouble("kpl"));
+                TK.LaitaResepti(JO.getInt("kantaID"), JO.getInt("ruokaID"), JO.getInt("aineID"), (float) JO.getDouble("kpl"));
             }
 
 
