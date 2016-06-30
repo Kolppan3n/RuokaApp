@@ -2,7 +2,6 @@ package com.example.co1200679.ruokaapp;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;

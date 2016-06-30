@@ -4,13 +4,9 @@ package com.example.co1200679.ruokaapp;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.res.Resources;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.graphics.drawable.Drawable;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
 
@@ -19,10 +15,6 @@ public class Tietokanta extends SQLiteOpenHelper {
     SQLiteDatabase db;
 
     Context context;
-
-    String aine = "aine";
-    String aineID;
-    String kuva;
 
     public Tietokanta(Context context) {
         super(context, DATABASE_NAME, null, 1);

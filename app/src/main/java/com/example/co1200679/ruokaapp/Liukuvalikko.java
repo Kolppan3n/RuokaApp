@@ -36,7 +36,7 @@ public class Liukuvalikko extends AppCompatActivity implements AdapterView.OnIte
         startManagingCursor(tiedot);
         long viive = System.currentTimeMillis();
 
-        String[] columns = new String[]{"nimi", "kuva", "_id"};
+        String[] columns = new String[]{"nimi", "kuva"};
         int[] viewIDs = new int[]{R.id.teksti, R.id.ikoni};
         SimpleCursorAdapter filleri = new SimpleCursorAdapter(this, R.layout.valikko_item, tiedot, columns, viewIDs, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
 
@@ -66,6 +66,25 @@ public class Liukuvalikko extends AppCompatActivity implements AdapterView.OnIte
     }
 
     public void fillScrollView(String lause) {
+
+        /*LinearLayout content = (LinearLayout) findViewById(R.id.content);*/
+        View temp;
+        ItemInfo item;
+        ImageView img;
+        int x = 0;
+        long viive;
+        long kokohomma;
+
+        kokohomma = System.currentTimeMillis();
+
+        /*if(content.getChildCount() > 0)
+            content.removeAllViews();*/
+
+        Cursor tiedot = TK.HaeTiedot(lause);
+        startManagingCursor(tiedot);
+        viive = System.currentTimeMillis();
+
+
 
         /*while(tiedot.moveToNext()) {
             temp = getLayoutInflater().inflate(R.layout.item, content, false);
@@ -169,12 +188,12 @@ public class Liukuvalikko extends AppCompatActivity implements AdapterView.OnIte
         {
             TK.LisaaListaan(aineID,lasku.getInt(1)+maara);
         }
-
+        lasku.close();
     }
 
-    public void laitaRuokaListaan(ItemInfo v){
+    public void laitaRuokaListaan(int ID){
 
-        String lause = ("SELECT aineID, ruokaID,lkm FROM ReseptiKanta WHERE RuokaID IS " + v.getID());
+        String lause = ("SELECT aineID, ruokaID,lkm FROM ReseptiKanta WHERE RuokaID IS " + ID);
         Cursor listatiedot = TK.HaeTiedot(lause);
 
         while(listatiedot.moveToNext())
@@ -184,7 +203,6 @@ public class Liukuvalikko extends AppCompatActivity implements AdapterView.OnIte
 
         Toast.makeText(Liukuvalikko.this,v.getText() + " ainekset lisättiin ostoslistalle", Toast.LENGTH_SHORT).show();
         listatiedot.close();
-
     }
 
 
@@ -285,6 +303,7 @@ public class Liukuvalikko extends AppCompatActivity implements AdapterView.OnIte
             laitaListaan(listatiedot.getInt(0),osto);
             TK.PoistaVaraus(listatiedot.getInt(0));
         }
+        listatiedot.close();
 
     }
 
@@ -300,6 +319,7 @@ public class Liukuvalikko extends AppCompatActivity implements AdapterView.OnIte
         {
             TK.VaraaLisaa(aineID,lasku.getFloat(1)+maara);
         }
+        lasku.close();
 
 
     }

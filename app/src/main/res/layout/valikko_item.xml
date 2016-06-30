@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:arvoja="http://schemas.android.com/apk/lib/android"
+
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="wrap_content">
+
+
 
     <ImageView
         android:layout_width="60dp"
@@ -18,5 +22,13 @@
         android:text="Large Text"
         android:id="@+id/teksti"
         android:layout_marginTop="8dp"
-        android:tag="juusto"/>
+        android:tag="juusto"
+
+        arvoja:moodi="@+id/moodi"
+        arvoja:nappiID="@+id/nappiID"
+
+         />
+
+
+
 </LinearLayout>

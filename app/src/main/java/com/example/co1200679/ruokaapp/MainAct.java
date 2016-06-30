@@ -23,7 +23,6 @@ public class MainAct extends AppCompatActivity {
         Intent intent = new Intent(this, Liukuvalikko.class);
         String lause = "SELECT aine nimi, aineID _id, kuva, 0 AS moodi FROM AineKanta WHERE edellinenID is 0";
         intent.putExtra("sqlqry", lause);
-        intent.putExtra("moodi", 0);
         startActivity(intent);
     }
 
@@ -31,21 +30,19 @@ public class MainAct extends AppCompatActivity {
         Intent intent = new Intent(this, Liukuvalikko.class);
         String lause = "SELECT ruoka nimi, ruokaID _id, kuva,  FROM RuokaKanta";
         intent.putExtra("sqlqry", lause);
-        intent.putExtra("moodi", 1);
         startActivity(intent);
     }
 
     public void KaappiBtnClick(View view){
         Intent intent = new Intent(this, Liukuvalikko.class);
-        String lause = "SELECT aine, KK.aineID, kuva, maara, pakkauskoko FROM AineKanta AK, KaappiKanta KK WHERE AK.aineID IS KK.aineID";
+        String lause = "SELECT aine nimi, KK.aineID _id, kuva, maara, pakkauskoko FROM AineKanta AK, KaappiKanta KK WHERE AK.aineID IS KK.aineID";
         intent.putExtra("sqlqry", lause);
-        intent.putExtra("moodi", 2);
         startActivity(intent);
     }
 
     public void ListaBtnClick(View view){
         Intent intent = new Intent(this, Liukuvalikko.class);
-        String lause = "SELECT aine, AK.aineID, kuva, kpl FROM AineKanta AK, OstosKanta OK WHERE AK.aineID IS OK.aineID";
+        String lause = "SELECT aine nimi, AK.aineID _id, kuva, kpl FROM AineKanta AK, OstosKanta OK WHERE AK.aineID IS OK.aineID";
         intent.putExtra("sqlqry", lause);
         intent.putExtra("moodi", 3);
         startActivity(intent);
