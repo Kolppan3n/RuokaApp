@@ -1,95 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rela"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBackground"
     android:orientation="vertical"
-    android:id="@+id/rela"
-    tools:context="com.example.co1200679.ruokaapp.Valikko"
     android:weightSum="1"
-    android:background="@color/colorBackground">
+    tools:context="com.example.co1200679.ruokaapp.Valikko">
 
     <fragment
+        android:id="@+id/fragment"
+        android:name="com.example.co1200679.ruokaapp.ToolbarFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:name="com.example.co1200679.ruokaapp.ToolbarFragment"
-        android:id="@+id/fragment"
         tools:layout="@layout/toolbar" />
 
     <TextView
+        android:id="@+id/otsikko"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Fish 'n' Chips"
-        android:id="@+id/otsikko"
-        android:textAlignment="center"
-        android:gravity="center"
         android:layout_marginBottom="12dp"
         android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:text="Fish 'n' Chips"
+        android:textAlignment="center"
+        android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="#FFFFFF"
-        android:textSize="30dp"/>
+        android:textSize="30dp" />
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:weightSum="7"
+        android:layout_below="@id/otsikko"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
-        android:layout_below="@id/otsikko">
+        android:orientation="vertical"
+        android:weightSum="7">
 
         <LinearLayout
-            android:orientation="vertical"
+            android:id="@+id/ainesLayout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:id="@+id/ainesLayout"
-            android:layout_weight="2">
+            android:layout_weight="2"
+            android:orientation="vertical">
 
             <TextView
+                android:id="@+id/ainesOtsikko"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Ainesosat"
-                android:id="@+id/ainesOtsikko" />
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <HorizontalScrollView
+                android:id="@+id/horizontalScrollView"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:id="@+id/horizontalScrollView"
                 android:fillViewport="false">
 
                 <LinearLayout
-                    android:orientation="horizontal"
+                    android:id="@+id/rullakontti1"
                     android:layout_width="wrap_content"
                     android:layout_height="fill_parent"
-                    android:id="@+id/rullakontti1"/>
+                    android:orientation="horizontal" />
             </HorizontalScrollView>
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="vertical"
+            android:id="@+id/välineLayout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:id="@+id/välineLayout"
-            android:layout_weight="2">
+            android:layout_weight="2"
+            android:orientation="vertical">
 
             <TextView
+                android:id="@+id/välineOtsikko"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Valmistus Välineet"
-                android:id="@+id/välineOtsikko" />
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <HorizontalScrollView
+                android:id="@+id/horizontalScrollView2"
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:id="@+id/horizontalScrollView2" >
+                android:layout_height="fill_parent">
 
                 <LinearLayout
-                    android:orientation="horizontal"
+                    android:id="@+id/rullakontti2"
                     android:layout_width="wrap_content"
                     android:layout_height="fill_parent"
-                    android:id="@+id/rullakontti2"/>
+                    android:orientation="horizontal" />
             </HorizontalScrollView>
 
         </LinearLayout>
@@ -106,10 +106,10 @@
                 android:layout_marginBottom="17dp">
 
                 <TextView
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="Tietoa"
                     android:id="@+id/nippeliOtsikko"
-                    android:layout_column="0" />
+                    android:layout_column="0"
+                    android:text="Tietoa"
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
             </TableRow>
 
             <TableRow
@@ -118,39 +118,19 @@
                 android:layout_marginBottom="6dp">
 
                 <TextView
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="@string/valmistusaika"
                     android:id="@+id/textView"
                     android:layout_column="0"
-                    android:layout_marginRight="10dp"/>
+                    android:layout_marginRight="10dp"
+                    android:text="@string/valmistusaika"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Medium Text"
                     android:id="@+id/aikaTxt"
-                    android:layout_column="1" />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="6dp">
-
-                <TextView
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="@string/vaikeusaste"
-                    android:id="@+id/textView2"
-                    android:layout_column="0" />
-
-                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:layout_column="1"
                     android:text="Medium Text"
-                    android:id="@+id/vaikeusTxt"
-                    android:layout_column="1" />
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
             </TableRow>
 
             <TableRow
@@ -159,18 +139,38 @@
                 android:layout_marginBottom="6dp">
 
                 <TextView
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="@string/muuta"
-                    android:id="@+id/textView3"
-                    android:layout_column="0" />
+                    android:id="@+id/textView2"
+                    android:layout_column="0"
+                    android:text="@string/vaikeusaste"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
 
                 <TextView
+                    android:id="@+id/vaikeusTxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text=""
+                    android:layout_column="1"
+                    android:text="Medium Text"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="6dp">
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_column="0"
+                    android:text="@string/muuta"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <TextView
                     android:id="@+id/muutaTxt"
-                    android:layout_column="1" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:text=""
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
             </TableRow>
 
         </TableLayout>

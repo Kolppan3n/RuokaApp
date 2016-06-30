@@ -13,4 +13,5 @@
     <string name="reseptiToast">Tästä painikkeesta voit avata tarkemmat valmistusohjeet</string>
     <string name="kotiToast">Tästä painikkeesta pääset takaisin koti-näkymään</string>
     <string name="kassiToast">Lisää aineet kaappiin</string>
+    <string name="asetuksetToast">Asetukset</string>
 </resources>

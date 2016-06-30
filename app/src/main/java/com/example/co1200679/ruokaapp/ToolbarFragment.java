@@ -73,6 +73,8 @@ public class ToolbarFragment extends Fragment {
 
             case R.id.koti: { startActivity(new Intent(getActivity(), MainAct.class)); break;}
 
+            case R.id.asetukset: { startActivity(new Intent(getActivity(), Asetukset.class)); break;}
+
             case R.id.resepti: {
                 Valikko valikko = (Valikko)getActivity();
                 valikko.avaaResepti();
