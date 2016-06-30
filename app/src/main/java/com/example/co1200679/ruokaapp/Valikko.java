@@ -55,7 +55,7 @@ public class Valikko extends AppCompatActivity {
         ImageView kaappiBtn;
         ImageView listBtn;
         ImageView reseptiBtn;
-        ImageButton ibu;
+        ImageView ibu;
         TextView teksti;
         LinearLayout rulla1 = (LinearLayout) findViewById(R.id.rullakontti1);
         LinearLayout rulla2 = (LinearLayout) findViewById(R.id.rullakontti2);
@@ -71,7 +71,7 @@ public class Valikko extends AppCompatActivity {
         //Ainesten täyttäminen
         while(ainetiedot.moveToNext()) {
             temp = getLayoutInflater().inflate(R.layout.ikoni, rulla1, false);
-            ibu = (ImageButton) temp.findViewById(R.id.imageButton);
+            ibu = (ImageView) temp.findViewById(R.id.ikoni);
             ibu.setImageResource(getResources().getIdentifier(ainetiedot.getString(0),"drawable",getPackageName()));
             rulla1.addView(temp);
         }
@@ -85,7 +85,7 @@ public class Valikko extends AppCompatActivity {
         for (int k = 0; k < 33; k++) {
             if ((testiarvo & tarvikearvo) != 0) {
                 temp = getLayoutInflater().inflate(R.layout.ikoni, rulla2, false);
-                ibu = (ImageButton) temp.findViewById(R.id.imageButton);
+                ibu = (ImageView) temp.findViewById(R.id.ikoni);
                 ibu.setImageResource(getResources().getIdentifier(tarvikenimet[k],"drawable",getPackageName()));
                 rulla2.addView(temp);
             }

@@ -98,13 +98,10 @@ public class Liukuvalikko extends AppCompatActivity {
         Log.d("Listan täyttö kesti", (System.currentTimeMillis() - viive) + " millisekunttia");
     }
 
-/*
-            if(moodi==2)
-            {
+/*              if(moodi==2){
                 item.setKpl("" + (tiedot.getFloat(3)/tiedot.getFloat(4)));
                 KaappiVari(item);
             }
-
             item.setOnTouchListener(new OnSwipeTouchListener(item) {
                 public boolean onSwipeRight() {
                     avaaRuuat(i);
@@ -114,42 +111,18 @@ public class Liukuvalikko extends AppCompatActivity {
                 }
                 public boolean onSwipeLeft() {
                     Log.d("swipeleft","toimii");
-                    if(i.getMoodi()==0)
-                    {
+                    if(i.getMoodi()==0){
                         laitaListaan(i.getID(),1);
                         Toast.makeText(Liukuvalikko.this, i.getText() + " lisättiin ostoslistalle", Toast.LENGTH_SHORT).show();
                     }
-                    if(i.getMoodi()==1)
-                    {
+                    if(i.getMoodi()==1){
                         laitaRuokaListaan(i);
                         Toast.makeText(Liukuvalikko.this,i.getText() + " ainekset lisättiin varauslistalle", Toast.LENGTH_SHORT).show();
                     }
-                    if(i.getMoodi()==2)
-                    {
+                    if(i.getMoodi()==2){
                         //KaappiVari(i);//vähentää 10% ruuan määrästä ja laittaa värin ei toimi enää kunnolla, koska prosentit muuttui oikeiksi luvuiksi
-                    }
-                    return true;
-                }
+                    }return true;}
             });
-        }
-        if(moodi == 3)
-        {
-            temp = getLayoutInflater().inflate(R.layout.item, content, false);
-            item = (ItemInfo) temp.findViewById(R.id.itemView);
-            item.setNimi("Laita kaikki ostokset kaappiin");
-            item.setMoodi(moodi);
-            item.setText(item.getNimi());
-
-            item.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ostoksetKaappiin();
-                }
-            });
-
-            img = (ImageView) temp.findViewById(R.id.imageView);
-            img.setImageResource(getResources().getIdentifier(tiedot.getString(2), "drawable", getPackageName()));
-            content.addView(temp);
         }*/
 
 
