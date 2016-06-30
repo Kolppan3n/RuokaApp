@@ -13,8 +13,6 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
 public class Liukuvalikko extends AppCompatActivity {
 
     Tietokanta TK;
@@ -100,29 +98,12 @@ public class Liukuvalikko extends AppCompatActivity {
         Log.d("Listan täyttö kesti", (System.currentTimeMillis() - viive) + " millisekunttia");
     }
 
-
-        /*while(tiedot.moveToNext()) {
-            temp = getLayoutInflater().inflate(R.layout.item, content, false);
-            item = (ItemInfo) temp.findViewById(R.id.itemView);
-            item.setNimi(tiedot.getString(0));
-            if(moodi==3) item.setNimi(tiedot.getInt(3) + " X " + tiedot.getString(0));
-            item.setID(tiedot.getInt(1));
-            item.setMoodi(moodi);
-            item.setText(item.getNimi());
-
+/*
             if(moodi==2)
             {
                 item.setKpl("" + (tiedot.getFloat(3)/tiedot.getFloat(4)));
                 KaappiVari(item);
             }
-
-
-            item.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    whatthesht((ItemInfo) v);
-                }
-            });
 
             item.setOnTouchListener(new OnSwipeTouchListener(item) {
                 public boolean onSwipeRight() {
@@ -170,8 +151,6 @@ public class Liukuvalikko extends AppCompatActivity {
             img.setImageResource(getResources().getIdentifier(tiedot.getString(2), "drawable", getPackageName()));
             content.addView(temp);
         }*/
-
-
 
 
     public void avaaRuuat(int moodi, int ID){
@@ -248,7 +227,6 @@ public class Liukuvalikko extends AppCompatActivity {
 
     public void ostoksetKaappiin()
     {
-
         String lause = ("SELECT AK.aineID, maara,kpl, pakkauskoko FROM KaappiKanta KK, AineKanta AK , OstosKanta OK WHERE AK.aineID IS KK.aineID AND AK.aineID IS OK.aineID AND OK.aineID IN (SELECT aineID FROM OstosKanta)");
         Cursor listatiedot = TK.HaeTiedot(lause);
 
@@ -270,9 +248,6 @@ public class Liukuvalikko extends AppCompatActivity {
             TK.LaitaKaappiin(listatiedot.getInt(0),listatiedot.getInt(1)*listatiedot.getFloat(2));
         }
 
-
-
-
         lause = ("SELECT aineID FROM OstosKanta");
         listatiedot = TK.HaeTiedot(lause);
 
@@ -282,9 +257,8 @@ public class Liukuvalikko extends AppCompatActivity {
         }
 
         Toast.makeText(Liukuvalikko.this,"Ostokset laitettu kaappiin ja poistettu listasta" , Toast.LENGTH_SHORT).show();
-        //fillScrollView("SELECT aine, AK.aineID, kuva FROM AineKanta AK, OstosKanta OK WHERE AK.aineID IS OK.aineID");
+        populateList("SELECT kpl|| ' X '||aine  AS nimi, AK.aineID _id, kuva,3 AS moodi FROM AineKanta AK, OstosKanta OK WHERE AK.aineID IS OK.aineID");
         listatiedot.close();
-
     }
 
     public void varauksetOstoksiksi()
