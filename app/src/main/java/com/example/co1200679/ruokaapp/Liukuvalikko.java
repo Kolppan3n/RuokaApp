@@ -29,10 +29,10 @@ public class Liukuvalikko extends AppCompatActivity {
         String lause = getIntent().getStringExtra("sqlqry");
         moodi = getIntent().getIntExtra("moodi",0);
         if (moodi==3)varauksetOstoksiksi();
-        populateList(lause, moodi);
+        populateList(lause);
     }
 
-    public void populateList(String lause, int moodi){
+    public void populateList(String lause){
 
         Cursor tiedot = TK.HaeTiedot(lause);
         startManagingCursor(tiedot);
@@ -100,7 +100,6 @@ public class Liukuvalikko extends AppCompatActivity {
         Log.d("Listan täyttö kesti", (System.currentTimeMillis() - viive) + " millisekunttia");
     }
 
-    public void fillScrollView(String lause) {
 
         /*while(tiedot.moveToNext()) {
             temp = getLayoutInflater().inflate(R.layout.item, content, false);
@@ -171,7 +170,7 @@ public class Liukuvalikko extends AppCompatActivity {
             img.setImageResource(getResources().getIdentifier(tiedot.getString(2), "drawable", getPackageName()));
             content.addView(temp);
         }*/
-    }
+
 
 
 
@@ -204,7 +203,7 @@ public class Liukuvalikko extends AppCompatActivity {
         {
             TK.LisaaListaan(aineID,lasku.getInt(1)+maara);
         }
-
+        lasku.close();
     }
 
     public void laitaRuokaListaan(ItemInfo v){
@@ -284,7 +283,7 @@ public class Liukuvalikko extends AppCompatActivity {
         }
 
         Toast.makeText(Liukuvalikko.this,"Ostokset laitettu kaappiin ja poistettu listasta" , Toast.LENGTH_SHORT).show();
-        fillScrollView("SELECT aine, AK.aineID, kuva FROM AineKanta AK, OstosKanta OK WHERE AK.aineID IS OK.aineID");
+        //fillScrollView("SELECT aine, AK.aineID, kuva FROM AineKanta AK, OstosKanta OK WHERE AK.aineID IS OK.aineID");
         listatiedot.close();
 
     }
@@ -320,6 +319,7 @@ public class Liukuvalikko extends AppCompatActivity {
             laitaListaan(listatiedot.getInt(0),osto);
             TK.PoistaVaraus(listatiedot.getInt(0));
         }
+        listatiedot.close();
 
     }
 
@@ -335,9 +335,11 @@ public class Liukuvalikko extends AppCompatActivity {
         {
             TK.VaraaLisaa(aineID,lasku.getFloat(1)+maara);
         }
+        lasku.close();
 
 
     }
+
 
 
 }
