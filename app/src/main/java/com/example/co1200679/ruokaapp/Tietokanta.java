@@ -1,7 +1,6 @@
 package com.example.co1200679.ruokaapp;
 
 
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -47,123 +46,110 @@ public class Tietokanta extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public Cursor HaeTiedot(String haku){
-        Cursor tulos = db.rawQuery(haku,null);
+    public Cursor HaeTiedot(String haku) {
+        Cursor tulos = db.rawQuery(haku, null);
         return tulos;
     }
 
     //tietokannan päivitystä netistä
-    public void LaitaAine(String aine, int aineID, int edellinenID,String mitta,String kuva,Float pakkauskoko)
-    {
+    public void LaitaAine(String aine, int aineID, int edellinenID, String mitta, String kuva, Float pakkauskoko) {
         ContentValues tiedot = new ContentValues();
-        tiedot.put("aine",aine);
-        tiedot.put("aineID",aineID);
-        tiedot.put("edellinenID",edellinenID);
-        tiedot.put("mitta",mitta);
-        int kuvaid = this.context.getResources().getIdentifier(kuva,"drawable",this.context.getPackageName());
-        tiedot.put("kuva",kuvaid);
-        tiedot.put("pakkauskoko",pakkauskoko);
-        db.insert("AineKanta",null,tiedot);
-        db.update("AineKanta",tiedot,("aineID is "+aineID),null);
+        tiedot.put("aine", aine);
+        tiedot.put("aineID", aineID);
+        tiedot.put("edellinenID", edellinenID);
+        tiedot.put("mitta", mitta);
+        int kuvaid = this.context.getResources().getIdentifier(kuva, "drawable", this.context.getPackageName());
+        tiedot.put("kuva", kuvaid);
+        tiedot.put("pakkauskoko", pakkauskoko);
+        db.insert("AineKanta", null, tiedot);
+        db.update("AineKanta", tiedot, ("aineID is " + aineID), null);
     }
 
-    public void LaitaResepti(int kantaID, int ruokaID, int aineID,float lkm)
-    {
-        if(lkm==0.0F) {
-            db.delete("ReseptiKanta",("kantaID is "+kantaID),null);
+    public void LaitaResepti(int kantaID, int ruokaID, int aineID, float lkm) {
+        if (lkm == 0.0F) {
+            db.delete("ReseptiKanta", ("kantaID is " + kantaID), null);
         }
         ContentValues tiedot = new ContentValues();
-        tiedot.put("kantaID",kantaID);
-        tiedot.put("ruokaID",ruokaID);
-        tiedot.put("aineID",aineID);
-        tiedot.put("lkm",lkm);
-        db.insert("ReseptiKanta",null,tiedot);
-        db.update("ReseptiKanta",tiedot,("kantaID is "+kantaID),null);
-        if(lkm==0.0F)
-        {
-            db.delete("ReseptiKanta",("kantaID is "+kantaID),null);
+        tiedot.put("kantaID", kantaID);
+        tiedot.put("ruokaID", ruokaID);
+        tiedot.put("aineID", aineID);
+        tiedot.put("lkm", lkm);
+        db.insert("ReseptiKanta", null, tiedot);
+        db.update("ReseptiKanta", tiedot, ("kantaID is " + kantaID), null);
+        if (lkm == 0.0F) {
+            db.delete("ReseptiKanta", ("kantaID is " + kantaID), null);
         }
     }
 
-    public void LaitaRuoka(String ruoka, int ruokaID, String resepti,int aika ,int taso ,int tarvikkeet, String kuva)
-    {
+    public void LaitaRuoka(String ruoka, int ruokaID, String resepti, int aika, int taso, int tarvikkeet, String kuva) {
         ContentValues tiedot = new ContentValues();
-        tiedot.put("ruoka",ruoka);
-        tiedot.put("ruokaID",ruokaID);
-        tiedot.put("resepti",resepti);
-        tiedot.put("aika",aika);
-        tiedot.put("taso",taso);
-        tiedot.put("tarvikkeet",tarvikkeet);
-        int kuvaid = this.context.getResources().getIdentifier(kuva,"drawable",this.context.getPackageName());
-        tiedot.put("kuva",kuvaid);
-        db.insert("RuokaKanta",null,tiedot);
-        db.update("RuokaKanta",tiedot,("ruokaID is "+ruokaID),null);
+        tiedot.put("ruoka", ruoka);
+        tiedot.put("ruokaID", ruokaID);
+        tiedot.put("resepti", resepti);
+        tiedot.put("aika", aika);
+        tiedot.put("taso", taso);
+        tiedot.put("tarvikkeet", tarvikkeet);
+        int kuvaid = this.context.getResources().getIdentifier(kuva, "drawable", this.context.getPackageName());
+        tiedot.put("kuva", kuvaid);
+        db.insert("RuokaKanta", null, tiedot);
+        db.update("RuokaKanta", tiedot, ("ruokaID is " + ruokaID), null);
     }
 
 
     //kaapin funktiot
-    public void LaitaKaappiin(int aineID, float maara)
-    {
+    public void LaitaKaappiin(int aineID, float maara) {
         ContentValues tiedot = new ContentValues();
-        tiedot.put("aineID",aineID);
-        tiedot.put("maara",maara);
-        db.insert("KaappiKanta",null,tiedot);
+        tiedot.put("aineID", aineID);
+        tiedot.put("maara", maara);
+        db.insert("KaappiKanta", null, tiedot);
     }
 
-    public void MuutaKaappia(int aineID,float uusi)
-    {
+    public void MuutaKaappia(int aineID, float uusi) {
         ContentValues tiedot = new ContentValues();
-        tiedot.put("maara",uusi);
-        db.update("KaappiKanta",tiedot,("aineID is "+aineID),null);
+        tiedot.put("maara", uusi);
+        db.update("KaappiKanta", tiedot, ("aineID is " + aineID), null);
     }
 
-    public void PoistaKaapista(int aineID)
-    {
-        db.delete("KaappiKanta",("aineID is "+aineID),null);
+    public void PoistaKaapista(int aineID) {
+        db.delete("KaappiKanta", ("aineID is " + aineID), null);
     }
 
     //listan funktiot
-    public void LaitaListaan(int aineID, int kpl)
-    {
+    public void LaitaListaan(int aineID, int kpl) {
         ContentValues tiedot = new ContentValues();
-        tiedot.put("aineID",aineID);
-        tiedot.put("kpl",kpl);
-        db.insert("OstosKanta",null,tiedot);
+        tiedot.put("aineID", aineID);
+        tiedot.put("kpl", kpl);
+        db.insert("OstosKanta", null, tiedot);
     }
 
-    public void LisaaListaan(int aineID, int kpl)
-    {
+    public void LisaaListaan(int aineID, int kpl) {
         ContentValues tiedot = new ContentValues();
-        tiedot.put("kpl",kpl);
-        db.update("OstosKanta",tiedot,("aineID is "+aineID),null);
+        tiedot.put("kpl", kpl);
+        db.update("OstosKanta", tiedot, ("aineID is " + aineID), null);
     }
 
-    public void PoistaListasta(int aineID)
-    {
-        db.delete("OstosKanta",("aineID is "+aineID),null);
+    public void PoistaListasta(int aineID) {
+        db.delete("OstosKanta", ("aineID is " + aineID), null);
     }
 
     //varauslistan funktiot
-    public void LaitaVaraus(int aineID,float maara)
-    {
+    public void LaitaVaraus(int aineID, float maara) {
         ContentValues tiedot = new ContentValues();
-        tiedot.put("aineID",aineID);
-        tiedot.put("maara",maara);
-        db.insert("VarausKanta",null,tiedot);
-        Log.d("varasu","" + aineID + " " + maara);
+        tiedot.put("aineID", aineID);
+        tiedot.put("maara", maara);
+        db.insert("VarausKanta", null, tiedot);
+        Log.d("varasu", "" + aineID + " " + maara);
     }
 
-    public void VaraaLisaa(int aineID,float uusi)
-    {
+    public void VaraaLisaa(int aineID, float uusi) {
         ContentValues tiedot = new ContentValues();
-        tiedot.put("maara",uusi);
-        db.update("VarausKanta",tiedot,("aineID is "+aineID),null);
+        tiedot.put("maara", uusi);
+        db.update("VarausKanta", tiedot, ("aineID is " + aineID), null);
     }
 
 
-    public void PoistaVaraus(int aineID)
-    {
-        db.delete("VarausKanta",("aineID is "+aineID),null);
+    public void PoistaVaraus(int aineID) {
+        db.delete("VarausKanta", ("aineID is " + aineID), null);
     }
 
 

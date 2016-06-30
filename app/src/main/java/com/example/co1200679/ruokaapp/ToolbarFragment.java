@@ -32,7 +32,7 @@ public class ToolbarFragment extends Fragment {
 
         mToolbar = (Toolbar) rootView.findViewById(R.id.tb);
         if (mToolbar != null) {
-            ((AppCompatActivity)getActivity()).setSupportActionBar(mToolbar);
+            ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
         }
 
         return rootView;
@@ -42,26 +42,40 @@ public class ToolbarFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         String FUCK = "menu_";
 
-        if (getActivity().getLocalClassName().toLowerCase().equals("liukuvalikko")){
+        if (getActivity().getLocalClassName().toLowerCase().equals("liukuvalikko")) {
             Liukuvalikko akti = (Liukuvalikko) getActivity();
-            switch (akti.moodi){
-                case 0: {FUCK += "aineet";break;}
-                case 1: {FUCK += "ruuat";break;}
-                case 2: {FUCK += "kaappi";break;}
-                case 3: {FUCK += "lista";break;}
-                default: {FUCK += "default"; break;}
+            switch (akti.moodi) {
+                case 0: {
+                    FUCK += "aineet";
+                    break;
+                }
+                case 1: {
+                    FUCK += "ruuat";
+                    break;
+                }
+                case 2: {
+                    FUCK += "kaappi";
+                    break;
+                }
+                case 3: {
+                    FUCK += "lista";
+                    break;
+                }
+                default: {
+                    FUCK += "default";
+                    break;
+                }
             }
-        }
-        else
+        } else
             FUCK += getActivity().getLocalClassName().toLowerCase().toString();
 
         int menuID = getResources().getIdentifier(FUCK, "menu", getActivity().getPackageName());
-        if(menuID != 0)
+        if (menuID != 0)
             inflater.inflate(menuID, menu);
         else
             inflater.inflate(R.menu.menu_default, menu);
 
-        super.onCreateOptionsMenu(menu,inflater);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
@@ -69,29 +83,34 @@ public class ToolbarFragment extends Fragment {
 
         int id = item.getItemId();
 
-        switch (id){
+        switch (id) {
 
-            case R.id.koti: { startActivity(new Intent(getActivity(), MainAct.class)); break;}
+            case R.id.koti: {
+                startActivity(new Intent(getActivity(), MainAct.class));
+                break;
+            }
 
             case R.id.resepti: {
-                Valikko valikko = (Valikko)getActivity();
+                Valikko valikko = (Valikko) getActivity();
                 valikko.avaaResepti();
                 break;
             }
 
             case R.id.lisaaListaan: {
-                Valikko valikko = (Valikko)getActivity();
+                Valikko valikko = (Valikko) getActivity();
                 valikko.lisaaListaan();
                 break;
             }
 
             case R.id.kassi: {
-                Liukuvalikko Lvalikko = (Liukuvalikko)getActivity();
+                Liukuvalikko Lvalikko = (Liukuvalikko) getActivity();
                 Lvalikko.ostoksetKaappiin();
                 break;
             }
 
-            default: Log.d("joo", "Derp"); break;
+            default:
+                Log.d("joo", "Derp");
+                break;
 
         }
 
