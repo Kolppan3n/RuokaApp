@@ -12,4 +12,5 @@
     <string name="lisaaListaanToast">Tästä painikkeesta voit lisätä ostoslistaa kaikki vaadittavat raaka-aineet jotka puuttuvat kaapistasi.</string>
     <string name="reseptiToast">Tästä painikkeesta voit avata tarkemmat valmistusohjeet</string>
     <string name="kotiToast">Tästä painikkeesta pääset takaisin koti-näkymään</string>
+    <string name="kassiToast">Lisää aineet kaappiin</string>
 </resources>

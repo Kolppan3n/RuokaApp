@@ -40,12 +40,27 @@ public class ToolbarFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        String FUCK = "menu_" + getActivity().getLocalClassName().toLowerCase();
+        String FUCK = "menu_";
+
+        if (getActivity().getLocalClassName().toLowerCase().equals("liukuvalikko")){
+            Liukuvalikko akti = (Liukuvalikko) getActivity();
+            switch (akti.moodi){
+                case 0: {FUCK += "aineet";break;}
+                case 1: {FUCK += "ruuat";break;}
+                case 2: {FUCK += "kaappi";break;}
+                case 3: {FUCK += "lista";break;}
+                default: {FUCK += "default"; break;}
+            }
+        }
+        else
+            FUCK += getActivity().getLocalClassName().toLowerCase().toString();
+
         int menuID = getResources().getIdentifier(FUCK, "menu", getActivity().getPackageName());
         if(menuID != 0)
             inflater.inflate(menuID, menu);
         else
             inflater.inflate(R.menu.menu_default, menu);
+
         super.onCreateOptionsMenu(menu,inflater);
     }
 
@@ -53,30 +68,26 @@ public class ToolbarFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         int id = item.getItemId();
-        Valikko akti = (Valikko)getActivity();
 
         switch (id){
 
             case R.id.koti: { startActivity(new Intent(getActivity(), MainAct.class)); break;}
 
             case R.id.resepti: {
-                Intent intent = new Intent(getActivity(), Kokkausohjeet.class);
-                intent.putExtra("ruokaID", akti.ruokaID);
-                startActivity(intent);
+                Valikko valikko = (Valikko)getActivity();
+                valikko.avaaResepti();
                 break;
             }
 
             case R.id.lisaaListaan: {
-                String lause = ("SELECT aineID, ruokaID FROM ReseptiKanta WHERE aineID NOT IN (SELECT aineID FROM KaappiKanta WHERE maara > 10) AND  RuokaID IS " + akti.ruokaID);
-                Cursor listatiedot = akti.TK.HaeTiedot(lause);
-                Log.d("popopopo",lause);
-                Log.d("pappapa", DatabaseUtils.dumpCursorToString(listatiedot));
-                while(listatiedot.moveToNext()) {
-                    akti.TK.LaitaListaan(listatiedot.getInt(0),1);
-                }
+                Valikko valikko = (Valikko)getActivity();
+                valikko.lisaaListaan();
+                break;
+            }
 
-                String toasti = "Tarvittavat aineet\nlisätty Ostoslistaan";
-                Toast.makeText(getActivity(), toasti, Toast.LENGTH_SHORT).show();
+            case R.id.kassi: {
+                Liukuvalikko Lvalikko = (Liukuvalikko)getActivity();
+                Lvalikko.ostoksetKaappiin();
                 break;
             }
 

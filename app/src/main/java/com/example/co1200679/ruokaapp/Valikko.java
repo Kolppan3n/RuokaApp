@@ -111,16 +111,16 @@ public class Valikko extends AppCompatActivity {
 
     }
 
-    public void avaaReseptiBtnClick(View view) {
+    public void avaaResepti() {
         Intent intent = new Intent(this, Kokkausohjeet.class);
         intent.putExtra("ruokaID", ruokaID);
         startActivity(intent);
     }
 
-    public void KatsoKaappiinBtnClick(View view) {
+    public void katsoKaappiin() {
     }
 
-    public void LisaaListaanBtnClick(View view){
+    public void lisaaListaan(){
         String lause = ("SELECT aineID, ruokaID,lkm FROM ReseptiKanta WHERE RuokaID IS " + ruokaID);
         Cursor listatiedot = TK.HaeTiedot(lause);
         Log.d("popopopo",lause);
