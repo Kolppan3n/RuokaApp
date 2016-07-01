@@ -23,6 +23,7 @@ public class MainAct extends AppCompatActivity {
         Intent intent = new Intent(this, Liukuvalikko.class);
         String lause = "SELECT aine nimi, aineID _id, kuva, 0 AS moodi FROM AineKanta WHERE edellinenID is 0";
         intent.putExtra("sqlqry", lause);
+        intent.putExtra("moodi", 0);
         startActivity(intent);
     }
 
@@ -30,6 +31,7 @@ public class MainAct extends AppCompatActivity {
         Intent intent = new Intent(this, Liukuvalikko.class);
         String lause = "SELECT ruoka nimi, ruokaID _id, kuva, 1 AS moodi  FROM RuokaKanta";
         intent.putExtra("sqlqry", lause);
+        intent.putExtra("moodi", 1);
         startActivity(intent);
     }
 

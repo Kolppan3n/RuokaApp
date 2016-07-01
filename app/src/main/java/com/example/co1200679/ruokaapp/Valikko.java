@@ -19,12 +19,14 @@ public class Valikko extends AppCompatActivity {
     String lause;
     Tietokanta TK;
     int ruokaID;
+    long viive;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_valikko);
 
+        viive = System.currentTimeMillis();
         //Tietokannan ja kursorin luominen
         TK = new Tietokanta(this);
         ruokaID = getIntent().getIntExtra("ruokaID", 0);
@@ -32,11 +34,12 @@ public class Valikko extends AppCompatActivity {
         Cursor ruokatiedot = TK.HaeTiedot(lause);
         ruokatiedot.moveToNext();
 
+
         //Aineen otsikko
         TextView otsikko;
         otsikko = (TextView) findViewById(R.id.otsikko);
         otsikko.setText(ruokatiedot.getString(0));
-
+        Log.d("otsikon viiveet", (System.currentTimeMillis() - viive) + "");
         //Alustaa sisällön
         alustus(ruokatiedot);
     }
@@ -57,7 +60,6 @@ public class Valikko extends AppCompatActivity {
         LinearLayout rulla1 = (LinearLayout) findViewById(R.id.rullakontti1);
         LinearLayout rulla2 = (LinearLayout) findViewById(R.id.rullakontti2);
 
-
         //Tyhjentää aineet ja välineet
         if (rulla1.getChildCount() > 0)
             rulla1.removeAllViews();
@@ -72,7 +74,7 @@ public class Valikko extends AppCompatActivity {
             ibu.setImageResource(getResources().getIdentifier(ainetiedot.getString(0), "drawable", getPackageName()));
             rulla1.addView(temp);
         }
-
+        Log.d("aineviive", (System.currentTimeMillis() - viive) + "");
 
         //Välineitten täyttäminen
         int testiarvo = 1;
@@ -88,7 +90,7 @@ public class Valikko extends AppCompatActivity {
             }
             testiarvo *= 2;
         }
-
+        Log.d("välineviive", (System.currentTimeMillis() - viive) + "");
 
         //Nippelitiedon täyttäminen
         TextView aika = (TextView) findViewById(R.id.aikaTxt);
@@ -105,7 +107,7 @@ public class Valikko extends AppCompatActivity {
         String vaikeusmerkit = "";
         for (int M = 0; M < ruokatiedot.getInt(3); M++) vaikeusmerkit += "\uD83C\uDF5D";
         vaikeusaste.setText(vaikeusmerkit);
-
+        Log.d("kokoviive", (System.currentTimeMillis() - viive) + "");
     }
 
     public void avaaResepti() {
