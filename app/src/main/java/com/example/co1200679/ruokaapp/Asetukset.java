@@ -17,15 +17,16 @@ public class Asetukset extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_asetukset);
         TK = new Tietokanta(this);
-        kirja = new Kirjastonhoitaja(this);
     }
 
     public void paivitaTietokanta(View view) {
+        kirja = new Kirjastonhoitaja(this);
         kirja.execute();
         Toast.makeText(this, "Tietokannat Päivitetty!", Toast.LENGTH_SHORT).show();
     }
 
     public void alustaTietokanta(View view) {
+        kirja = new Kirjastonhoitaja(this);
         new AlertDialog.Builder(this)
                 .setTitle("Alustetaanko tietokannat")
                 .setMessage("Alustaminen hävittää tiedot myös kaapista ja ostoslistasta! \nOletko aivan varma?")
