@@ -90,7 +90,10 @@ public class ToolbarFragment extends Fragment {
                 break;
             }
 
-            case R.id.asetukset: { startActivity(new Intent(getActivity(), Asetukset.class)); break;}
+            case R.id.asetukset: {
+                startActivity(new Intent(getActivity(), Asetukset.class));
+                break;
+            }
 
             case R.id.resepti: {
                 Valikko valikko = (Valikko) getActivity();
@@ -110,8 +113,12 @@ public class ToolbarFragment extends Fragment {
                 break;
             }
 
+            case R.id.tila: {
+                break;
+            }
+
             default:
-                Log.d("joo", "Derp");
+                Log.d("Herp", "Derp");
                 break;
 
         }

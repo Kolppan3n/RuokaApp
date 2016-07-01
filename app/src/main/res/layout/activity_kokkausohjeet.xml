@@ -7,67 +7,67 @@
     tools:context="com.example.co1200679.ruokaapp.Kokkausohjeet">
 
     <fragment
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:id="@+id/fragment"
         android:name="com.example.co1200679.ruokaapp.ToolbarFragment"
-        android:id="@+id/fragment" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <TextView
+        android:id="@+id/ruuanNimi"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Pasta Bolognese"
-        android:textSize="30dp"
-        android:textColor="#FFFFFF"
-        android:id="@+id/ruuanNimi"
+        android:background="@color/colorPrimary"
         android:gravity="center"
+        android:text="Pasta Bolognese"
         android:textAlignment="center"
-        android:background="@color/colorPrimary"/>
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#FFFFFF"
+        android:textSize="30dp" />
 
     <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/scrollView2" >
+        android:layout_height="match_parent">
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <TextView
+                android:id="@+id/ainesOtsikko"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Ainesosat"
-                android:id="@+id/ainesOtsikko"
-                android:gravity="center"
-                android:textAlignment="center"
                 android:background="@color/colorAccentDark"
-                android:onClick="toggleA" />
+                android:gravity="center"
+                android:onClick="toggleA"
+                android:text="Ainesosat"
+                android:textAlignment="center"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <LinearLayout
+                android:id="@+id/ainesKontti"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:id="@+id/ainesKontti">
+                android:orientation="vertical">
 
             </LinearLayout>
 
             <TextView
+                android:id="@+id/ohjeOtsikko"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Ohje"
-                android:id="@+id/ohjeOtsikko"
-                android:gravity="center"
-                android:textAlignment="center"
                 android:background="@color/colorAccentDark"
-                android:onClick="toggleO" />
+                android:gravity="center"
+                android:onClick="toggleO"
+                android:text="Ohje"
+                android:textAlignment="center"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <RelativeLayout
+                android:id="@+id/ohjeKontti"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/ohjeKontti"
                 android:paddingBottom="0dp"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp">

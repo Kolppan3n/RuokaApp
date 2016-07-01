@@ -1,40 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.example.co1200679.ruokaapp.MainAct"
-    >
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.co1200679.ruokaapp.MainAct">
 
     <item
         android:id="@+id/katsoKaappiin"
-        android:title="@string/katsoKaappiinToast"
-        android:orderInCategory="200"
         android:icon="@drawable/menukatsokaappiin"
-        app:showAsAction="always"
-        />
+        android:orderInCategory="1"
+        android:title="@string/katsoKaappiinToast"
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/lisaaListaan"
-        android:title="@string/lisaaListaanToast"
-        android:orderInCategory="200"
         android:icon="@drawable/menulisaalistaan"
-        app:showAsAction="always"
-        />
+        android:orderInCategory="2"
+        android:title="@string/lisaaListaanToast"
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/resepti"
-        android:title="@string/reseptiToast"
-        android:orderInCategory="200"
         android:icon="@drawable/menuresepti"
-        app:showAsAction="always"
-        />
+        android:orderInCategory="3"
+        android:title="@string/reseptiToast"
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/koti"
-        android:title="@string/kotiToast"
-        android:orderInCategory="200"
         android:icon="@drawable/menukoti"
-        app:showAsAction="always"
-        />
+        android:orderInCategory="4"
+        android:title="@string/kotiToast"
+        app:showAsAction="always" />
 
 </menu>

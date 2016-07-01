@@ -7,24 +7,23 @@
     tools:context="com.example.co1200679.ruokaapp.MainAct">
 
     <fragment
+        android:id="@+id/fragment"
+        android:name="com.example.co1200679.ruokaapp.ToolbarFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:name="com.example.co1200679.ruokaapp.ToolbarFragment"
-        android:id="@+id/fragment"
         android:layout_gravity="center_horizontal"
         tools:layout="@layout/toolbar" />
 
     <RelativeLayout
-
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <GridLayout
+            android:id="@+id/gridLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/gridLayout"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true">
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true">
 
             <ImageView
                 android:id="@+id/aineBtn"

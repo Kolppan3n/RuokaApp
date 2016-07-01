@@ -59,17 +59,17 @@ public class Valikko extends AppCompatActivity {
 
 
         //Tyhjentää aineet ja välineet
-        if(rulla1.getChildCount() > 0)
+        if (rulla1.getChildCount() > 0)
             rulla1.removeAllViews();
-        if(rulla2.getChildCount() > 0)
+        if (rulla2.getChildCount() > 0)
             rulla2.removeAllViews();
 
 
         //Ainesten täyttäminen
-        while(ainetiedot.moveToNext()) {
+        while (ainetiedot.moveToNext()) {
             temp = getLayoutInflater().inflate(R.layout.ikoni, rulla1, false);
             ibu = (ImageView) temp.findViewById(R.id.ikoni);
-            ibu.setImageResource(getResources().getIdentifier(ainetiedot.getString(0),"drawable",getPackageName()));
+            ibu.setImageResource(getResources().getIdentifier(ainetiedot.getString(0), "drawable", getPackageName()));
             rulla1.addView(temp);
         }
 
@@ -83,7 +83,7 @@ public class Valikko extends AppCompatActivity {
             if ((testiarvo & tarvikearvo) != 0) {
                 temp = getLayoutInflater().inflate(R.layout.ikoni, rulla2, false);
                 ibu = (ImageView) temp.findViewById(R.id.ikoni);
-                ibu.setImageResource(getResources().getIdentifier(tarvikenimet[k],"drawable",getPackageName()));
+                ibu.setImageResource(getResources().getIdentifier(tarvikenimet[k], "drawable", getPackageName()));
                 rulla2.addView(temp);
             }
             testiarvo *= 2;
@@ -117,28 +117,24 @@ public class Valikko extends AppCompatActivity {
     public void katsoKaappiin() {
     }
 
-    public void lisaaListaan(){
+    public void lisaaListaan() {
         String lause = ("SELECT aineID, ruokaID,lkm FROM ReseptiKanta WHERE RuokaID IS " + ruokaID);
         Cursor listatiedot = TK.HaeTiedot(lause);
-        while(listatiedot.moveToNext())
-        {
-            laitaVaraus(listatiedot.getInt(0),listatiedot.getFloat(2));
+        while (listatiedot.moveToNext()) {
+            laitaVaraus(listatiedot.getInt(0), listatiedot.getFloat(2));
         }
         String toasti = "Tarvittavat aineet\nlisätty Ostoslistaan";
         Toast.makeText(Valikko.this, toasti, Toast.LENGTH_SHORT).show();
         listatiedot.close();
     }
 
-    public void laitaVaraus(int aineID,float maara){
+    public void laitaVaraus(int aineID, float maara) {
         Cursor lasku = TK.HaeTiedot("SELECT count(aineID) AS luku, maara FROM VarausKanta WHERE aineID IS " + aineID);
         lasku.moveToNext();
-        if(lasku.getInt(0)==0)
-        {
-            TK.LaitaVaraus(aineID,maara);
-        }
-        else
-        {
-            TK.VaraaLisaa(aineID,lasku.getFloat(1)+maara);
+        if (lasku.getInt(0) == 0) {
+            TK.LaitaVaraus(aineID, maara);
+        } else {
+            TK.VaraaLisaa(aineID, lasku.getFloat(1) + maara);
         }
         lasku.close();
     }

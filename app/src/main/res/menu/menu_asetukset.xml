@@ -9,6 +9,6 @@
         android:icon="@drawable/menukoti"
         android:orderInCategory="200"
         android:title="@string/kotiToast"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
 
 </menu>

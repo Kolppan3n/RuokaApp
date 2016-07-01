@@ -7,29 +7,16 @@
     tools:context="com.example.co1200679.ruokaapp.Liukuvalikko">
 
     <fragment
+        android:id="@+id/fragment"
+        android:name="com.example.co1200679.ruokaapp.ToolbarFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:name="com.example.co1200679.ruokaapp.ToolbarFragment"
-        android:id="@+id/fragment"
         tools:layout="@layout/toolbar" />
 
     <ListView
+        android:id="@+id/valikko"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/valikko"
         android:layout_gravity="center_horizontal" />
 
-    <!--
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/rulla">
-
-        <LinearLayout
-            android:layout_margin="16dp"
-            android:id="@+id/content"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"></LinearLayout>
-    </ScrollView> -->
 </LinearLayout>

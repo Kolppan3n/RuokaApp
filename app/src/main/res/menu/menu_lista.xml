@@ -9,14 +9,14 @@
         android:icon="@drawable/menukoti"
         android:orderInCategory="200"
         android:title="@string/kotiToast"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/kassi"
         android:icon="@drawable/menukassi"
         android:orderInCategory="100"
         android:title="@string/kassiToast"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
 
 
 </menu>
