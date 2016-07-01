@@ -18,7 +18,7 @@ public class Liukuvalikko extends AppCompatActivity {
 
     Tietokanta TK;
     int moodi;// AINE = 0 RUUAT = 1 KAAPPI = 2 LISTA = 3
-
+    int plussa;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +27,7 @@ public class Liukuvalikko extends AppCompatActivity {
         TK = new Tietokanta(this);
         String lause = getIntent().getStringExtra("sqlqry");
         moodi = getIntent().getIntExtra("moodi", 0);
+        plussa = 0;
         if (moodi == 3) varauksetOstoksiksi();
         populateList(lause);
     }
@@ -75,39 +76,50 @@ public class Liukuvalikko extends AppCompatActivity {
                 int moodi = temp.getMoodi();
                 int ID = temp.getID();
 
-                if (moodi == 0) {
-                    Cursor lasku = TK.HaeTiedot("SELECT count(aineID) AS luku FROM AineKanta WHERE edellinenID IS " + ID);
-                    lasku.moveToNext();
+                Log.d("Plussa",""+plussa);
+                if(plussa == 0) {
+                    if (moodi == 0) {
+                        Cursor lasku = TK.HaeTiedot("SELECT count(aineID) AS luku FROM AineKanta WHERE edellinenID IS " + ID);
+                        lasku.moveToNext();
 
-                    if (lasku.getInt(0) == 0) {
-                        lasku.close();
-                        avaaRuuat(moodi, ID);
-                    } else {
-                        Intent intent = new Intent(Liukuvalikko.this, Liukuvalikko.class);
-                        String lause = ("SELECT aine nimi, aineID _id, kuva, " + moodi + " as moodi FROM AineKanta WHERE edellinenID is " + ID);
-                        intent.putExtra("sqlqry", lause);
-                        intent.putExtra("moodi", 0);
-                        lasku.close();
+                        if (lasku.getInt(0) == 0) {
+                            lasku.close();
+                            avaaRuuat(moodi, ID);
+                        } else {
+                            Intent intent = new Intent(Liukuvalikko.this, Liukuvalikko.class);
+                            String lause = ("SELECT aine nimi, aineID _id, kuva, " + moodi + " as moodi FROM AineKanta WHERE edellinenID is " + ID);
+                            intent.putExtra("sqlqry", lause);
+                            intent.putExtra("moodi", 0);
+                            lasku.close();
+                            startActivity(intent);
+                        }
+                    }
+                    if (moodi == 1) {
+                        Intent intent = new Intent(Liukuvalikko.this, Valikko.class);
+                        intent.putExtra("ruokaID", ID);
                         startActivity(intent);
                     }
+                    if (moodi == 2) {
+                        view.setBackgroundColor(KaappiVari(0.5F));
+                    }
                 }
-                if (moodi == 1) {
-                    Intent intent = new Intent(Liukuvalikko.this, Valikko.class);
-                    intent.putExtra("ruokaID", ID);
-                    startActivity(intent);
-                }
-                if (moodi == 2) {
-                    view.setBackgroundColor(KaappiVari(0.5F));
+                else{
+                    String nimi = temp.getNimi();
+                    if(moodi == 0){
+                        laitaListaan(ID,1);
+                        Toast.makeText(Liukuvalikko.this, nimi + " lisättiin ostoslistalle", Toast.LENGTH_SHORT).show();
+                    }
+
+                    if(moodi == 1) {
+                        laitaRuokaListaan(ID, nimi);
+                    }
                 }
             }
         });
         Log.d("Listan täyttö kesti", (System.currentTimeMillis() - viive) + " millisekunttia");
     }
 
-/*              if(moodi==2){
-                item.setKpl("" + (tiedot.getFloat(3)/tiedot.getFloat(4)));
-                KaappiVari(item);
-            }
+/*
             item.setOnTouchListener(new OnSwipeTouchListener(item) {
                 public boolean onSwipeRight() {
                     avaaRuuat(i);
@@ -151,29 +163,29 @@ public class Liukuvalikko extends AppCompatActivity {
     public void laitaListaan(int aineID, int maara) {
         Cursor lasku = TK.HaeTiedot("SELECT count(aineID) AS luku, kpl FROM OstosKanta WHERE aineID IS " + aineID);
         lasku.moveToNext();
-
-        if (lasku.getInt(0) == 0) {
-            TK.LaitaListaan(aineID, maara);
-        } else {
-            TK.LisaaListaan(aineID, lasku.getInt(1) + maara);
+        if(maara>0) {
+            if (lasku.getInt(0) == 0) {
+                TK.LaitaListaan(aineID, maara);
+            } else {
+                TK.LisaaListaan(aineID, lasku.getInt(1) + maara);
+            }
         }
         lasku.close();
     }
 
-    public void laitaRuokaListaan(ItemInfo v) {
+    public void laitaRuokaListaan(int ID, String nimi) {
 
-        String lause = ("SELECT aineID, ruokaID,lkm FROM ReseptiKanta WHERE RuokaID IS " + v.getID());
+        String lause = ("SELECT aineID, ruokaID,lkm FROM ReseptiKanta WHERE RuokaID IS " + ID);
         Cursor listatiedot = TK.HaeTiedot(lause);
 
         while (listatiedot.moveToNext()) {
             laitaVaraus(listatiedot.getInt(0), listatiedot.getFloat(2));
         }
 
-        Toast.makeText(Liukuvalikko.this, v.getText() + " ainekset lisättiin ostoslistalle", Toast.LENGTH_SHORT).show();
+        Toast.makeText(Liukuvalikko.this, nimi + " ainekset lisättiin ostoslistalle", Toast.LENGTH_SHORT).show();
         listatiedot.close();
 
     }
-
 
     public int KaappiVari(float prosentti) {
         int color = getResources().getColor(R.color.colorRed);
@@ -232,6 +244,7 @@ public class Liukuvalikko extends AppCompatActivity {
 
             int osto = (int) (tarve / pakkauskoko);
             if (tarve % pakkauskoko > 0) osto++;
+
             laitaListaan(listatiedot.getInt(0), osto);
             TK.PoistaVaraus(listatiedot.getInt(0));
         }
@@ -265,6 +278,12 @@ public class Liukuvalikko extends AppCompatActivity {
         lasku.close();
 
 
+    }
+
+    public int muutaPlussa(){
+        plussa ^= 1;
+        Log.d("Plussa",""+plussa);
+        return plussa;
     }
 
 
