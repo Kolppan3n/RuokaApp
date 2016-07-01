@@ -17,10 +17,22 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Päivitä tietokanta"
+        android:text="Päivitä Tietokanta"
         android:id="@+id/button"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_marginTop="148dp"
+        android:layout_below="@+id/fragment"
+        android:layout_centerHorizontal="true"
+        android:onClick="paivitaTietokanta" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Alusta Tietokanta"
+        android:id="@+id/button2"
+        android:layout_marginTop="86dp"
+        android:layout_below="@+id/button"
+        android:layout_alignEnd="@+id/button"
+        android:onClick="alustaTietokanta" />
 
 
 </RelativeLayout>
