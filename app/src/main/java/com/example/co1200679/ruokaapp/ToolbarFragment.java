@@ -117,7 +117,7 @@ public class ToolbarFragment extends Fragment {
 
             case R.id.tila: {
                 RelativeLayout rela = (RelativeLayout) ((Liukuvalikko) getActivity()).findViewById(R.id.liukuRela);
-                rela.setBackgroundColor(getResources().getColor(R.color.superHailea));
+                rela.setBackgroundColor(getResources().getColor(R.color.colorBackground2));
                 break;
             }
 
