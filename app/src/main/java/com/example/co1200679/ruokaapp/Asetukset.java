@@ -1,5 +1,7 @@
 package com.example.co1200679.ruokaapp;
 
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -24,8 +26,18 @@ public class Asetukset extends AppCompatActivity {
     }
 
     public void alustaTietokanta(View view) {
-        TK.onUpgrade(TK.getReadableDatabase(), 1, 1); //Tällä saadaan tehtyä uusi versio tietokannasta, mutta tiedot poistu
-        kirja.execute();
-        Toast.makeText(this, "Tietokannat Alustettu!", Toast.LENGTH_SHORT).show();
+        new AlertDialog.Builder(this)
+                .setTitle("Alustetaanko tietokannat")
+                .setMessage("Alustaminen hävittää tiedot myös kaapista ja ostoslistasta! \nOletko aivan varma?")
+                .setIcon(R.drawable.errori)
+                .setPositiveButton("Kyllä", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        TK.onUpgrade(TK.getReadableDatabase(), 1, 1); //Tällä saadaan tehtyä uusi versio tietokannasta, mutta tiedot poistu
+                        kirja.execute();
+                        Toast.makeText(Asetukset.this, "Tietokannat Alustettu!", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setNegativeButton("EI", null).show();
+
     }
 }

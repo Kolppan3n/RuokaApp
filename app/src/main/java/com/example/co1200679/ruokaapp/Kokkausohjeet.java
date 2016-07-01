@@ -11,8 +11,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 public class Kokkausohjeet extends AppCompatActivity {
 
     Tietokanta TK;

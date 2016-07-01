@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-
 public class Tietokanta extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "AppiKanta.db";
     SQLiteDatabase db;
@@ -31,7 +30,6 @@ public class Tietokanta extends SQLiteOpenHelper {
         db.execSQL("create table OstosKanta (aineID INTEGER UNIQUE, kpl INTEGER)");
         db.execSQL("create table VarausKanta (aineID INTEGER UNIQUE, maara FLOAT)");
     }
-
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -96,7 +94,6 @@ public class Tietokanta extends SQLiteOpenHelper {
         db.update("RuokaKanta", tiedot, ("ruokaID is " + ruokaID), null);
     }
 
-
     //kaapin funktiot
     public void LaitaKaappiin(int aineID, float maara) {
         ContentValues tiedot = new ContentValues();
@@ -148,10 +145,8 @@ public class Tietokanta extends SQLiteOpenHelper {
         db.update("VarausKanta", tiedot, ("aineID is " + aineID), null);
     }
 
-
     public void PoistaVaraus(int aineID) {
         db.delete("VarausKanta", ("aineID is " + aineID), null);
     }
-
 
 }

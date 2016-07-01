@@ -36,7 +36,6 @@ public class ToolbarFragment extends Fragment {
         if (mToolbar != null) {
             ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
         }
-
         return rootView;
     }
 
@@ -117,7 +116,7 @@ public class ToolbarFragment extends Fragment {
 
             case R.id.tila: {
                 Liukuvalikko Lvalikko = (Liukuvalikko) getActivity();
-                RelativeLayout rela = (RelativeLayout)Lvalikko.findViewById(R.id.liukuRela);
+                RelativeLayout rela = (RelativeLayout) Lvalikko.findViewById(R.id.liukuRela);
                 if (Lvalikko.muutaPlussa() == 1) {
                     item.setIcon(R.drawable.menuselaustila);
                     rela.setBackgroundColor(getResources().getColor(R.color.colorBackground2));
@@ -126,16 +125,12 @@ public class ToolbarFragment extends Fragment {
                     rela.setBackgroundColor(getResources().getColor(R.color.colorBackground));
                 }
 
-
-
-
                 break;
             }
 
             default:
                 Log.d("Herp", "Derp");
                 break;
-
         }
 
         return super.onOptionsItemSelected(item);
