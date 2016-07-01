@@ -67,6 +67,29 @@ public class Liukuvalikko extends AppCompatActivity {
 
         ListView valikko = (ListView) findViewById(R.id.valikko);
         valikko.setAdapter(filleri);
+        valikko.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener(){
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+
+                ItemInfo temp = (ItemInfo) view.findViewById(R.id.teksti);
+                int moodi = temp.getMoodi();
+                int ID = temp.getID();
+
+                if(moodi == 0){
+                    avaaRuuat(moodi, ID);
+                }
+
+                if(moodi == 1){
+                    Intent intent = new Intent(Liukuvalikko.this, Kokkausohjeet.class);
+                    intent.putExtra("ruokaID", ID);
+                    startActivity(intent);
+                }
+
+
+
+                return false;
+            }
+        });
         valikko.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override

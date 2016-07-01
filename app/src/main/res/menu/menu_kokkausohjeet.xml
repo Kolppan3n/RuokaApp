@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.co1200679.ruokaapp.MainAct">
+
+    <item
+        android:id="@+id/koti"
+        android:icon="@drawable/menukoti"
+        android:orderInCategory="2"
+        android:title="@string/kotiToast"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/kokkaus"
+        android:icon="@drawable/menukokkaus"
+        android:orderInCategory="1"
+        android:title="@string/kotiToast"
+        app:showAsAction="ifRoom" />
+
+
+
+</menu>
