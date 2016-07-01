@@ -1,22 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/liukuRela"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.example.co1200679.ruokaapp.Liukuvalikko">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tilaIkoni"
+        android:src="@drawable/lisaustila"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
 
     <fragment
         android:id="@+id/fragment"
         android:name="com.example.co1200679.ruokaapp.ToolbarFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:layout="@layout/toolbar" />
+        tools:layout="@layout/toolbar"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
 
     <ListView
         android:id="@+id/valikko"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:layout_below="@+id/fragment"
+        android:layout_alignParentStart="true" />
 
-</LinearLayout>
+</RelativeLayout>

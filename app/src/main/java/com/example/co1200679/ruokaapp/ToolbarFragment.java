@@ -14,6 +14,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 public class ToolbarFragment extends Fragment {
@@ -114,6 +116,8 @@ public class ToolbarFragment extends Fragment {
             }
 
             case R.id.tila: {
+                RelativeLayout rela = (RelativeLayout) ((Liukuvalikko) getActivity()).findViewById(R.id.liukuRela);
+                rela.setBackgroundColor(getResources().getColor(R.color.superHailea));
                 break;
             }
 
