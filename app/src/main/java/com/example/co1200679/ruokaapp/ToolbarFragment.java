@@ -114,6 +114,13 @@ public class ToolbarFragment extends Fragment {
                 break;
             }
 
+            case R.id.ruokaMahdollisuudet: {
+                Liukuvalikko Lvalikko = (Liukuvalikko) getActivity();
+                Lvalikko.ruokaMahdollisuudetKaapinAineksista();
+                break;
+            }
+
+
             case R.id.tila: {
                 Liukuvalikko Lvalikko = (Liukuvalikko) getActivity();
                 RelativeLayout rela = (RelativeLayout) Lvalikko.findViewById(R.id.liukuRela);
@@ -132,6 +139,8 @@ public class ToolbarFragment extends Fragment {
                 Log.d("Herp", "Derp");
                 break;
         }
+
+        //SELECT ruoka nimi, ruokaID _id, kuva, 1 AS moodi  FROM RuokaKanta WHERE ruokaID NOT IN (SELECT ruokaID FROM ReseptiKanta WHERE aineID NOT IN (SELECT aineID FROM KaappiKanta))
 
         return super.onOptionsItemSelected(item);
     }

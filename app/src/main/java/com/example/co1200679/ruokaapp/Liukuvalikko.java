@@ -239,6 +239,14 @@ public class Liukuvalikko extends AppCompatActivity {
         listatiedot.close();
     }
 
+    public void ruokaMahdollisuudetKaapinAineksista() {
+        Intent intent = new Intent(this, Liukuvalikko.class);
+        String lause = ("SELECT ruoka nimi, ruokaID _id, kuva, 1 AS moodi  FROM RuokaKanta WHERE ruokaID NOT IN (SELECT ruokaID FROM ReseptiKanta WHERE aineID NOT IN (SELECT aineID FROM KaappiKanta))");
+        intent.putExtra("sqlqry", lause);
+        intent.putExtra("moodi", 1);
+        startActivity(intent);
+    }
+
     public void varauksetOstoksiksi() {
         //Ostoslistalle sopiva määrä aineita, joita ei ole valmiiksi kaapissa
         String lause = ("SELECT VK.aineID, VK.maara, pakkauskoko FROM VarausKanta VK, aineKanta AK WHERE VK.aineID IS AK.aineID AND VK.aineID NOT IN (select aineID FROM KaappiKanta)");

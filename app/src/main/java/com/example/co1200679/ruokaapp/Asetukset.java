@@ -1,10 +1,13 @@
 package com.example.co1200679.ruokaapp;
 
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.res.Resources;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class Asetukset extends AppCompatActivity {
@@ -23,6 +26,15 @@ public class Asetukset extends AppCompatActivity {
         kirja = new Kirjastonhoitaja(this);
         kirja.execute();
         Toast.makeText(this, "Tietokannat Päivitetty!", Toast.LENGTH_SHORT).show();
+    }
+
+    public void SQLNappi(View view) {
+        TextView hermanni = (TextView) findViewById(R.id.SQLKysely);
+        String lause =  hermanni.getText().toString();
+        Intent intent = new Intent(this, Liukuvalikko.class);
+        intent.putExtra("sqlqry", lause);
+        intent.putExtra("moodi", 1);
+        startActivity(intent);
     }
 
     public void alustaTietokanta(View view) {

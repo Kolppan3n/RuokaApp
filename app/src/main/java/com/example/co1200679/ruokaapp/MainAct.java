@@ -16,7 +16,7 @@ public class MainAct extends AppCompatActivity {
         TK = new Tietokanta(this);
         //TK.onUpgrade(TK.getReadableDatabase(), 1, 1); //Tällä saadaan tehtyä uusi versio tietokannasta, mutta tiedot poistu
         kirja = new Kirjastonhoitaja(this);
-        kirja.execute();
+        //kirja.execute();
     }
 
     public void AineBtnClick(View view) {
