@@ -102,6 +102,12 @@ public class ToolbarFragment extends Fragment {
                 break;
             }
 
+            case R.id.katsoKaappiin: {
+                Valikko valikko = (Valikko) getActivity();
+                valikko.katsoKaappiin();
+                break;
+            }
+
             case R.id.lisaaListaan: {
                 Valikko valikko = (Valikko) getActivity();
                 valikko.lisaaListaan();

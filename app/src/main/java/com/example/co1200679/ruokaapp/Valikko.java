@@ -117,6 +117,28 @@ public class Valikko extends AppCompatActivity {
     }
 
     public void katsoKaappiin() {
+        Cursor kaapissaON = TK.HaeTiedot("SELECT aine, Ak.aineID, RK.aineID FROM AineKanta AK, ReseptiKanta RK WHERE RK.aineID IS AK.aineID AND RK.aineID IN (SELECT aineID FROM KaappiKanta) AND RuokaID IS " + ruokaID);
+        Cursor kaapissaEIOLE = TK.HaeTiedot("SELECT aine, Ak.aineID, RK.aineID FROM AineKanta AK, ReseptiKanta RK WHERE RK.aineID IS AK.aineID AND RK.aineID NOT IN (SELECT aineID FROM KaappiKanta) AND RuokaID IS " + ruokaID);
+        String viesti = "";
+        String on = "";
+        String eiOle = "";
+
+        while (kaapissaON.moveToNext()) {
+            on += "\n -" + kaapissaON.getString(0);
+        }
+        if (on != "")
+            viesti = "Kaapista löytyy:" + on;
+
+        while (kaapissaEIOLE.moveToNext()) {
+            eiOle += "\n -" + kaapissaEIOLE.getString(0);
+        }
+        if (eiOle != "") {
+            if (on != "")
+                viesti += "\n\n";
+            viesti += "Sinulta puuttuu:" + eiOle;
+        } else viesti = "Kaikki aineet löytyy!";
+
+        Toast.makeText(Valikko.this, viesti, Toast.LENGTH_LONG).show();
     }
 
     public void lisaaListaan() {

@@ -7,8 +7,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CursorAdapter;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 public class Kokkausohjeet extends AppCompatActivity {
@@ -33,46 +37,77 @@ public class Kokkausohjeet extends AppCompatActivity {
     public void loadRecipe(Cursor tiedot) {
         TextView otsikko = (TextView) findViewById(R.id.ruuanNimi);
         otsikko.setText(tiedot.getString(0));
-        RelativeLayout kontti = (RelativeLayout) findViewById(R.id.ohjeKontti);
-        View temp = getLayoutInflater().inflate(R.layout.resepti, kontti, false);
-        TextView teksti = (TextView) temp.findViewById(R.id.reseptiTeksti);
-        teksti.setText(tiedot.getString(2));
-        kontti.addView(temp);
+        TextView resepti = (TextView) findViewById(R.id.ohjeKontti);
+        resepti.setText(tiedot.getString(2));
+    }
+
+    public void setListViewHeight (ListView listView) {
+
+        ListAdapter adapter = listView.getAdapter();
+
+        if (adapter == null) {
+            return;
+        }
+        ViewGroup vg = listView;
+        int totalHeight = 0;
+        for (int i = 0; i < adapter.getCount(); i++) {
+            View listItem = adapter.getView(i, null, vg);
+            listItem.measure(0, 0);
+            totalHeight += listItem.getMeasuredHeight();
+        }
+
+        ViewGroup.LayoutParams par = listView.getLayoutParams();
+        par.height = totalHeight + (listView.getDividerHeight() * (adapter.getCount() - 1));
+        listView.setLayoutParams(par);
+        listView.requestLayout();
     }
 
     public void fillScrollView() {
 
-        String lause = ("SELECT aine, lkm, mitta FROM AineKanta AK, ReseptiKanta RK WHERE AK.aineID IS RK.aineID AND RK.RuokaID IS " + ruokaID);
-        Cursor tiedot = TK.HaeTiedot(lause);
+        String lause = ("SELECT aine _id, lkm, mitta FROM AineKanta AK, ReseptiKanta RK WHERE AK.aineID IS RK.aineID AND RK.RuokaID IS " + ruokaID);
+        final Cursor tiedot = TK.HaeTiedot(lause);
 
-        LinearLayout kontti = (LinearLayout) findViewById(R.id.ainesKontti);
-        View temp;
-        ItemInfo item;
+        ListView kontti = (ListView) findViewById(R.id.ainesKontti);
 
-        if (kontti.getChildCount() > 0)
-            kontti.removeAllViews();
+        startManagingCursor(tiedot);
 
+        String[] columns = new String[]{"_id", "lkm"};
+        int[] viewIDs = new int[]{R.id.aine, R.id.lkm};
+        SimpleCursorAdapter filleri = new SimpleCursorAdapter(this, R.layout.ainesosa, tiedot, columns, viewIDs, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER){
+            @Override
+            public void setViewText(TextView v, String text) {
+                if(v.getId() == R.id.lkm){
+                    v.setText(text + " " + tiedot.getString(tiedot.getColumnIndex("mitta")));
+                }
+                else
+                super.setViewText(v, text);
+            }
+        };
 
-        while (tiedot.moveToNext()) {
-            temp = getLayoutInflater().inflate(R.layout.ainesosa, kontti, false);
-            item = (ItemInfo) temp.findViewById(R.id.aine);
-            item.setNimi(tiedot.getString(0));
-            item = (ItemInfo) temp.findViewById(R.id.lkm);
-            item.setText(tiedot.getFloat(1) + " " + tiedot.getString(2));
-            item.setKpl("kaksisataa");
-            kontti.addView(temp);
+        kontti.setAdapter(filleri);
+        setListViewHeight(kontti);
+
+    }
+
+    public static void setMargins (View v, int l, int t, int r, int b) {
+        if (v.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
+            ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
+            p.setMargins(l, t, r, b);
+            v.requestLayout();
         }
     }
 
-    public void toggleA(View view) {
+    /*public void toggleA(View view) {
         LinearLayout lio = (LinearLayout) findViewById(R.id.ainesKontti);
-        ViewGroup.LayoutParams lap = lio.getLayoutParams();
+        LinearLayout.LayoutParams lap = (LinearLayout.LayoutParams)lio.getLayoutParams();
 
         if (lap.height == ViewGroup.LayoutParams.WRAP_CONTENT) {
             lap.height = 0;
+            lap.setMargins(0, 0, 0, 0);
             lio.setLayoutParams(lap);
         } else {
             lap.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+            lap.setMargins(0, 0, 0, 30);
             lio.setLayoutParams(lap);
         }
     }
@@ -88,5 +123,5 @@ public class Kokkausohjeet extends AppCompatActivity {
             lap.height = ViewGroup.LayoutParams.WRAP_CONTENT;
             lio.setLayoutParams(lap);
         }
-    }
+    }*/
 }
