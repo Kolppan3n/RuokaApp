@@ -29,6 +29,9 @@ public class Tietokanta extends SQLiteOpenHelper {
         db.execSQL("create table KaappiKanta (aineID INTEGER UNIQUE, maara FLOAT)");
         db.execSQL("create table OstosKanta (aineID INTEGER UNIQUE, kpl INTEGER)");
         db.execSQL("create table VarausKanta (aineID INTEGER UNIQUE, maara FLOAT)");
+
+        db.execSQL("create table ValineKuvaKanta (valineID INTEGER UNIQUE, kuva INTEGER)");
+        this.LaitaTarvikkeet();
     }
 
     @Override
@@ -41,6 +44,8 @@ public class Tietokanta extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS OstosKanta");
         db.execSQL("DROP TABLE IF EXISTS KaappiKanta");
         db.execSQL("DROP TABLE IF EXISTS VarausKanta");
+
+        db.execSQL("DROP TABLE IF EXISTS ValineKuvaKanta");
         onCreate(db);
     }
 
@@ -148,5 +153,26 @@ public class Tietokanta extends SQLiteOpenHelper {
     public void PoistaVaraus(int aineID) {
         db.delete("VarausKanta", ("aineID is " + aineID), null);
     }
+
+    public void LaitaTarvikkeet() {
+
+        String tarvikenimet[] = {"paistinpannu", "kattila", "uuni", "kulho", "puukko", "uunivuoka", "piirakkavuoka", "kakkuvuoka", "irtopohjavuoka", "sauvasekoitin", "sahkovatkain",
+                "tehosekoitin", "yleiskone", "vispila", "kaulin", "siivila", "raastinrauta", "grilli", "lihanuija", "avotuli", "mehustin","","","","","","","","","",""};
+
+
+        int tarvikearvo = 1;
+        for (int k = 0; k < 31; k++) {
+            ContentValues tiedot = new ContentValues();
+            int kuvaid = this.context.getResources().getIdentifier(tarvikenimet[k], "drawable", this.context.getPackageName());
+            if (kuvaid == 0)
+                kuvaid = this.context.getResources().getIdentifier("errori", "drawable", this.context.getPackageName());
+            tiedot.put("valineID", tarvikearvo);
+            tiedot.put("kuva", kuvaid);
+            db.insert("ValineKuvaKanta", null, tiedot);
+            tarvikearvo *= 2;
+        }
+
+    }
+
 
 }

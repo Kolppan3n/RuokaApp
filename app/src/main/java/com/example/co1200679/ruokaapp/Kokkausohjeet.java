@@ -8,10 +8,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
-import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
@@ -41,7 +39,7 @@ public class Kokkausohjeet extends AppCompatActivity {
         resepti.setText(tiedot.getString(2));
     }
 
-    public void setListViewHeight (ListView listView) {
+    public void setListViewHeight(ListView listView) {
 
         ListAdapter adapter = listView.getAdapter();
 
@@ -64,32 +62,23 @@ public class Kokkausohjeet extends AppCompatActivity {
 
     public void fillScrollView() {
 
-        String lause = ("SELECT aine _id, lkm, mitta FROM AineKanta AK, ReseptiKanta RK WHERE AK.aineID IS RK.aineID AND RK.RuokaID IS " + ruokaID);
+        String lause = ("SELECT aine _id, lkm || ' ' || mitta AS ainemitta FROM AineKanta AK, ReseptiKanta RK WHERE AK.aineID IS RK.aineID AND RK.RuokaID IS " + ruokaID);
         final Cursor tiedot = TK.HaeTiedot(lause);
 
         ListView kontti = (ListView) findViewById(R.id.ainesKontti);
 
         startManagingCursor(tiedot);
 
-        String[] columns = new String[]{"_id", "lkm"};
+        String[] columns = new String[]{"_id", "ainemitta"};
         int[] viewIDs = new int[]{R.id.aine, R.id.lkm};
-        SimpleCursorAdapter filleri = new SimpleCursorAdapter(this, R.layout.ainesosa, tiedot, columns, viewIDs, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER){
-            @Override
-            public void setViewText(TextView v, String text) {
-                if(v.getId() == R.id.lkm){
-                    v.setText(text + " " + tiedot.getString(tiedot.getColumnIndex("mitta")));
-                }
-                else
-                super.setViewText(v, text);
-            }
-        };
+        SimpleCursorAdapter filleri = new SimpleCursorAdapter(this, R.layout.ainesosa, tiedot, columns, viewIDs, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
 
         kontti.setAdapter(filleri);
         setListViewHeight(kontti);
 
     }
 
-    public static void setMargins (View v, int l, int t, int r, int b) {
+    public static void setMargins(View v, int l, int t, int r, int b) {
         if (v.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
             ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
             p.setMargins(l, t, r, b);

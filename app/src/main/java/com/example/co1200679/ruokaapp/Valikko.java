@@ -1,16 +1,13 @@
 package com.example.co1200679.ruokaapp;
 
-import android.app.Fragment;
+
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.CursorAdapter;
+import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,54 +39,36 @@ public class Valikko extends AppCompatActivity {
         Log.d("otsikon viiveet", (System.currentTimeMillis() - viive) + "");
         //Alustaa sisällön
         alustus(ruokatiedot);
+
     }
 
     public void alustus(Cursor ruokatiedot) {
-        //Kursorin alustaminen
-        String lause = ("SELECT kuva FROM AineKanta AK, ReseptiKanta RK WHERE AK.aineID IS RK.aineID AND RK.RuokaID IS " + ruokaID);
-        Cursor ainetiedot = TK.HaeTiedot(lause);
 
-
-        //Muuttujien alustaminen
-        View temp;
-        ImageView kaappiBtn;
-        ImageView listBtn;
-        ImageView reseptiBtn;
-        ImageView ibu;
-        TextView teksti;
-        LinearLayout rulla1 = (LinearLayout) findViewById(R.id.rullakontti1);
-        LinearLayout rulla2 = (LinearLayout) findViewById(R.id.rullakontti2);
-
-        //Tyhjentää aineet ja välineet
-        if (rulla1.getChildCount() > 0)
-            rulla1.removeAllViews();
-        if (rulla2.getChildCount() > 0)
-            rulla2.removeAllViews();
-
+        HorizontalListView rulla1 = (HorizontalListView) findViewById(R.id.rullakontti1);
+        HorizontalListView rulla2 = (HorizontalListView) findViewById(R.id.rullakontti2);
 
         //Ainesten täyttäminen
-        while (ainetiedot.moveToNext()) {
-            temp = getLayoutInflater().inflate(R.layout.ikoni, rulla1, false);
-            ibu = (ImageView) temp.findViewById(R.id.ikoni);
-            ibu.setImageResource(getResources().getIdentifier(ainetiedot.getString(0), "drawable", getPackageName()));
-            rulla1.addView(temp);
-        }
+        String lause = ("SELECT kuva _id FROM AineKanta AK, ReseptiKanta RK WHERE AK.aineID IS RK.aineID AND RK.RuokaID IS " + ruokaID);
+        Cursor ainetiedot = TK.HaeTiedot(lause);
+        startManagingCursor(ainetiedot);
+
+        String[] columns = new String[]{"_id"};
+        int[] viewIDs = new int[]{R.id.ikoni};
+        SimpleCursorAdapter filleri = new SimpleCursorAdapter(this, R.layout.ikoni, ainetiedot, columns, viewIDs, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
+        rulla1.setAdapter(filleri);
+
         Log.d("aineviive", (System.currentTimeMillis() - viive) + "");
 
-        //Välineitten täyttäminen
-        int testiarvo = 1;
         int tarvikearvo = ruokatiedot.getInt(1);
-        String tarvikenimet[] = {"paistinpannu", "kattila", "uuni", "kulho", "puukko", "uunivuoka", "piirakkavuoka", "kakkuvuoka", "irtopohjavuoka", "sauvasekoitin", "sahkovatkain", "tehosekoitin", "yleiskone", "vispila", "kaulin", "siivila", "raastinrauta", "grilli", "lihanuija", "avotuli", "mehustin", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""};
+        String lause2 = ("SELECT kuva _id FROM ValineKuvaKanta WHERE valineID & " + tarvikearvo);
+        Cursor valinekuvat = TK.HaeTiedot(lause2);
+        startManagingCursor(valinekuvat);
 
-        for (int k = 0; k < 33; k++) {
-            if ((testiarvo & tarvikearvo) != 0) {
-                temp = getLayoutInflater().inflate(R.layout.ikoni, rulla2, false);
-                ibu = (ImageView) temp.findViewById(R.id.ikoni);
-                ibu.setImageResource(getResources().getIdentifier(tarvikenimet[k], "drawable", getPackageName()));
-                rulla2.addView(temp);
-            }
-            testiarvo *= 2;
-        }
+        String[] columns2 = new String[]{"_id"};
+        int[] viewIDs2 = new int[]{R.id.ikoni};
+        SimpleCursorAdapter filleri2 = new SimpleCursorAdapter(this, R.layout.ikoni, valinekuvat, columns2, viewIDs2, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
+        rulla2.setAdapter(filleri2);
+
         Log.d("välineviive", (System.currentTimeMillis() - viive) + "");
 
         //Nippelitiedon täyttäminen
@@ -107,6 +86,7 @@ public class Valikko extends AppCompatActivity {
         String vaikeusmerkit = "";
         for (int M = 0; M < ruokatiedot.getInt(3); M++) vaikeusmerkit += "\uD83C\uDF5D";
         vaikeusaste.setText(vaikeusmerkit);
+
         Log.d("kokoviive", (System.currentTimeMillis() - viive) + "");
     }
 
@@ -139,6 +119,10 @@ public class Valikko extends AppCompatActivity {
         } else viesti = "Kaikki aineet löytyy!";
 
         Toast.makeText(Valikko.this, viesti, Toast.LENGTH_LONG).show();
+    }
+
+    public void kulutaAineet() {
+        String lause = ("SELECT aine _id, lkm, mitta FROM AineKanta AK, ReseptiKanta RK WHERE AK.aineID IS RK.aineID AND RK.RuokaID IS " + ruokaID);
     }
 
     public void lisaaListaan() {
