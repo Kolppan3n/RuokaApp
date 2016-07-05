@@ -36,12 +36,7 @@ public class Valikko extends AppCompatActivity {
     Tietokanta TK;
     int ruokaID;
     long viive;
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    private GoogleApiClient client;
-
+  
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
