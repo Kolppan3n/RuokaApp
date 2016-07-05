@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CursorAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
@@ -31,6 +32,12 @@ public class Liukuvalikko extends AppCompatActivity {
         plussa = 0;
         if (moodi == 3) varauksetOstoksiksi();
         populateList(lause);
+
+        ImageView img = (ImageView) this.findViewById(R.id.tilaIkoni);
+        if (moodi == 2) {
+            img.setImageResource(R.drawable.poistotila);
+        } else
+            img.setImageResource(R.drawable.lisaustila);
     }
 
     public void populateList(String lause) {
@@ -298,6 +305,5 @@ public class Liukuvalikko extends AppCompatActivity {
         plussa ^= 1;
         return plussa;
     }
-
 
 }
