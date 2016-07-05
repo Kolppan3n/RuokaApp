@@ -66,11 +66,11 @@ public class Valikko extends AppCompatActivity {
         HorizontalListView rulla1 = (HorizontalListView) findViewById(R.id.rullakontti1);
         HorizontalListView rulla2 = (HorizontalListView) findViewById(R.id.rullakontti2);
 
-
         //Ainesten täyttäminen
         String lause = ("SELECT kuva _id FROM AineKanta AK, ReseptiKanta RK WHERE AK.aineID IS RK.aineID AND RK.RuokaID IS " + ruokaID);
         Cursor ainetiedot = TK.HaeTiedot(lause);
         startManagingCursor(ainetiedot);
+
         String[] columns = new String[]{"_id"};
         int[] viewIDs = new int[]{R.id.ikoni};
         SimpleCursorAdapter filleri = new SimpleCursorAdapter(this, R.layout.ikoni, ainetiedot, columns, viewIDs, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
@@ -79,15 +79,14 @@ public class Valikko extends AppCompatActivity {
         Log.d("aineviive", (System.currentTimeMillis() - viive) + "");
 
         int tarvikearvo = ruokatiedot.getInt(1);
-
         String lause2 = ("SELECT kuva _id FROM ValineKuvaKanta WHERE valineID & " + tarvikearvo);
         Cursor valinekuvat = TK.HaeTiedot(lause2);
+        startManagingCursor(valinekuvat);
+        
         String[] columns2 = new String[]{"_id"};
         int[] viewIDs2 = new int[]{R.id.ikoni};
         SimpleCursorAdapter filleri2 = new SimpleCursorAdapter(this, R.layout.ikoni, valinekuvat, columns2, viewIDs2, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
         rulla2.setAdapter(filleri2);
-
-
 
         Log.d("välineviive", (System.currentTimeMillis() - viive) + "");
 
@@ -106,6 +105,7 @@ public class Valikko extends AppCompatActivity {
         String vaikeusmerkit = "";
         for (int M = 0; M < ruokatiedot.getInt(3); M++) vaikeusmerkit += "\uD83C\uDF5D";
         vaikeusaste.setText(vaikeusmerkit);
+
         Log.d("kokoviive", (System.currentTimeMillis() - viive) + "");
     }
 
