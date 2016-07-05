@@ -58,7 +58,7 @@ public class Valikko extends AppCompatActivity {
         Log.d("otsikon viiveet", (System.currentTimeMillis() - viive) + "");
         //Alustaa sisällön
         alustus(ruokatiedot);
-      
+
     }
 
     public void alustus(Cursor ruokatiedot) {
