@@ -29,7 +29,7 @@ public class Kokkausohjeet extends AppCompatActivity {
         Cursor tiedot = TK.HaeTiedot(lause);
         tiedot.moveToNext();
         loadRecipe(tiedot);
-        fillScrollView();
+        fillListView();
     }
 
     public void loadRecipe(Cursor tiedot) {
@@ -60,9 +60,9 @@ public class Kokkausohjeet extends AppCompatActivity {
         listView.requestLayout();
     }
 
-    public void fillScrollView() {
+    public void fillListView() {
 
-        String lause = ("SELECT aine _id, lkm || ' ' || mitta AS ainemitta FROM AineKanta AK, ReseptiKanta RK WHERE AK.aineID IS RK.aineID AND RK.RuokaID IS " + ruokaID);
+        String lause = ("SELECT aine _id, PRINTF('%g', lkm)|| ' ' || mitta AS ainemitta FROM AineKanta AK, ReseptiKanta RK WHERE AK.aineID IS RK.aineID AND RK.RuokaID IS " + ruokaID);
         final Cursor tiedot = TK.HaeTiedot(lause);
 
         ListView kontti = (ListView) findViewById(R.id.ainesKontti);
