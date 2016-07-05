@@ -16,7 +16,7 @@ public class MainAct extends AppCompatActivity {
         TK = new Tietokanta(this);
         //TK.onUpgrade(TK.getReadableDatabase(), 1, 1); //Tällä saadaan tehtyä uusi versio tietokannasta, mutta tiedot poistu
         kirja = new Kirjastonhoitaja(this);
-        //kirja.execute();
+        kirja.execute();
     }
 
     public void AineBtnClick(View view) {
@@ -50,10 +50,5 @@ public class MainAct extends AppCompatActivity {
         intent.putExtra("moodi", 3);
         startActivity(intent);
     }
-
-    public void AsetuksetBtnClick(View view) {
-        startActivity(new Intent(this, Asetukset.class));
-    }
-
 
 }

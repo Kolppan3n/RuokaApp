@@ -50,8 +50,7 @@ public class Tietokanta extends SQLiteOpenHelper {
     }
 
     public Cursor HaeTiedot(String haku) {
-        Cursor tulos = db.rawQuery(haku, null);
-        return tulos;
+        return db.rawQuery(haku, null);
     }
 
     //tietokannan päivitystä netistä
@@ -159,13 +158,13 @@ public class Tietokanta extends SQLiteOpenHelper {
         String tarvikenimet[] = {"paistinpannu", "kattila", "uuni", "kulho", "puukko", "uunivuoka", "piirakkavuoka", "kakkuvuoka", "irtopohjavuoka", "sauvasekoitin", "sahkovatkain",
                 "tehosekoitin", "yleiskone", "vispila", "kaulin", "siivila", "raastinrauta", "grilli", "lihanuija", "avotuli", "mehustin","","","","","","","","","",""};
 
-
+        int errori = this.context.getResources().getIdentifier("errori", "drawable", this.context.getPackageName());
         int tarvikearvo = 1;
         for (int k = 0; k < 31; k++) {
             ContentValues tiedot = new ContentValues();
             int kuvaid = this.context.getResources().getIdentifier(tarvikenimet[k], "drawable", this.context.getPackageName());
             if (kuvaid == 0)
-                kuvaid = this.context.getResources().getIdentifier("errori", "drawable", this.context.getPackageName());
+                kuvaid = errori;
             tiedot.put("valineID", tarvikearvo);
             tiedot.put("kuva", kuvaid);
             db.insert("ValineKuvaKanta", null, tiedot);
