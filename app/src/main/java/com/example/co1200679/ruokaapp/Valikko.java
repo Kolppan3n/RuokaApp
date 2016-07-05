@@ -4,18 +4,31 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
+import android.media.Image;
+import android.net.Uri;
+import android.support.v4.media.MediaMetadataCompat;
+import android.support.v4.util.SimpleArrayMap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.CursorAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
 
 public class Valikko extends AppCompatActivity {
 
@@ -23,6 +36,11 @@ public class Valikko extends AppCompatActivity {
     Tietokanta TK;
     int ruokaID;
     long viive;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,59 +63,39 @@ public class Valikko extends AppCompatActivity {
         Log.d("otsikon viiveet", (System.currentTimeMillis() - viive) + "");
         //Alustaa sisällön
         alustus(ruokatiedot);
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     public void alustus(Cursor ruokatiedot) {
-        //Kursorin alustaminen
-        String lause = ("SELECT kuva _id FROM AineKanta AK, ReseptiKanta RK WHERE AK.aineID IS RK.aineID AND RK.RuokaID IS " + ruokaID);
-        Cursor ainetiedot = TK.HaeTiedot(lause);
 
-        startManagingCursor(ainetiedot);
-        //Muuttujien alustaminen
-        View temp;
-        ImageView kaappiBtn;
-        ImageView listBtn;
-        ImageView reseptiBtn;
-        ImageView ibu;
-        TextView teksti;
         HorizontalListView rulla1 = (HorizontalListView) findViewById(R.id.rullakontti1);
-        LinearLayout rulla2 = (LinearLayout) findViewById(R.id.rullakontti2);
-
-
-        if (rulla2.getChildCount() > 0)
-            rulla2.removeAllViews();
+        HorizontalListView rulla2 = (HorizontalListView) findViewById(R.id.rullakontti2);
 
 
         //Ainesten täyttäminen
-
+        String lause = ("SELECT kuva _id FROM AineKanta AK, ReseptiKanta RK WHERE AK.aineID IS RK.aineID AND RK.RuokaID IS " + ruokaID);
+        Cursor ainetiedot = TK.HaeTiedot(lause);
+        startManagingCursor(ainetiedot);
         String[] columns = new String[]{"_id"};
         int[] viewIDs = new int[]{R.id.ikoni};
         SimpleCursorAdapter filleri = new SimpleCursorAdapter(this, R.layout.ikoni, ainetiedot, columns, viewIDs, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
-
         rulla1.setAdapter(filleri);
 
-       // while (ainetiedot.moveToNext()) {
-          //  temp = getLayoutInflater().inflate(R.layout.ikoni, rulla1, false);
-          //  ibu = (ImageView) temp.findViewById(R.id.ikoni);
-           // ibu.setImageResource(getResources().getIdentifier(ainetiedot.getString(0), "drawable", getPackageName()));
-           // rulla1.addView(temp);
-       // }
         Log.d("aineviive", (System.currentTimeMillis() - viive) + "");
 
-        //Välineitten täyttäminen
-        int testiarvo = 1;
-        int tarvikearvo = ruokatiedot.getInt(1);
-        String tarvikenimet[] = {"paistinpannu", "kattila", "uuni", "kulho", "puukko", "uunivuoka", "piirakkavuoka", "kakkuvuoka", "irtopohjavuoka", "sauvasekoitin", "sahkovatkain", "tehosekoitin", "yleiskone", "vispila", "kaulin", "siivila", "raastinrauta", "grilli", "lihanuija", "avotuli", "mehustin", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""};
 
-        for (int k = 0; k < 33; k++) {
-            if ((testiarvo & tarvikearvo) != 0) {
-                temp = getLayoutInflater().inflate(R.layout.ikoni, rulla2, false);
-                ibu = (ImageView) temp.findViewById(R.id.ikoni);
-                ibu.setImageResource(getResources().getIdentifier(tarvikenimet[k], "drawable", getPackageName()));
-                rulla2.addView(temp);
-            }
-            testiarvo *= 2;
-        }
+
+        String lause2 = ("SELECT kuva _id FROM ValineKuvaKanta");
+        Cursor valinekuvat = TK.HaeTiedot(lause2);
+        String[] columns2 = new String[]{"_id"};
+        int[] viewIDs2 = new int[]{R.id.ikoni};
+        SimpleCursorAdapter filleri2 = new SimpleCursorAdapter(this, R.layout.ikoni, valinekuvat, columns2, viewIDs2, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
+        rulla2.setAdapter(filleri2);
+
+
+
         Log.d("välineviive", (System.currentTimeMillis() - viive) + "");
 
         //Nippelitiedon täyttäminen

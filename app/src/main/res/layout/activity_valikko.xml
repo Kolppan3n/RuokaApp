@@ -76,17 +76,11 @@
                 android:text="Valmistus Välineet"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
-            <HorizontalScrollView
-                android:id="@+id/horizontalScrollView2"
+            <com.example.co1200679.ruokaapp.HorizontalListView
+                android:id="@+id/rullakontti2"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent">
-
-                <LinearLayout
-                    android:id="@+id/rullakontti2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="fill_parent"
-                    android:orientation="horizontal" />
-            </HorizontalScrollView>
+            </com.example.co1200679.ruokaapp.HorizontalListView>
 
         </LinearLayout>
 
