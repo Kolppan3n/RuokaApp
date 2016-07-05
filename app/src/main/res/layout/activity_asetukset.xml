@@ -36,7 +36,7 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
-        android:text="SELECT ruoka nimi, ruokaID _id, kuva, 1 AS moodi  FROM RuokaKanta"
+        android:text="SELECT valineID nimi, valineID _id, kuva, 1 AS moodi  FROM ValineKuvaKanta"
         android:id="@+id/SQLKysely"
         android:layout_below="@+id/button3"
         android:layout_alignParentStart="true"

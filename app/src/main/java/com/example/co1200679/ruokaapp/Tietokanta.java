@@ -157,11 +157,11 @@ public class Tietokanta extends SQLiteOpenHelper {
     public void LaitaTarvikkeet() {
 
         String tarvikenimet[] = {"paistinpannu", "kattila", "uuni", "kulho", "puukko", "uunivuoka", "piirakkavuoka", "kakkuvuoka", "irtopohjavuoka", "sauvasekoitin", "sahkovatkain",
-                "tehosekoitin", "yleiskone", "vispila", "kaulin", "siivila", "raastinrauta", "grilli", "lihanuija", "avotuli", "mehustin", "", "", "", "", "", "", "", "", "", "", "",
-                "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""};
+                "tehosekoitin", "yleiskone", "vispila", "kaulin", "siivila", "raastinrauta", "grilli", "lihanuija", "avotuli", "mehustin","","","","","","","","","",""};
+
 
         int tarvikearvo = 1;
-        for (int k = 0; k < 33; k++) {
+        for (int k = 0; k < 31; k++) {
             ContentValues tiedot = new ContentValues();
             int kuvaid = this.context.getResources().getIdentifier(tarvikenimet[k], "drawable", this.context.getPackageName());
             if (kuvaid == 0)
