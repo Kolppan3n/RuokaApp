@@ -36,7 +36,7 @@ public class Valikko extends AppCompatActivity {
     Tietokanta TK;
     int ruokaID;
     long viive;
-  
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,9 +58,7 @@ public class Valikko extends AppCompatActivity {
         Log.d("otsikon viiveet", (System.currentTimeMillis() - viive) + "");
         //Alustaa sisällön
         alustus(ruokatiedot);
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+      
     }
 
     public void alustus(Cursor ruokatiedot) {
@@ -80,9 +78,9 @@ public class Valikko extends AppCompatActivity {
 
         Log.d("aineviive", (System.currentTimeMillis() - viive) + "");
 
+        int tarvikearvo = ruokatiedot.getInt(1);
 
-
-        String lause2 = ("SELECT kuva _id FROM ValineKuvaKanta");
+        String lause2 = ("SELECT kuva _id FROM ValineKuvaKanta WHERE valineID & " + tarvikearvo);
         Cursor valinekuvat = TK.HaeTiedot(lause2);
         String[] columns2 = new String[]{"_id"};
         int[] viewIDs2 = new int[]{R.id.ikoni};
