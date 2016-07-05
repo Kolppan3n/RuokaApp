@@ -2,7 +2,6 @@ package com.example.co1200679.ruokaapp;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -30,7 +29,7 @@ public class Asetukset extends AppCompatActivity {
 
     public void SQLNappi(View view) {
         TextView hermanni = (TextView) findViewById(R.id.SQLKysely);
-        String lause =  hermanni.getText().toString();
+        String lause = hermanni.getText().toString();
         Intent intent = new Intent(this, Liukuvalikko.class);
         intent.putExtra("sqlqry", lause);
         intent.putExtra("moodi", 1);

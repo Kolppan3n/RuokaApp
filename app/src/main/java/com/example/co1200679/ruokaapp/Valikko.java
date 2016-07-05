@@ -1,34 +1,15 @@
 package com.example.co1200679.ruokaapp;
 
-import android.app.Fragment;
+
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
-import android.media.Image;
-import android.net.Uri;
-import android.support.v4.media.MediaMetadataCompat;
-import android.support.v4.util.SimpleArrayMap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.util.Log;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.CursorAdapter;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.common.api.GoogleApiClient;
 
 public class Valikko extends AppCompatActivity {
 
@@ -82,7 +63,7 @@ public class Valikko extends AppCompatActivity {
         String lause2 = ("SELECT kuva _id FROM ValineKuvaKanta WHERE valineID & " + tarvikearvo);
         Cursor valinekuvat = TK.HaeTiedot(lause2);
         startManagingCursor(valinekuvat);
-        
+
         String[] columns2 = new String[]{"_id"};
         int[] viewIDs2 = new int[]{R.id.ikoni};
         SimpleCursorAdapter filleri2 = new SimpleCursorAdapter(this, R.layout.ikoni, valinekuvat, columns2, viewIDs2, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
