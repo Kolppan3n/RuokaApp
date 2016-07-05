@@ -8,9 +8,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.CursorAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,10 +49,10 @@ public class Valikko extends AppCompatActivity {
 
     public void alustus(Cursor ruokatiedot) {
         //Kursorin alustaminen
-        String lause = ("SELECT kuva FROM AineKanta AK, ReseptiKanta RK WHERE AK.aineID IS RK.aineID AND RK.RuokaID IS " + ruokaID);
+        String lause = ("SELECT kuva _id FROM AineKanta AK, ReseptiKanta RK WHERE AK.aineID IS RK.aineID AND RK.RuokaID IS " + ruokaID);
         Cursor ainetiedot = TK.HaeTiedot(lause);
 
-
+        startManagingCursor(ainetiedot);
         //Muuttujien alustaminen
         View temp;
         ImageView kaappiBtn;
@@ -57,23 +60,28 @@ public class Valikko extends AppCompatActivity {
         ImageView reseptiBtn;
         ImageView ibu;
         TextView teksti;
-        LinearLayout rulla1 = (LinearLayout) findViewById(R.id.rullakontti1);
+        HorizontalListView rulla1 = (HorizontalListView) findViewById(R.id.rullakontti1);
         LinearLayout rulla2 = (LinearLayout) findViewById(R.id.rullakontti2);
 
-        //Tyhjentää aineet ja välineet
-        if (rulla1.getChildCount() > 0)
-            rulla1.removeAllViews();
+
         if (rulla2.getChildCount() > 0)
             rulla2.removeAllViews();
 
 
         //Ainesten täyttäminen
-        while (ainetiedot.moveToNext()) {
-            temp = getLayoutInflater().inflate(R.layout.ikoni, rulla1, false);
-            ibu = (ImageView) temp.findViewById(R.id.ikoni);
-            ibu.setImageResource(getResources().getIdentifier(ainetiedot.getString(0), "drawable", getPackageName()));
-            rulla1.addView(temp);
-        }
+
+        String[] columns = new String[]{"_id"};
+        int[] viewIDs = new int[]{R.id.ikoni};
+        SimpleCursorAdapter filleri = new SimpleCursorAdapter(this, R.layout.ikoni, ainetiedot, columns, viewIDs, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
+
+        rulla1.setAdapter(filleri);
+
+       // while (ainetiedot.moveToNext()) {
+          //  temp = getLayoutInflater().inflate(R.layout.ikoni, rulla1, false);
+          //  ibu = (ImageView) temp.findViewById(R.id.ikoni);
+           // ibu.setImageResource(getResources().getIdentifier(ainetiedot.getString(0), "drawable", getPackageName()));
+           // rulla1.addView(temp);
+       // }
         Log.d("aineviive", (System.currentTimeMillis() - viive) + "");
 
         //Välineitten täyttäminen
@@ -139,6 +147,10 @@ public class Valikko extends AppCompatActivity {
         } else viesti = "Kaikki aineet löytyy!";
 
         Toast.makeText(Valikko.this, viesti, Toast.LENGTH_LONG).show();
+    }
+
+    public void kulutaAineet() {
+        String lause = ("SELECT aine _id, lkm, mitta FROM AineKanta AK, ReseptiKanta RK WHERE AK.aineID IS RK.aineID AND RK.RuokaID IS " + ruokaID);
     }
 
     public void lisaaListaan() {

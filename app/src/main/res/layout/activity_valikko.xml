@@ -52,18 +52,14 @@
                 android:text="Ainesosat"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
-            <HorizontalScrollView
-                android:id="@+id/horizontalScrollView"
+
+
+            <com.example.co1200679.ruokaapp.HorizontalListView
+                android:id="@+id/rullakontti1"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:fillViewport="false">
+                />
 
-                <LinearLayout
-                    android:id="@+id/rullakontti1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="fill_parent"
-                    android:orientation="horizontal" />
-            </HorizontalScrollView>
         </LinearLayout>
 
         <LinearLayout
