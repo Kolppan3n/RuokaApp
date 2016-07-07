@@ -127,6 +127,7 @@ public class ToolbarFragment extends Fragment {
                 Liukuvalikko Lvalikko = (Liukuvalikko) getActivity();
                 RelativeLayout rela = (RelativeLayout) Lvalikko.findViewById(R.id.liukuRela);
 
+                if (Lvalikko.moodi == 0 || Lvalikko.moodi == 1) {
                     if (Lvalikko.muutaPlussa() == 1) {
                         item.setIcon(R.drawable.menuselaustila);
                         rela.setBackgroundColor(getResources().getColor(R.color.colorBackground2));
@@ -134,7 +135,17 @@ public class ToolbarFragment extends Fragment {
                         item.setIcon(R.drawable.menulisaustila);
                         rela.setBackgroundColor(getResources().getColor(R.color.colorBackground));
                     }
-                
+                }
+                else{
+                    if (Lvalikko.muutaPlussa() == 1) {
+                        item.setIcon(R.drawable.menuselaustila);
+                        rela.setBackgroundColor(getResources().getColor(R.color.colorBackground2));
+                    } else {
+                        item.setIcon(R.drawable.menupoistotila);
+                        rela.setBackgroundColor(getResources().getColor(R.color.colorBackground));
+                    }
+                }
+
                 break;
             }
 
