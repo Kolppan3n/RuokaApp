@@ -3,7 +3,9 @@ package com.example.co1200679.ruokaapp;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
+import android.graphics.Paint;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -13,7 +15,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 public class Liukuvalikko extends AppCompatActivity {
 
@@ -83,20 +88,32 @@ public class Liukuvalikko extends AppCompatActivity {
                 int moodi = temp.getMoodi();
                 int ID = temp.getID();
 
-                if (moodi == 0) {
-                    avaaRuuat(ID);
-                }
+                switch (moodi) {
 
-                if (moodi == 1) {
-                    Intent intent = new Intent(Liukuvalikko.this, Kokkausohjeet.class);
-                    intent.putExtra("ruokaID", ID);
-                    startActivity(intent);
-                }
+                    case 0: {
+                        avaaRuuat(ID);
+                        break;
+                    }
+                    case 1: {
+                        Intent intent = new Intent(Liukuvalikko.this, Kokkausohjeet.class);
+                        intent.putExtra("ruokaID", ID);
+                        startActivity(intent);
+                        break;
+                    }
 
+                    case 3: {
+
+                        break;
+                    }
+
+                    default:
+                        Log.d("Herp", "Derp");
+                }
 
                 return false;
             }
         });
+
         valikko.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
@@ -131,6 +148,17 @@ public class Liukuvalikko extends AppCompatActivity {
                     if (moodi == 2) {
                         view.setBackgroundColor(KaappiVari(0.5F));
                     }
+                    if (moodi == 3) {
+                        if (temp.getTag().equals("")) {
+                            temp.setTextColor(ContextCompat.getColor(Liukuvalikko.this, R.color.colorTextSecondary));
+                            temp.setPaintFlags(temp.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                            temp.setTag("Checked");
+                        } else {
+                            temp.setTextColor(ContextCompat.getColor(Liukuvalikko.this, R.color.colorTextPrimary));
+                            temp.setPaintFlags(temp.getPaintFlags() & (~ Paint.STRIKE_THRU_TEXT_FLAG));
+                            temp.setTag("");
+                        }
+                    }
                 } else {
                     String nimi = temp.getNimi();
                     if (moodi == 0) {
@@ -157,6 +185,7 @@ public class Liukuvalikko extends AppCompatActivity {
                     }return true;}
             });*/
 
+
     public void avaaRuuat(int ID) {
 
         Cursor lasku = TK.HaeTiedot("SELECT count(ruokaID) AS luku FROM ReseptiKanta WHERE aineID IS " + ID);
@@ -173,6 +202,7 @@ public class Liukuvalikko extends AppCompatActivity {
         }
     }
 
+
     public void laitaListaan(int aineID, int maara) {
         Cursor lasku = TK.HaeTiedot("SELECT count(aineID) AS luku, kpl FROM OstosKanta WHERE aineID IS " + aineID);
         lasku.moveToNext();
@@ -185,6 +215,7 @@ public class Liukuvalikko extends AppCompatActivity {
         }
         lasku.close();
     }
+
 
     public void laitaRuokaListaan(int ID, String nimi) {
 
@@ -200,6 +231,7 @@ public class Liukuvalikko extends AppCompatActivity {
 
     }
 
+
     public int KaappiVari(float prosentti) {
         int color = getResources().getColor(R.color.colorRed);
         if (prosentti > 0.25) {
@@ -213,6 +245,7 @@ public class Liukuvalikko extends AppCompatActivity {
         }
         return color;
     }
+
 
     public void ostoksetKaappiin() {
         String lause = ("SELECT AK.aineID, maara,kpl, pakkauskoko FROM KaappiKanta KK, AineKanta AK , OstosKanta OK WHERE AK.aineID IS KK.aineID AND AK.aineID IS OK.aineID AND OK.aineID IN (SELECT aineID FROM OstosKanta)");
@@ -246,6 +279,7 @@ public class Liukuvalikko extends AppCompatActivity {
         listatiedot.close();
     }
 
+
     public void ruokaMahdollisuudetKaapinAineksista() {
         Intent intent = new Intent(this, Liukuvalikko.class);
         String lause = ("SELECT ruoka nimi, ruokaID _id, kuva, 1 AS moodi  FROM RuokaKanta WHERE ruokaID NOT IN (SELECT ruokaID FROM ReseptiKanta WHERE aineID NOT IN (SELECT aineID FROM KaappiKanta))");
@@ -253,6 +287,7 @@ public class Liukuvalikko extends AppCompatActivity {
         intent.putExtra("moodi", 1);
         startActivity(intent);
     }
+
 
     public void varauksetOstoksiksi() {
         //Ostoslistalle sopiva määrä aineita, joita ei ole valmiiksi kaapissa
@@ -287,6 +322,7 @@ public class Liukuvalikko extends AppCompatActivity {
 
     }
 
+
     public void laitaVaraus(int aineID, float maara) {
         Cursor lasku = TK.HaeTiedot("SELECT count(aineID) AS luku, maara FROM VarausKanta WHERE aineID IS " + aineID);
         lasku.moveToNext();
@@ -297,9 +333,8 @@ public class Liukuvalikko extends AppCompatActivity {
             TK.VaraaLisaa(aineID, lasku.getFloat(1) + maara);
         }
         lasku.close();
-
-
     }
+
 
     public int muutaPlussa() {
         plussa ^= 1;
