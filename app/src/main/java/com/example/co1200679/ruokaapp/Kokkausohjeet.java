@@ -61,9 +61,9 @@ public class Kokkausohjeet extends AppCompatActivity {
     public void fillListView() {
 
         String lause = ("SELECT aine _id, PRINTF('%g', lkm)|| ' ' || mitta AS ainemitta FROM AineKanta AK, ReseptiKanta RK WHERE AK.aineID IS RK.aineID AND toiminta IS 0 AND RK.RuokaID IS " + ruokaID
-                +" UNION ALL SELECT aine _id, '' AS ainemitta FROM AineKanta AK, ReseptiKanta RK WHERE AK.aineID IS RK.aineID AND toiminta & 1 AND RK.RuokaID IS " + ruokaID
-        + " UNION ALL SELECT 'Valinnaiset aineet:' as _id, '' AS ainemitta WHERE 2 IN (SELECT toiminta FROM ReseptiKanta WHERE ruokaID IS "+ruokaID + ")"+
-                " UNION ALL SELECT aine _id, '' AS ainemitta FROM AineKanta AK, ReseptiKanta RK WHERE AK.aineID IS RK.aineID AND toiminta & 2 AND RK.RuokaID IS " + ruokaID);
+                + " UNION ALL SELECT aine _id, '' AS ainemitta FROM AineKanta AK, ReseptiKanta RK WHERE AK.aineID IS RK.aineID AND toiminta & 1 AND RK.RuokaID IS " + ruokaID
+                + " UNION ALL SELECT 'Valinnaiset aineet:' as _id, '' AS ainemitta WHERE 2 IN (SELECT toiminta FROM ReseptiKanta WHERE ruokaID IS " + ruokaID + ")"
+                + " UNION ALL SELECT aine _id, '' AS ainemitta FROM AineKanta AK, ReseptiKanta RK WHERE AK.aineID IS RK.aineID AND toiminta & 2 AND RK.RuokaID IS " + ruokaID);
         final Cursor tiedot = TK.HaeTiedot(lause);
 
         ListView kontti = (ListView) findViewById(R.id.ainesKontti);

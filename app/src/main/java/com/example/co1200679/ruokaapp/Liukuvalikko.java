@@ -219,7 +219,7 @@ public class Liukuvalikko extends AppCompatActivity {
 
     public void laitaRuokaListaan(int ID, String nimi) {
 
-        String lause = ("SELECT aineID, ruokaID,lkm FROM ReseptiKanta WHERE RuokaID IS " + ID);
+        String lause = ("SELECT aineID, ruokaID,lkm , toiminta FROM ReseptiKanta WHERE NOT toiminta & 6 AND RuokaID IS " + ID);
         Cursor listatiedot = TK.HaeTiedot(lause);
 
         while (listatiedot.moveToNext()) {
@@ -282,7 +282,7 @@ public class Liukuvalikko extends AppCompatActivity {
 
     public void ruokaMahdollisuudetKaapinAineksista() {
         Intent intent = new Intent(this, Liukuvalikko.class);
-        String lause = ("SELECT ruoka nimi, ruokaID _id, kuva, 1 AS moodi  FROM RuokaKanta WHERE ruokaID NOT IN (SELECT ruokaID FROM ReseptiKanta WHERE aineID NOT IN (SELECT aineID FROM KaappiKanta))");
+        String lause = ("SELECT ruoka nimi, ruokaID _id, kuva, 1 AS moodi  FROM RuokaKanta WHERE ruokaID NOT IN (SELECT ruokaID FROM ReseptiKanta WHERE NOT toiminta & 6 AND aineID NOT IN (SELECT aineID FROM KaappiKanta))");
         intent.putExtra("sqlqry", lause);
         intent.putExtra("moodi", 1);
         startActivity(intent);

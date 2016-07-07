@@ -48,7 +48,7 @@ public class Valikko extends AppCompatActivity {
         HorizontalListView rulla2 = (HorizontalListView) findViewById(R.id.rullakontti2);
 
         //Ainesten täyttäminen
-        String lause = ("SELECT kuva _id FROM AineKanta AK, ReseptiKanta RK WHERE AK.aineID IS RK.aineID AND RK.RuokaID IS " + ruokaID);
+        String lause = ("SELECT kuva _id FROM AineKanta AK, ReseptiKanta RK WHERE NOT toiminta & 6 AND AK.aineID IS RK.aineID AND RK.RuokaID IS " + ruokaID);
         Cursor ainetiedot = TK.HaeTiedot(lause);
         startManagingCursor(ainetiedot);
 
