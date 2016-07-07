@@ -1,10 +1,8 @@
 package com.example.co1200679.ruokaapp;
 
 import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
@@ -29,7 +27,7 @@ public class Kokkausohjeet extends AppCompatActivity {
         Cursor tiedot = TK.HaeTiedot(lause);
         tiedot.moveToNext();
         loadRecipe(tiedot);
-        fillScrollView();
+        fillListView();
     }
 
     public void loadRecipe(Cursor tiedot) {
@@ -60,9 +58,11 @@ public class Kokkausohjeet extends AppCompatActivity {
         listView.requestLayout();
     }
 
-    public void fillScrollView() {
+    public void fillListView() {
 
-        String lause = ("SELECT aine _id, lkm || ' ' || mitta AS ainemitta FROM AineKanta AK, ReseptiKanta RK WHERE AK.aineID IS RK.aineID AND RK.RuokaID IS " + ruokaID);
+        String lause = ("SELECT aine _id, PRINTF('%g', lkm)|| ' ' || mitta AS ainemitta FROM AineKanta AK, ReseptiKanta RK WHERE AK.aineID IS RK.aineID AND RK.RuokaID IS " + ruokaID
+                +" UNION ALL SELECT 'vesi' AS _id, '' AS ainemitta FROM AineKanta AK, ReseptiKanta RK WHERE AK.aineID IS RK.aineID AND RK.RuokaID IS " + ruokaID
+        + " UNION ALL SELECT 'Valinnaiset aineet:' as _id, '' AS ainemitta UNION ALL SELECT 'Suola' as _id, '' AS ainemitta");
         final Cursor tiedot = TK.HaeTiedot(lause);
 
         ListView kontti = (ListView) findViewById(R.id.ainesKontti);
