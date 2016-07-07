@@ -67,7 +67,7 @@ public class Kirjastonhoitaja extends AsyncTask<Void, Void, Void> {
 
             for (int k = 0; k < reseptit.length(); k++) {
                 JSONObject JO = reseptit.getJSONObject(k);
-                TK.LaitaResepti(JO.getInt("kantaID"), JO.getInt("ruokaID"), JO.getInt("aineID"), (float) JO.getDouble("kpl"));
+                TK.LaitaResepti(JO.getInt("kantaID"), JO.getInt("ruokaID"), JO.getInt("aineID"), (float) JO.getDouble("kpl"),JO.getInt("toiminta"));
             }
         } catch (MalformedURLException e) {
             e.printStackTrace();

@@ -23,7 +23,7 @@ public class Tietokanta extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table RuokaKanta (ruoka TEXT NOT NULL,ruokaID INTEGER PRIMARY KEY, resepti TEXT ,kuva INT,aika INTEGER,taso INTEGER,tarvikkeet INTEGER)");
-        db.execSQL("create table ReseptiKanta (kantaID INTEGER PRIMARY KEY,ruokaID INTEGER NOT NULL, aineID INTEGER NOT NULL,lkm FLOAT NOT NULL)");
+        db.execSQL("create table ReseptiKanta (kantaID INTEGER PRIMARY KEY,ruokaID INTEGER NOT NULL, aineID INTEGER NOT NULL,lkm FLOAT NOT NULL, toiminta INT NOT NULL)");
         db.execSQL("create table AineKanta (aine TEXT NOT NULL, aineID INTEGER PRIMARY KEY,edellinenID INTEGER NOT NULL ,kuva INT ,mitta TEXT,pakkauskoko FLOAT)");
 
         db.execSQL("create table KaappiKanta (aineID INTEGER UNIQUE, maara FLOAT)");
@@ -69,12 +69,13 @@ public class Tietokanta extends SQLiteOpenHelper {
         db.update("AineKanta", tiedot, ("aineID is " + aineID), null);
     }
 
-    public void LaitaResepti(int kantaID, int ruokaID, int aineID, float lkm) {
+    public void LaitaResepti(int kantaID, int ruokaID, int aineID, float lkm, int toiminta) {
         ContentValues tiedot = new ContentValues();
         tiedot.put("kantaID", kantaID);
         tiedot.put("ruokaID", ruokaID);
         tiedot.put("aineID", aineID);
         tiedot.put("lkm", lkm);
+        tiedot.put("toiminta", toiminta);
         db.insert("ReseptiKanta", null, tiedot);
         db.update("ReseptiKanta", tiedot, ("kantaID is " + kantaID), null);
         if (lkm == 0.0F) {
@@ -156,7 +157,7 @@ public class Tietokanta extends SQLiteOpenHelper {
     public void LaitaTarvikkeet() {
 
         String tarvikenimet[] = {"paistinpannu", "kattila", "uuni", "kulho", "puukko", "uunivuoka", "piirakkavuoka", "kakkuvuoka", "irtopohjavuoka", "sauvasekoitin", "sahkovatkain",
-                "tehosekoitin", "yleiskone", "vispila", "kaulin", "siivila", "raastinrauta", "grilli", "lihanuija", "avotuli", "mehustin","","","","","","","","","",""};
+                "tehosekoitin", "yleiskone", "vispila", "kaulin", "siivila", "raastinrauta", "grilli", "lihanuija", "avotuli", "mehustin","","","","","","","","","","tomaatti"};
 
         int errori = this.context.getResources().getIdentifier("errori", "drawable", this.context.getPackageName());
         int tarvikearvo = 1;
