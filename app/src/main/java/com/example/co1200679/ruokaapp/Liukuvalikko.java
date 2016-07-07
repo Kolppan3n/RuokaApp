@@ -105,6 +105,10 @@ public class Liukuvalikko extends AppCompatActivity {
 
                         break;
                     }
+                    case 4: {
+                        poistaListasta(ID);
+                        break;
+                    }
 
                     default:
                         Log.d("Herp", "Derp");
@@ -122,57 +126,63 @@ public class Liukuvalikko extends AppCompatActivity {
                 ItemInfo temp = (ItemInfo) view.findViewById(R.id.teksti);
                 int moodi = temp.getMoodi();
                 int ID = temp.getID();
+                String nimi = temp.getNimi();
 
-                if (plussa == 0) {
-                    if (moodi == 0) {
-                        Cursor lasku = TK.HaeTiedot("SELECT count(aineID) AS luku FROM AineKanta WHERE edellinenID IS " + ID);
-                        lasku.moveToNext();
+                switch (moodi) {
 
-                        if (lasku.getInt(0) == 0) {
-                            lasku.close();
-                            avaaRuuat(ID);
+                    case 0: {
+                        if (plussa == 0) {
+                            Cursor lasku = TK.HaeTiedot("SELECT count(aineID) AS luku FROM AineKanta WHERE edellinenID IS " + ID);
+                            lasku.moveToNext();
+
+                            if (lasku.getInt(0) == 0) {
+                                lasku.close();
+                                avaaRuuat(ID);
+                            } else {
+                                Intent intent = new Intent(Liukuvalikko.this, Liukuvalikko.class);
+                                String lause = ("SELECT aine nimi, aineID _id, kuva, " + moodi + " as moodi FROM AineKanta WHERE edellinenID is " + ID);
+                                intent.putExtra("sqlqry", lause);
+                                intent.putExtra("moodi", 0);
+                                lasku.close();
+                                startActivity(intent);
+                            }
                         } else {
-                            Intent intent = new Intent(Liukuvalikko.this, Liukuvalikko.class);
-                            String lause = ("SELECT aine nimi, aineID _id, kuva, " + moodi + " as moodi FROM AineKanta WHERE edellinenID is " + ID);
-                            intent.putExtra("sqlqry", lause);
-                            intent.putExtra("moodi", 0);
-                            lasku.close();
-                            startActivity(intent);
+                            laitaListaan(ID, 1);
+                            Toast.makeText(Liukuvalikko.this, nimi + " lisättiin ostoslistalle", Toast.LENGTH_SHORT).show();
                         }
+                        break;
                     }
-                    if (moodi == 1) {
-                        Intent intent = new Intent(Liukuvalikko.this, Valikko.class);
-                        intent.putExtra("ruokaID", ID);
-                        startActivity(intent);
+                    case 1: {
+                        if (plussa == 0) {
+                            Intent intent = new Intent(Liukuvalikko.this, Valikko.class);
+                            intent.putExtra("ruokaID", ID);
+                            startActivity(intent);
+                        } else {
+                            laitaRuokaListaan(ID, nimi);
+                        }
+                        break;
                     }
-                    if (moodi == 2) {
-                        view.setBackgroundColor(KaappiVari(0.5F));
-                    }
-                    if (moodi == 3) {
+
+                    case 3: {
                         if (temp.getTag().equals("")) {
                             temp.setTextColor(ContextCompat.getColor(Liukuvalikko.this, R.color.colorTextSecondary));
                             temp.setPaintFlags(temp.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                             temp.setTag("Checked");
                         } else {
                             temp.setTextColor(ContextCompat.getColor(Liukuvalikko.this, R.color.colorTextPrimary));
-                            temp.setPaintFlags(temp.getPaintFlags() & (~ Paint.STRIKE_THRU_TEXT_FLAG));
+                            temp.setPaintFlags(temp.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
                             temp.setTag("");
                         }
+                        break;
                     }
-                } else {
-                    String nimi = temp.getNimi();
-                    if (moodi == 0) {
-                        laitaListaan(ID, 1);
-                        Toast.makeText(Liukuvalikko.this, nimi + " lisättiin ostoslistalle", Toast.LENGTH_SHORT).show();
+                    case 4: {
+                        break;
                     }
-
-                    if (moodi == 1) {
-                        laitaRuokaListaan(ID, nimi);
-                    }
+                    default:
+                        Log.d("Herp", "Derp");
                 }
             }
         });
-        Log.d("Listan täyttö kesti", (System.currentTimeMillis() - viive) + " millisekunttia");
     }
 
 /*          item.setOnTouchListener(new OnSwipeTouchListener(item) {
@@ -203,6 +213,11 @@ public class Liukuvalikko extends AppCompatActivity {
     }
 
 
+    public int muutaPlussa() {
+        plussa ^= 1;
+        return plussa;
+    }
+
     public void laitaListaan(int aineID, int maara) {
         Cursor lasku = TK.HaeTiedot("SELECT count(aineID) AS luku, kpl FROM OstosKanta WHERE aineID IS " + aineID);
         lasku.moveToNext();
@@ -215,7 +230,6 @@ public class Liukuvalikko extends AppCompatActivity {
         }
         lasku.close();
     }
-
 
     public void laitaRuokaListaan(int ID, String nimi) {
 
@@ -231,6 +245,18 @@ public class Liukuvalikko extends AppCompatActivity {
 
     }
 
+    public void laitaVaraus(int aineID, float maara) {
+        Cursor lasku = TK.HaeTiedot("SELECT count(aineID) AS luku, maara FROM VarausKanta WHERE aineID IS " + aineID);
+        lasku.moveToNext();
+
+        if (lasku.getInt(0) == 0) {
+            TK.LaitaVaraus(aineID, maara);
+        } else {
+            TK.VaraaLisaa(aineID, lasku.getFloat(1) + maara);
+        }
+        lasku.close();
+    }
+
 
     public int KaappiVari(float prosentti) {
         int color = getResources().getColor(R.color.colorRed);
@@ -244,6 +270,14 @@ public class Liukuvalikko extends AppCompatActivity {
             } else color = getResources().getColor(R.color.colorOrange);
         }
         return color;
+    }
+
+    public void ruokaMahdollisuudetKaapinAineksista() {
+        Intent intent = new Intent(this, Liukuvalikko.class);
+        String lause = ("SELECT ruoka nimi, ruokaID _id, kuva, 1 AS moodi  FROM RuokaKanta WHERE ruokaID NOT IN (SELECT ruokaID FROM ReseptiKanta WHERE NOT toiminta & 6 AND aineID NOT IN (SELECT aineID FROM KaappiKanta))");
+        intent.putExtra("sqlqry", lause);
+        intent.putExtra("moodi", 1);
+        startActivity(intent);
     }
 
 
@@ -279,15 +313,9 @@ public class Liukuvalikko extends AppCompatActivity {
         listatiedot.close();
     }
 
-
-    public void ruokaMahdollisuudetKaapinAineksista() {
-        Intent intent = new Intent(this, Liukuvalikko.class);
-        String lause = ("SELECT ruoka nimi, ruokaID _id, kuva, 1 AS moodi  FROM RuokaKanta WHERE ruokaID NOT IN (SELECT ruokaID FROM ReseptiKanta WHERE NOT toiminta & 6 AND aineID NOT IN (SELECT aineID FROM KaappiKanta))");
-        intent.putExtra("sqlqry", lause);
-        intent.putExtra("moodi", 1);
-        startActivity(intent);
+    public void poistaListasta(int ID) {
+        TK.PoistaListasta(ID);
     }
-
 
     public void varauksetOstoksiksi() {
         //Ostoslistalle sopiva määrä aineita, joita ei ole valmiiksi kaapissa
@@ -322,23 +350,5 @@ public class Liukuvalikko extends AppCompatActivity {
 
     }
 
-
-    public void laitaVaraus(int aineID, float maara) {
-        Cursor lasku = TK.HaeTiedot("SELECT count(aineID) AS luku, maara FROM VarausKanta WHERE aineID IS " + aineID);
-        lasku.moveToNext();
-
-        if (lasku.getInt(0) == 0) {
-            TK.LaitaVaraus(aineID, maara);
-        } else {
-            TK.VaraaLisaa(aineID, lasku.getFloat(1) + maara);
-        }
-        lasku.close();
-    }
-
-
-    public int muutaPlussa() {
-        plussa ^= 1;
-        return plussa;
-    }
 
 }
