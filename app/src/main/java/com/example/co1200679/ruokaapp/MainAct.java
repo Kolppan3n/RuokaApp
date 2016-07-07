@@ -13,10 +13,11 @@ public class MainAct extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        TK = new Tietokanta(this);
+        //TK = new Tietokanta(this);
         //TK.onUpgrade(TK.getReadableDatabase(), 1, 1); //Tällä saadaan tehtyä uusi versio tietokannasta, mutta tiedot poistu
-        kirja = new Kirjastonhoitaja(this);
-        kirja.execute();
+        //kirja = new Kirjastonhoitaja(this);
+        //kirja.execute();
+        //TK.close();
     }
 
     public void AineBtnClick(View view) {

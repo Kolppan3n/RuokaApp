@@ -22,6 +22,7 @@ public class Tietokanta extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        Log.d("uusitietokanta","uusitietokanta");
         db.execSQL("create table RuokaKanta (ruoka TEXT NOT NULL,ruokaID INTEGER PRIMARY KEY, resepti TEXT ,kuva INT,aika INTEGER,taso INTEGER,tarvikkeet INTEGER)");
         db.execSQL("create table ReseptiKanta (kantaID INTEGER PRIMARY KEY,ruokaID INTEGER NOT NULL, aineID INTEGER NOT NULL,lkm FLOAT NOT NULL, toiminta INT NOT NULL)");
         db.execSQL("create table AineKanta (aine TEXT NOT NULL, aineID INTEGER PRIMARY KEY,edellinenID INTEGER NOT NULL ,kuva INT ,mitta TEXT,pakkauskoko FLOAT)");

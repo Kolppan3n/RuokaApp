@@ -25,9 +25,12 @@ public class Kokkausohjeet extends AppCompatActivity {
         ruokaID = getIntent().getIntExtra("ruokaID", 0);
         String lause = ("SELECT ruoka, ruokaID, resepti FROM RuokaKanta WHERE RuokaID IS " + ruokaID);
         Cursor tiedot = TK.HaeTiedot(lause);
+        startManagingCursor(tiedot);
         tiedot.moveToNext();
         loadRecipe(tiedot);
+        tiedot.close();
         fillListView();
+        TK.close();
     }
 
     public void loadRecipe(Cursor tiedot) {
@@ -64,15 +67,15 @@ public class Kokkausohjeet extends AppCompatActivity {
                 + " UNION ALL SELECT aine _id, '' AS ainemitta FROM AineKanta AK, ReseptiKanta RK WHERE AK.aineID IS RK.aineID AND toiminta & 1 AND RK.RuokaID IS " + ruokaID
                 + " UNION ALL SELECT 'Valinnaiset aineet:' as _id, '' AS ainemitta WHERE 2 IN (SELECT toiminta FROM ReseptiKanta WHERE ruokaID IS " + ruokaID + ")"
                 + " UNION ALL SELECT aine _id, '' AS ainemitta FROM AineKanta AK, ReseptiKanta RK WHERE AK.aineID IS RK.aineID AND toiminta & 2 AND RK.RuokaID IS " + ruokaID);
-        final Cursor tiedot = TK.HaeTiedot(lause);
+        final Cursor aineet = TK.HaeTiedot(lause);
 
         ListView kontti = (ListView) findViewById(R.id.ainesKontti);
 
-        startManagingCursor(tiedot);
+        startManagingCursor(aineet);
 
         String[] columns = new String[]{"_id", "ainemitta"};
         int[] viewIDs = new int[]{R.id.aine, R.id.lkm};
-        SimpleCursorAdapter filleri = new SimpleCursorAdapter(this, R.layout.ainesosa, tiedot, columns, viewIDs, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
+        SimpleCursorAdapter filleri = new SimpleCursorAdapter(this, R.layout.ainesosa, aineet, columns, viewIDs, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
 
         kontti.setAdapter(filleri);
         setListViewHeight(kontti);

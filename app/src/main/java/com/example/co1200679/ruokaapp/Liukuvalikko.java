@@ -100,20 +100,16 @@ public class Liukuvalikko extends AppCompatActivity {
                         startActivity(intent);
                         break;
                     }
+                    case 2: {
+                        break;
+                    }
 
                     case 3: {
                         TK.PoistaListasta(ID);
-                        Intent intent = new Intent(Liukuvalikko.this, Liukuvalikko.class);
-                        String lause = "SELECT kpl|| ' X '||aine  AS nimi, AK.aineID _id, kuva,3 AS moodi FROM AineKanta AK, OstosKanta OK WHERE AK.aineID IS OK.aineID";
-                        intent.putExtra("sqlqry", lause);
-                        intent.putExtra("moodi", 3);
-                        startActivity(intent);
+                        populateList("SELECT kpl|| ' X '||aine  AS nimi, AK.aineID _id, kuva,3 AS moodi FROM AineKanta AK, OstosKanta OK WHERE AK.aineID IS OK.aineID");
                         break;
                     }
-                    case 4: {
-                        poistaListasta(ID);
-                        break;
-                    }
+
 
                     default:
                         Log.d("Herp", "Derp");
@@ -166,6 +162,9 @@ public class Liukuvalikko extends AppCompatActivity {
                         }
                         break;
                     }
+                    case 2: {
+                        break;
+                    }
 
                     case 3: {
                         if (temp.getTag().equals("")) {
@@ -177,9 +176,6 @@ public class Liukuvalikko extends AppCompatActivity {
                             temp.setPaintFlags(temp.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
                             temp.setTag("");
                         }
-                        break;
-                    }
-                    case 4: {
                         break;
                     }
                     default:
@@ -315,10 +311,6 @@ public class Liukuvalikko extends AppCompatActivity {
         Toast.makeText(Liukuvalikko.this, "Ostokset laitettu kaappiin ja poistettu listasta", Toast.LENGTH_SHORT).show();
         populateList("SELECT kpl|| ' X '||aine  AS nimi, AK.aineID _id, kuva,3 AS moodi FROM AineKanta AK, OstosKanta OK WHERE AK.aineID IS OK.aineID");
         listatiedot.close();
-    }
-
-    public void poistaListasta(int ID) {
-        TK.PoistaListasta(ID);
     }
 
     public void varauksetOstoksiksi() {
