@@ -102,7 +102,12 @@ public class Liukuvalikko extends AppCompatActivity {
                     }
 
                     case 3: {
-
+                        TK.PoistaListasta(ID);
+                        Intent intent = new Intent(Liukuvalikko.this, Liukuvalikko.class);
+                        String lause = "SELECT kpl|| ' X '||aine  AS nimi, AK.aineID _id, kuva,3 AS moodi FROM AineKanta AK, OstosKanta OK WHERE AK.aineID IS OK.aineID";
+                        intent.putExtra("sqlqry", lause);
+                        intent.putExtra("moodi", 3);
+                        startActivity(intent);
                         break;
                     }
                     case 4: {
