@@ -129,7 +129,6 @@ public class Liukuvalikko extends AppCompatActivity {
                 String nimi = temp.getNimi();
 
                 switch (moodi) {
-
                     case 0: {
                         if (plussa == 0) {
                             Cursor lasku = TK.HaeTiedot("SELECT count(aineID) AS luku FROM AineKanta WHERE edellinenID IS " + ID);
