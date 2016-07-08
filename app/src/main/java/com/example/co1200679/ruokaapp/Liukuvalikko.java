@@ -15,7 +15,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.w3c.dom.Text;
@@ -25,6 +24,21 @@ public class Liukuvalikko extends AppCompatActivity {
     Tietokanta TK;
     int moodi;// AINE = 0 RUUAT = 1 KAAPPI = 2 LISTA = 3
     int plussa;
+    LauseLista LL;
+
+
+    @Override
+    public void onBackPressed() {
+        if (LL.Viimeinen.edellinen == null) {
+            this.finish();
+        }
+        else{
+            LauseMoodi Temp = LL.Takaisin();
+            moodi=Temp.getMoodi();
+            populateList(Temp.getLause());
+        }
+
+}
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,9 +48,13 @@ public class Liukuvalikko extends AppCompatActivity {
         TK = new Tietokanta(this);
         String lause = getIntent().getStringExtra("sqlqry");
         moodi = getIntent().getIntExtra("moodi", 0);
+        LL = new LauseLista();
+        LL.UusiLause(lause,moodi);
+
         plussa = 0;
         if (moodi == 3) varauksetOstoksiksi();
         populateList(lause);
+
 
         ImageView img = (ImageView) this.findViewById(R.id.tilaIkoni);
         if (moodi == 2) {
@@ -139,12 +157,10 @@ public class Liukuvalikko extends AppCompatActivity {
                                 lasku.close();
                                 avaaRuuat(ID);
                             } else {
-                                Intent intent = new Intent(Liukuvalikko.this, Liukuvalikko.class);
                                 String lause = ("SELECT aine nimi, aineID _id, kuva, " + moodi + " as moodi FROM AineKanta WHERE edellinenID is " + ID);
-                                intent.putExtra("sqlqry", lause);
-                                intent.putExtra("moodi", 0);
                                 lasku.close();
-                                startActivity(intent);
+                                LL.UusiLause(lause,0);
+                                populateList(lause);
                             }
                         } else {
                             laitaListaan(ID, 1);
@@ -202,13 +218,10 @@ public class Liukuvalikko extends AppCompatActivity {
         lasku.moveToNext();
 
         if (lasku.getInt(0) != 0) {
-            Intent intent = new Intent(this, Liukuvalikko.class);
             String lause = ("SELECT ruoka nimi, RU.ruokaID _id, kuva, 1 AS moodi FROM RuokaKanta RU, ReseptiKanta RE WHERE RU.ruokaID IS RE.ruokaID AND RE.aineID IS " + ID);
-            intent.putExtra("sqlqry", lause);
-            intent.putExtra("moodi", 1);
             lasku.close();
-            startActivity(intent);
-
+            LL.UusiLause(lause,1);
+            populateList(lause);
         }
     }
 
@@ -273,11 +286,9 @@ public class Liukuvalikko extends AppCompatActivity {
     }
 
     public void ruokaMahdollisuudetKaapinAineksista() {
-        Intent intent = new Intent(this, Liukuvalikko.class);
         String lause = ("SELECT ruoka nimi, ruokaID _id, kuva, 1 AS moodi  FROM RuokaKanta WHERE ruokaID NOT IN (SELECT ruokaID FROM ReseptiKanta WHERE NOT toiminta & 6 AND aineID NOT IN (SELECT aineID FROM KaappiKanta))");
-        intent.putExtra("sqlqry", lause);
-        intent.putExtra("moodi", 1);
-        startActivity(intent);
+        LL.UusiLause(lause,1);
+        populateList(lause);
     }
 
 
