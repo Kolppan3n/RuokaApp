@@ -14,15 +14,25 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
 
-public class OikeaValikko extends Fragment {
+public class FragmentValikko extends Fragment {
 
-    Liukuvalikko2 liukkari = (Liukuvalikko2)getActivity();
+    Liukuvalikko2 liukkari;
+    ListView valikko;
+    Tietokanta TK;
+    int moodi;
+    int plussa;
+    LauseLista LL;
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //return super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_valikko, container, false);
-        view.findViewById(R.id.rela).setBackgroundColor(Color.GREEN);
+        int vari = getArguments().getInt("vari",0);
+        if(vari==1)view.findViewById(R.id.rela).setBackgroundColor(Color.BLUE);
+        else view.findViewById(R.id.rela).setBackgroundColor(Color.GREEN);
+
 
         return view;
     }
@@ -30,20 +40,22 @@ public class OikeaValikko extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        populateList(/*liukkari.lause, liukkari.TK, VasenValikko.this.getActivity()*/);
+
+        TK = new Tietokanta(getContext());
+        valikko = (ListView) this.getActivity().findViewById(R.id.valikko);
+        valikko.setId(valikko.getId()+1);
+        String lause = getArguments().getString("sqlqry");
+        populateList(lause, TK);
     }
 
-    public void populateList(/*String lause, Tietokanta TK, FragmentActivity temp*/) {
+    public void populateList(String lause, Tietokanta TK) {
 
-        FragmentActivity temp = (FragmentActivity) this.getActivity();
-        Tietokanta TK = new Tietokanta(OikeaValikko.this.getActivity());
-        String lause = "SELECT ruoka nimi, ruokaID _id, kuva, 1 AS moodi  FROM RuokaKanta";
         Cursor tiedot = TK.HaeTiedot(lause);
 
         String[] columns = new String[]{"nimi", "kuva"};
         int[] viewIDs = new int[]{R.id.teksti, R.id.ikoni};
-        SimpleCursorAdapter filleri = new SimpleCursorAdapter(OikeaValikko.this.getActivity(), R.layout.valikko_item, tiedot, columns, viewIDs, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
-        ListView valikko = (ListView) temp.findViewById(R.id.valikko);
+        SimpleCursorAdapter filleri = new SimpleCursorAdapter(FragmentValikko.this.getActivity(), R.layout.valikko_item, tiedot, columns, viewIDs, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
         valikko.setAdapter(filleri);
     }
+
 }

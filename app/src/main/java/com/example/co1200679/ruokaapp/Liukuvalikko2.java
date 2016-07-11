@@ -17,10 +17,9 @@ public class Liukuvalikko2 extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_valikko_swapper);
-
         TK = new Tietokanta(this);
-        lause = getIntent().getStringExtra("sqlqry");
-        moodi = getIntent().getIntExtra("moodi", 0);
+
+
         LL = new LauseLista();
         LL.UusiLause(lause, moodi);
         plussa = 0;
