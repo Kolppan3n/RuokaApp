@@ -11,5 +11,12 @@
         android:title="@string/asetuksetToast"
         app:showAsAction="ifRoom" />
 
+    <item
+        android:id="@+id/testi"
+        android:icon="@drawable/ateriat6"
+        android:orderInCategory="100"
+        android:title="YEAH!"
+        app:showAsAction="ifRoom" />
+
 
 </menu>

@@ -122,7 +122,6 @@ public class ToolbarFragment extends Fragment {
                 break;
             }
 
-
             case R.id.tila: {
                 Liukuvalikko Lvalikko = (Liukuvalikko) getActivity();
                 RelativeLayout rela = (RelativeLayout) Lvalikko.findViewById(R.id.liukuRela);
@@ -146,6 +145,15 @@ public class ToolbarFragment extends Fragment {
                     }
                 }
 
+                break;
+            }
+
+            case R.id.testi: {
+                Intent intent = new Intent(this.getActivity(), Liukuvalikko2.class);
+                String lause = "SELECT aine nimi, aineID _id, kuva, 0 AS moodi FROM AineKanta WHERE edellinenID is 0";
+                intent.putExtra("sqlqry", lause);
+                intent.putExtra("moodi", 0);
+                startActivity(intent);
                 break;
             }
 
