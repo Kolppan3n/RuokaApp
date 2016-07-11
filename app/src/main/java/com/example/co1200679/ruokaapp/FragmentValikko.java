@@ -29,10 +29,10 @@ public class FragmentValikko extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //return super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_valikko, container, false);
-        int vari = getArguments().getInt("vari",0);
-        if(vari==1)view.findViewById(R.id.rela).setBackgroundColor(Color.BLUE);
+        int moodi = getArguments().getInt("moodi",0);
+        if(moodi==1)view.findViewById(R.id.rela).setBackgroundColor(Color.BLUE);
         else view.findViewById(R.id.rela).setBackgroundColor(Color.GREEN);
-
+        valikko = (ListView) view.findViewById(R.id.valikko);
 
         return view;
     }
@@ -42,8 +42,6 @@ public class FragmentValikko extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         TK = new Tietokanta(getContext());
-        valikko = (ListView) this.getActivity().findViewById(R.id.valikko);
-        valikko.setId(valikko.getId()+1);
         String lause = getArguments().getString("sqlqry");
         populateList(lause, TK);
     }
