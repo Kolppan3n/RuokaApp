@@ -14,10 +14,10 @@ public class Tietokanta extends SQLiteOpenHelper {
 
     Context context;
 
-    public Tietokanta(Context context) {
-        super(context, DATABASE_NAME, null, 1);
+    public Tietokanta(Context ctx) {
+        super(ctx, DATABASE_NAME, null, 1);
+        this.context = ctx;
         db = this.getReadableDatabase();
-        this.context = context;
     }
 
     @Override
@@ -32,7 +32,7 @@ public class Tietokanta extends SQLiteOpenHelper {
         db.execSQL("create table VarausKanta (aineID INTEGER UNIQUE, maara FLOAT)");
 
         db.execSQL("create table ValineKuvaKanta (valineID INTEGER UNIQUE, kuva INTEGER)");
-        this.LaitaTarvikkeet();
+        LaitaTarvikkeet();
     }
 
     @Override
