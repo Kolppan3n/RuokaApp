@@ -16,14 +16,17 @@ public class Liukuvalikko2 extends FragmentActivity {
     @Override
     public void onBackPressed() {
         int item = pager.getCurrentItem();
-        if(pada.taakse(item));
+        if (pada.taakse(item)) ;
         else {
-            TK.close();
-            this.finish();
+            if (item == 1) pager.setCurrentItem(0);
+            else {
+                TK.close();
+                this.finish();
+            }
         }
     }
 
-    public void avaaRuuat(String lause){
+    public void avaaRuuat(String lause) {
         pager.setCurrentItem(1);
         pada.avaaRuuat(lause);
     }
@@ -36,7 +39,9 @@ public class Liukuvalikko2 extends FragmentActivity {
         TK = new Tietokanta(this);
 
         pager = (ViewPager) findViewById(R.id.pager);
-        pada = new PagerAdapter(getSupportFragmentManager());
+        pada = new PagerAdapter(getSupportFragmentManager(),
+                0,"SELECT aine nimi, aineID _id, kuva, 0 AS moodi FROM AineKanta WHERE edellinenID is 0",
+                1,"SELECT ruoka nimi, ruokaID _id, kuva, 1 AS moodi  FROM RuokaKanta");
         pager.setAdapter(pada);
     }
 

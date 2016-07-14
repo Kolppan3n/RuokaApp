@@ -12,10 +12,19 @@ public class PagerAdapter extends FragmentPagerAdapter {
 
     FragmentValikko vava;
     FragmentValikko ova;
+    int MV;
+    String LV;
+    int MO;
+    String LO;
 
 
-    public PagerAdapter(FragmentManager fm) {
+    public PagerAdapter(FragmentManager fm,int mv, String lv, int mo, String lo) {
         super(fm);
+        MV = mv;
+        LV = lv;
+        MO = mo;
+        LO = lo;
+
     }
 
     @Override
@@ -23,16 +32,16 @@ public class PagerAdapter extends FragmentPagerAdapter {
         switch (position) {
             case 0: {
                 Bundle args = new Bundle();
-                args.putInt("moodi", 0);
-                args.putString("sqlqry", "SELECT aine nimi, aineID _id, kuva, 0 AS moodi FROM AineKanta WHERE edellinenID is 0");
+                args.putInt("moodi", MV);
+                args.putString("sqlqry", LV);
                 vava = new FragmentValikko();
                 vava.setArguments(args);
                 return vava;
             }
             case 1: {
                 Bundle args = new Bundle();
-                args.putInt("moodi", 1);
-                args.putString("sqlqry", "SELECT ruoka nimi, ruokaID _id, kuva, 1 AS moodi  FROM RuokaKanta");
+                args.putInt("moodi", MO);
+                args.putString("sqlqry",LO);
                 ova = new FragmentValikko();
                 ova.setArguments(args);
                 return ova;
