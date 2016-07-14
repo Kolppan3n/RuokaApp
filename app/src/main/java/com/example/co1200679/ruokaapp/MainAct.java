@@ -14,7 +14,7 @@ public class MainAct extends AppCompatActivity {
         TK = new Tietokanta(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        alustaKannat();
+        //alustaKannat();
     }
 
     public void alustaKannat(){

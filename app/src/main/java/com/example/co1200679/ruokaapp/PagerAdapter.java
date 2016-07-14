@@ -10,6 +10,9 @@ import android.util.Log;
 
 public class PagerAdapter extends FragmentPagerAdapter {
 
+    FragmentValikko vava;
+    FragmentValikko ova;
+
 
     public PagerAdapter(FragmentManager fm) {
         super(fm);
@@ -18,19 +21,19 @@ public class PagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         switch (position) {
-            case 0:{
+            case 0: {
                 Bundle args = new Bundle();
-                args.putInt("moodi",0);
-                args.putString("sqlqry","SELECT aine nimi, aineID _id, kuva, 0 AS moodi FROM AineKanta WHERE edellinenID is 0");
-                FragmentValikko vava = new FragmentValikko();
+                args.putInt("moodi", 0);
+                args.putString("sqlqry", "SELECT aine nimi, aineID _id, kuva, 0 AS moodi FROM AineKanta WHERE edellinenID is 0");
+                vava = new FragmentValikko();
                 vava.setArguments(args);
                 return vava;
             }
-            case 1:{
+            case 1: {
                 Bundle args = new Bundle();
-                args.putInt("moodi",1);
-                args.putString("sqlqry","SELECT ruoka nimi, ruokaID _id, kuva, 1 AS moodi  FROM RuokaKanta");
-                FragmentValikko ova = new FragmentValikko();
+                args.putInt("moodi", 1);
+                args.putString("sqlqry", "SELECT ruoka nimi, ruokaID _id, kuva, 1 AS moodi  FROM RuokaKanta");
+                ova = new FragmentValikko();
                 ova.setArguments(args);
                 return ova;
             }
@@ -43,5 +46,26 @@ public class PagerAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         return 2;
+    }
+
+    public boolean taakse(int hermanni) {
+        switch (hermanni) {
+            case 0: {
+                return vava.takaisin();
+            }
+            case 1: {
+                return ova.takaisin();
+            }
+            default:
+                Log.d("Herp", "Derp");
+                return false;
+        }
+    }
+
+
+    public void avaaRuuat(String lause)
+    {
+        ova.LL.UusiLause(lause,1);
+        ova.populateList(lause);
     }
 }
