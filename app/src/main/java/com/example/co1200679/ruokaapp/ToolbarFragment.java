@@ -147,6 +147,12 @@ public class ToolbarFragment extends Fragment {
 
                 break;
             }
+            case R.id.kokkaus:{
+                Kokkausohjeet kokkausohjeet = (Kokkausohjeet) getActivity();
+                kokkausohjeet.kokkaa();
+
+                break;
+            }
 
             case R.id.testi: {
                 Intent intent = new Intent(this.getActivity(), Liukuvalikko2.class);

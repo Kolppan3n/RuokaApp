@@ -16,14 +16,12 @@ public class Valikko extends AppCompatActivity {
     String lause;
     Tietokanta TK;
     int ruokaID;
-    long viive;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_valikko);
 
-        viive = System.currentTimeMillis();
         //Tietokannan ja kursorin luominen
         TK = new Tietokanta(this);
         ruokaID = getIntent().getIntExtra("ruokaID", 0);
@@ -36,7 +34,6 @@ public class Valikko extends AppCompatActivity {
         TextView otsikko;
         otsikko = (TextView) findViewById(R.id.otsikko);
         otsikko.setText(ruokatiedot.getString(0));
-        Log.d("otsikon viiveet", (System.currentTimeMillis() - viive) + "");
         //Alustaa sisällön
         alustus(ruokatiedot);
 
@@ -57,7 +54,6 @@ public class Valikko extends AppCompatActivity {
         SimpleCursorAdapter filleri = new SimpleCursorAdapter(this, R.layout.ikoni, ainetiedot, columns, viewIDs, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
         rulla1.setAdapter(filleri);
 
-        Log.d("aineviive", (System.currentTimeMillis() - viive) + "");
 
         int tarvikearvo = ruokatiedot.getInt(1);
         String lause2 = ("SELECT kuva _id FROM ValineKuvaKanta WHERE valineID & " + tarvikearvo);
@@ -69,7 +65,6 @@ public class Valikko extends AppCompatActivity {
         SimpleCursorAdapter filleri2 = new SimpleCursorAdapter(this, R.layout.ikoni, valinekuvat, columns2, viewIDs2, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
         rulla2.setAdapter(filleri2);
 
-        Log.d("välineviive", (System.currentTimeMillis() - viive) + "");
 
         //Nippelitiedon täyttäminen
         TextView aika = (TextView) findViewById(R.id.aikaTxt);
@@ -87,7 +82,6 @@ public class Valikko extends AppCompatActivity {
         for (int M = 0; M < ruokatiedot.getInt(3); M++) vaikeusmerkit += "\uD83C\uDF5D";
         vaikeusaste.setText(vaikeusmerkit);
 
-        Log.d("kokoviive", (System.currentTimeMillis() - viive) + "");
     }
 
     public void avaaResepti() {

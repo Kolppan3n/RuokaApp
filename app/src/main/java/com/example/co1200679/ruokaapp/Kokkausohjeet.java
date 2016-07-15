@@ -1,8 +1,10 @@
 package com.example.co1200679.ruokaapp;
 
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
@@ -30,7 +32,6 @@ public class Kokkausohjeet extends AppCompatActivity {
         loadRecipe(tiedot);
         tiedot.close();
         fillListView();
-        TK.close();
     }
 
     public void loadRecipe(Cursor tiedot) {
@@ -80,6 +81,17 @@ public class Kokkausohjeet extends AppCompatActivity {
         kontti.setAdapter(filleri);
         setListViewHeight(kontti);
 
+    }
+
+    public void kokkaa()
+    {
+        String lause = "SELECT RK.aineID, maara - lkm AS uusi FROM ReseptiKanta RK, KaappiKanta KK WHERE NOT toiminta & 6 AND RK.aineID IS KK.aineID AND  RuokaID IS " + ruokaID;
+        Cursor poisto = TK.HaeTiedot(lause);
+        Log.d("Poistuu", DatabaseUtils.dumpCursorToString(poisto));
+        while (poisto.moveToNext()){
+            TK.MuutaKaappia(poisto.getInt(0),poisto.getFloat(1));
+        }
+        poisto.close();
     }
 
     public static void setMargins(View v, int l, int t, int r, int b) {

@@ -67,7 +67,7 @@ public class Liukuvalikko extends AppCompatActivity {
 
         Cursor tiedot = TK.HaeTiedot(lause);
         startManagingCursor(tiedot);
-        long viive = System.currentTimeMillis();
+        Log.d("Tietoa", DatabaseUtils.dumpCursorToString(tiedot));
 
         String[] columns = new String[]{"nimi", "kuva"};
         int[] viewIDs = new int[]{R.id.teksti, R.id.ikoni};
@@ -86,7 +86,7 @@ public class Liukuvalikko extends AppCompatActivity {
                     temp.setID(ruokaID);
                     temp.setMoodi(moodi);
                     if (moodi == 2) {
-                        float prosentti = cursor.getInt(cursor.getColumnIndex("prosentti"));
+                        float prosentti = cursor.getFloat(cursor.getColumnIndex("prosentti"));
                         LinearLayout hermanni = (LinearLayout) temp.getParent();
                         hermanni.setBackgroundColor(KaappiVari(prosentti));
                     }
@@ -272,9 +272,10 @@ public class Liukuvalikko extends AppCompatActivity {
 
 
     public int KaappiVari(float prosentti) {
+        Log.d("prosetnt",prosentti+"");
         int color = getResources().getColor(R.color.colorRed);
         if (prosentti > 0.25) {
-            if (prosentti > 0.5) {
+            if (prosentti > 0.50) {
                 if (prosentti > 0.75) {
                     if (prosentti > 0.99) {
                         color = getResources().getColor(R.color.colorGreen);
