@@ -13,17 +13,18 @@ public class PagerAdapter extends FragmentPagerAdapter {
     FragmentValikko vava;
     FragmentValikko ova;
     int MV;
-    String LV;
     int MO;
-    String LO;
+    String moodit[] =
+            {"SELECT aine nimi, aineID _id, kuva, 0 AS moodi FROM AineKanta WHERE edellinenID is 0",
+                    "SELECT ruoka nimi, ruokaID _id, kuva, 1 AS moodi  FROM RuokaKanta",
+                    "SELECT aine nimi, KK.aineID _id, kuva, 2 AS moodi, maara / pakkauskoko AS prosentti FROM AineKanta AK, KaappiKanta KK WHERE AK.aineID IS KK.aineID",
+                    "SELECT kpl|| ' X '||aine  AS nimi, AK.aineID _id, kuva,3 AS moodi FROM AineKanta AK, OstosKanta OK WHERE AK.aineID IS OK.aineID"};
 
 
-    public PagerAdapter(FragmentManager fm,int mv, String lv, int mo, String lo) {
+    public PagerAdapter(FragmentManager fm, int mv, int mo) {
         super(fm);
         MV = mv;
-        LV = lv;
         MO = mo;
-        LO = lo;
 
     }
 
@@ -33,7 +34,7 @@ public class PagerAdapter extends FragmentPagerAdapter {
             case 0: {
                 Bundle args = new Bundle();
                 args.putInt("moodi", MV);
-                args.putString("sqlqry", LV);
+                args.putString("sqlqry", moodit[MV]);
                 vava = new FragmentValikko();
                 vava.setArguments(args);
                 return vava;
@@ -41,7 +42,7 @@ public class PagerAdapter extends FragmentPagerAdapter {
             case 1: {
                 Bundle args = new Bundle();
                 args.putInt("moodi", MO);
-                args.putString("sqlqry",LO);
+                args.putString("sqlqry", moodit[MO]);
                 ova = new FragmentValikko();
                 ova.setArguments(args);
                 return ova;
@@ -72,9 +73,8 @@ public class PagerAdapter extends FragmentPagerAdapter {
     }
 
 
-    public void avaaRuuat(String lause)
-    {
-        ova.LL.UusiLause(lause,1);
+    public void avaaRuuat(String lause) {
+        ova.LL.UusiLause(lause, 1);
         ova.populateList(lause);
     }
 }

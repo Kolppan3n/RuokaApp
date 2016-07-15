@@ -150,9 +150,8 @@ public class ToolbarFragment extends Fragment {
 
             case R.id.testi: {
                 Intent intent = new Intent(this.getActivity(), Liukuvalikko2.class);
-                String lause = "SELECT aine nimi, aineID _id, kuva, 0 AS moodi FROM AineKanta WHERE edellinenID is 0";
-                intent.putExtra("sqlqry", lause);
-                intent.putExtra("moodi", 0);
+                intent.putExtra("MoodiVasen",0);
+                intent.putExtra("MoodiOikea",1);
                 startActivity(intent);
                 break;
             }

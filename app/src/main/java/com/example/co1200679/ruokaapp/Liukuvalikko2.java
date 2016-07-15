@@ -37,11 +37,12 @@ public class Liukuvalikko2 extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_valikko_swapper);
         TK = new Tietokanta(this);
+        int MV = getIntent().getIntExtra("MoodiVasen",0);
+        int MO = getIntent().getIntExtra("MoodiOikea",1);
+
 
         pager = (ViewPager) findViewById(R.id.pager);
-        pada = new PagerAdapter(getSupportFragmentManager(),
-                0,"SELECT aine nimi, aineID _id, kuva, 0 AS moodi FROM AineKanta WHERE edellinenID is 0",
-                1,"SELECT ruoka nimi, ruokaID _id, kuva, 1 AS moodi  FROM RuokaKanta");
+        pada = new PagerAdapter(getSupportFragmentManager(),MV,MO);
         pager.setAdapter(pada);
     }
 
