@@ -72,6 +72,7 @@ public class FragmentValikko extends Fragment {
         LL.UusiLause(lause,moodi);
 
         plussa = 0;
+        if (moodi == 3) varauksetOstoksiksi();
         populateList(lause);
     }
 
