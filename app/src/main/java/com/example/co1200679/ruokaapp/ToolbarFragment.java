@@ -43,6 +43,12 @@ public class ToolbarFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         String kasa = "menu_";
 
+        if (getActivity().getLocalClassName().toLowerCase().equals("liukuvalikko2")) {
+            Liukuvalikko2 akti = (Liukuvalikko2) getActivity();
+            akti.Toolbar = this;
+
+        }
+
         if (getActivity().getLocalClassName().toLowerCase().equals("liukuvalikko")) {
             Liukuvalikko akti = (Liukuvalikko) getActivity();
             switch (akti.moodi) {
@@ -70,6 +76,8 @@ public class ToolbarFragment extends Fragment {
         } else
             kasa += getActivity().getLocalClassName().toLowerCase().toString();
 
+
+
         int menuID = getResources().getIdentifier(kasa, "menu", getActivity().getPackageName());
         if (menuID != 0)
             inflater.inflate(menuID, menu);
@@ -78,6 +86,12 @@ public class ToolbarFragment extends Fragment {
 
         super.onCreateOptionsMenu(menu, inflater);
     }
+
+    public void esko()
+    {
+        Log.d("Herb","Derb");
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

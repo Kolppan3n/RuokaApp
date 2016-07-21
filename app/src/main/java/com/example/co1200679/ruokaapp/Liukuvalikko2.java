@@ -4,6 +4,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Toast;
 
 public class Liukuvalikko2 extends AppCompatActivity {
@@ -12,6 +13,7 @@ public class Liukuvalikko2 extends AppCompatActivity {
     PagerAdapter pada;
     PagerListerner pala;
     Tietokanta TK;
+    ToolbarFragment Toolbar;
 
 
     int moodi;// AINE = 0 RUUAT = 1 KAAPPI = 2 LISTA = 3
@@ -38,6 +40,7 @@ public class Liukuvalikko2 extends AppCompatActivity {
     public void riehuva_puhveli(String teksti)
     {
         Toast.makeText(this,teksti,Toast.LENGTH_SHORT).show();
+        Toolbar.esko();
     }
 
 
@@ -48,7 +51,6 @@ public class Liukuvalikko2 extends AppCompatActivity {
         TK = new Tietokanta(this);
         int MV = getIntent().getIntExtra("MoodiVasen",0);
         int MO = getIntent().getIntExtra("MoodiOikea",1);
-
 
         pager = (ViewPager) findViewById(R.id.pager);
         pada = new PagerAdapter(getSupportFragmentManager(),MV,MO);
