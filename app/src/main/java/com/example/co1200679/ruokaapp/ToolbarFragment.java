@@ -27,46 +27,50 @@ public class ToolbarFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.toolbar, container, false);
-
         mToolbar = (Toolbar) rootView.findViewById(R.id.tb);
-        if (mToolbar != null) {
-            ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
-        }
         return rootView;
     }
 
     @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (mToolbar != null) {
+            ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
+        }
+    }
+
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        String FUCK = "menu_";
+        String kasa = "menu_";
 
         if (getActivity().getLocalClassName().toLowerCase().equals("liukuvalikko")) {
             Liukuvalikko akti = (Liukuvalikko) getActivity();
             switch (akti.moodi) {
                 case 0: {
-                    FUCK += "aineet";
+                    kasa += "aineet";
                     break;
                 }
                 case 1: {
-                    FUCK += "ruuat";
+                    kasa += "ruuat";
                     break;
                 }
                 case 2: {
-                    FUCK += "kaappi";
+                    kasa += "kaappi";
                     break;
                 }
                 case 3: {
-                    FUCK += "lista";
+                    kasa += "lista";
                     break;
                 }
                 default: {
-                    FUCK += "default";
+                    kasa += "default";
                     break;
                 }
             }
         } else
-            FUCK += getActivity().getLocalClassName().toLowerCase().toString();
+            kasa += getActivity().getLocalClassName().toLowerCase().toString();
 
-        int menuID = getResources().getIdentifier(FUCK, "menu", getActivity().getPackageName());
+        int menuID = getResources().getIdentifier(kasa, "menu", getActivity().getPackageName());
         if (menuID != 0)
             inflater.inflate(menuID, menu);
         else

@@ -3,9 +3,10 @@ package com.example.co1200679.ruokaapp;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
-public class Liukuvalikko2 extends FragmentActivity {
+public class Liukuvalikko2 extends AppCompatActivity {
 
     ViewPager pager;
     PagerAdapter pada;

@@ -12,6 +12,7 @@ public class PagerAdapter extends FragmentPagerAdapter {
 
     FragmentValikko vava;
     FragmentValikko ova;
+
     int MV;
     int MO;
     String moodit[] =
@@ -25,7 +26,6 @@ public class PagerAdapter extends FragmentPagerAdapter {
         super(fm);
         MV = mv;
         MO = mo;
-
     }
 
     @Override
