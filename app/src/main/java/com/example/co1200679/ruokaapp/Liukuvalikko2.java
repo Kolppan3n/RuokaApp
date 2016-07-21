@@ -10,7 +10,9 @@ public class Liukuvalikko2 extends AppCompatActivity {
 
     ViewPager pager;
     PagerAdapter pada;
+    PagerListerner pala;
     Tietokanta TK;
+
 
     int moodi;// AINE = 0 RUUAT = 1 KAAPPI = 2 LISTA = 3
 
@@ -27,9 +29,15 @@ public class Liukuvalikko2 extends AppCompatActivity {
         }
     }
 
+
     public void avaaRuuat(String lause) {
         pager.setCurrentItem(1);
         pada.avaaRuuat(lause);
+    }
+
+    public void riehuva_puhveli(String teksti)
+    {
+        Toast.makeText(this,teksti,Toast.LENGTH_SHORT).show();
     }
 
 
@@ -44,7 +52,9 @@ public class Liukuvalikko2 extends AppCompatActivity {
 
         pager = (ViewPager) findViewById(R.id.pager);
         pada = new PagerAdapter(getSupportFragmentManager(),MV,MO);
+        pala = new PagerListerner(this);
         pager.setAdapter(pada);
+        pager.addOnPageChangeListener(pala);
     }
 
 }
