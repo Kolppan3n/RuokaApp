@@ -20,7 +20,7 @@ public class PagerListerner implements OnPageChangeListener {
 
     @Override
     public void onPageSelected(int position) {
-        liukkari.riehuva_puhveli("asdasdasdasd"+position);
+        liukkari.muuttuvaValikko(position);
     }
 
     @Override

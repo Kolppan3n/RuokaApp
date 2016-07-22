@@ -37,10 +37,10 @@ public class Liukuvalikko2 extends AppCompatActivity {
         pada.avaaRuuat(lause);
     }
 
-    public void riehuva_puhveli(String teksti)
+    public void muuttuvaValikko(int numero)
     {
-        Toast.makeText(this,teksti,Toast.LENGTH_SHORT).show();
-        Toolbar.esko();
+        Toolbar.muutaToolbar(numero);
+        Toast.makeText(this,""+numero,Toast.LENGTH_SHORT).show();
     }
 
 

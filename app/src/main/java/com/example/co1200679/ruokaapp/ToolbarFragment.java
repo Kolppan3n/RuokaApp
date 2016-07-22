@@ -17,6 +17,8 @@ import android.widget.RelativeLayout;
 public class ToolbarFragment extends Fragment {
 
     private Toolbar mToolbar;
+    private MenuInflater inflater;
+    private Menu menu;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,8 +42,10 @@ public class ToolbarFragment extends Fragment {
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(Menu _menu, MenuInflater _inflater) {
         String kasa = "menu_";
+        inflater = _inflater;
+        menu = _menu;
 
         if (getActivity().getLocalClassName().toLowerCase().equals("liukuvalikko2")) {
             Liukuvalikko2 akti = (Liukuvalikko2) getActivity();
@@ -77,7 +81,6 @@ public class ToolbarFragment extends Fragment {
             kasa += getActivity().getLocalClassName().toLowerCase().toString();
 
 
-
         int menuID = getResources().getIdentifier(kasa, "menu", getActivity().getPackageName());
         if (menuID != 0)
             inflater.inflate(menuID, menu);
@@ -87,9 +90,14 @@ public class ToolbarFragment extends Fragment {
         super.onCreateOptionsMenu(menu, inflater);
     }
 
-    public void esko()
-    {
-        Log.d("Herb","Derb");
+    public void muutaToolbar(int numero) {
+        Log.d("Testi",""+numero);
+        menu.clear();
+        int menuID = getResources().getIdentifier("menu_kaappi", "menu", getActivity().getPackageName());
+        if (numero == 1) {
+            menuID = getResources().getIdentifier("menu_ruuat", "menu", getActivity().getPackageName());
+        }
+            inflater.inflate(menuID, menu);
     }
 
 
@@ -152,8 +160,7 @@ public class ToolbarFragment extends Fragment {
                         item.setIcon(R.drawable.menulisaustila);
                         rela.setBackgroundColor(getResources().getColor(R.color.colorBackground));
                     }
-                }
-                else{
+                } else {
                     if (Lvalikko.muutaPlussa() == 1) {
                         item.setIcon(R.drawable.menuselaustila);
                         rela.setBackgroundColor(getResources().getColor(R.color.colorBackground2));
@@ -165,7 +172,7 @@ public class ToolbarFragment extends Fragment {
 
                 break;
             }
-            case R.id.kokkaus:{
+            case R.id.kokkaus: {
                 Kokkausohjeet kokkausohjeet = (Kokkausohjeet) getActivity();
                 kokkausohjeet.kokkaa();
 
@@ -174,8 +181,8 @@ public class ToolbarFragment extends Fragment {
 
             case R.id.testi: {
                 Intent intent = new Intent(this.getActivity(), Liukuvalikko2.class);
-                intent.putExtra("MoodiVasen",0);
-                intent.putExtra("MoodiOikea",1);
+                intent.putExtra("MoodiVasen", 0);
+                intent.putExtra("MoodiOikea", 1);
                 startActivity(intent);
                 break;
             }
