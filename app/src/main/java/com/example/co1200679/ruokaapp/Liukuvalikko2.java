@@ -37,10 +37,18 @@ public class Liukuvalikko2 extends AppCompatActivity {
         pada.avaaRuuat(lause);
     }
 
-    public void muuttuvaValikko(int numero)
-    {
-        Toolbar.muutaToolbar(numero);
-        Toast.makeText(this,""+numero,Toast.LENGTH_SHORT).show();
+    public int alkuvalinta(){
+        int valitseValikko = getIntent().getIntExtra("valitseValikko",0);
+        pager.setCurrentItem(valitseValikko);
+        return valitseValikko;
+    }
+
+    public void muuttuvaValikko(int numero) {
+        int moodi = pada.ova.moodi;
+        if (numero == 1) {
+            moodi = pada.vava.moodi;
+        }
+            Toolbar.muutaToolbar(moodi);
     }
 
 
@@ -49,11 +57,11 @@ public class Liukuvalikko2 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_valikko_swapper);
         TK = new Tietokanta(this);
-        int MV = getIntent().getIntExtra("MoodiVasen",0);
-        int MO = getIntent().getIntExtra("MoodiOikea",1);
+        int MV = getIntent().getIntExtra("MoodiVasen", 0);
+        int MO = getIntent().getIntExtra("MoodiOikea", 1);
 
         pager = (ViewPager) findViewById(R.id.pager);
-        pada = new PagerAdapter(getSupportFragmentManager(),MV,MO);
+        pada = new PagerAdapter(getSupportFragmentManager(), MV, MO);
         pala = new PagerListerner(this);
         pager.setAdapter(pada);
         pager.addOnPageChangeListener(pala);

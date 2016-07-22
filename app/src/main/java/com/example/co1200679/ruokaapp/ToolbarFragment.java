@@ -47,12 +47,6 @@ public class ToolbarFragment extends Fragment {
         inflater = _inflater;
         menu = _menu;
 
-        if (getActivity().getLocalClassName().toLowerCase().equals("liukuvalikko2")) {
-            Liukuvalikko2 akti = (Liukuvalikko2) getActivity();
-            akti.Toolbar = this;
-
-        }
-
         if (getActivity().getLocalClassName().toLowerCase().equals("liukuvalikko")) {
             Liukuvalikko akti = (Liukuvalikko) getActivity();
             switch (akti.moodi) {
@@ -88,16 +82,42 @@ public class ToolbarFragment extends Fragment {
             inflater.inflate(R.menu.menu_default, menu);
 
         super.onCreateOptionsMenu(menu, inflater);
+
+        if (getActivity().getLocalClassName().toLowerCase().equals("liukuvalikko2")) {
+            Liukuvalikko2 akti = (Liukuvalikko2) getActivity();
+            akti.Toolbar = this;
+            akti.Toolbar.muutaToolbar(akti.alkuvalinta());
+        }
     }
 
     public void muutaToolbar(int numero) {
         Log.d("Testi",""+numero);
         menu.clear();
-        int menuID = getResources().getIdentifier("menu_kaappi", "menu", getActivity().getPackageName());
-        if (numero == 1) {
-            menuID = getResources().getIdentifier("menu_ruuat", "menu", getActivity().getPackageName());
+        String kasa = "menu_";
+        switch (numero) {
+            case 0: {
+                kasa += "aineet";
+                break;
+            }
+            case 1: {
+                kasa += "ruuat";
+                break;
+            }
+            case 2: {
+                kasa += "kaappi";
+                break;
+            }
+            case 3: {
+                kasa += "lista";
+                break;
+            }
+            default: {
+                kasa += "default";
+                break;
+            }
         }
-            inflater.inflate(menuID, menu);
+        int menuID = getResources().getIdentifier(kasa, "menu", getActivity().getPackageName());
+        inflater.inflate(menuID, menu);
     }
 
 
@@ -183,6 +203,7 @@ public class ToolbarFragment extends Fragment {
                 Intent intent = new Intent(this.getActivity(), Liukuvalikko2.class);
                 intent.putExtra("MoodiVasen", 0);
                 intent.putExtra("MoodiOikea", 1);
+                intent.putExtra("valitseValikko",1);
                 startActivity(intent);
                 break;
             }
