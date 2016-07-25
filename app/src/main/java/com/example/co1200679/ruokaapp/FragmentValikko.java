@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,9 +17,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.CursorAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -96,6 +99,30 @@ public class FragmentValikko extends Fragment {
                         LinearLayout hermanni = (LinearLayout) temp.getParent();
                         hermanni.setBackgroundColor(KaappiVari(prosentti));
                     }
+
+                    LinearLayout goddamnfilthy = (LinearLayout) view.getParent().getParent();
+                    goddamnfilthy = (LinearLayout) goddamnfilthy.findViewById(R.id.pikavalikko);
+                    View.OnClickListener oni = new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            pikavalinta(v);
+                        }
+                    };
+
+                    TextView mittari = (TextView) goddamnfilthy.findViewById(R.id.mittari);
+
+
+                    
+
+                    ImageView nappi1 = (ImageView) goddamnfilthy.findViewById(R.id.pika1);
+                    ImageView nappi2 = (ImageView) goddamnfilthy.findViewById(R.id.pika2);
+                    ImageView nappi3 = (ImageView) goddamnfilthy.findViewById(R.id.pika3);
+                    nappi1.setOnClickListener(oni);
+                    nappi2.setOnClickListener(oni);
+                    nappi3.setOnClickListener(oni);
+                    nappi1.setTag(1);
+                    nappi2.setTag(2);
+                    nappi3.setTag(3);
                 }
 
                 return false;
@@ -352,6 +379,24 @@ public class FragmentValikko extends Fragment {
         }
         listatiedot.close();
 
+    }
+
+    public void pikavalinta(View v) {
+        int nappinumero = (int) v.getTag();
+        switch (nappinumero) {
+            case 1: {
+                Log.d("paksaaaakooodiaaaa", "Nappi#1");
+                break;
+            }
+            case 2: {
+                Log.d("paksaaaakooodiaaaa", "Nappi#2");
+                break;
+            }
+            case 3: {
+                Log.d("paksaaaakooodiaaaa", "Nappi#3");
+                break;
+            }
+        }
     }
 
 }

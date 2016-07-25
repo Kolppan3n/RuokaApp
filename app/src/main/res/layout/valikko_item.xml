@@ -10,13 +10,14 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="4dp">
+        android:padding="4dp"
+        android:background="@color/colorBackground2">
 
         <ImageView
             android:id="@+id/ikoni"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:layout_margin="8dp"
+            android:layout_margin="6dp"
             android:src="@drawable/grilli" />
 
         <com.example.co1200679.ruokaapp.ItemInfo
@@ -36,40 +37,51 @@
         android:layout_height="76dp"
         android:orientation="horizontal"
         android:gravity="center"
-        android:paddingBottom="16dp"
         android:visibility="gone">
 
         <ImageView
+            android:id="@+id/pika1"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@drawable/ateriat4"
+            android:src="@drawable/menulisaakaappiin"
             android:scaleType="fitCenter"
-            android:padding="8dp"
-            android:adjustViewBounds="true"/>
+            android:padding="12dp"
+            android:adjustViewBounds="true"
+            android:tint="@color/colorAccent"/>
 
         <ImageView
+            android:id="@+id/pika2"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@drawable/ateriat5"
+            android:src="@drawable/menulisaalistaan"
             android:scaleType="fitCenter"
-            android:padding="8dp"
-            android:adjustViewBounds="true"/>
+            android:padding="12dp"
+            android:adjustViewBounds="true"
+            android:tint="@color/colorAccent"/>
 
         <ImageView
+            android:id="@+id/pika3"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@drawable/ateriat1"
+            android:src="@drawable/ruokamahdollisuudet"
             android:scaleType="fitCenter"
-            android:padding="8dp"
-            android:adjustViewBounds="true"/>
+            android:padding="12dp"
+            android:adjustViewBounds="true"
+            android:tint="@color/colorAccent"/>
 
-        <ImageView
-            android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/mittari"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/ateriat3"
-            android:scaleType="fitCenter"
-            android:padding="8dp"
-            android:adjustViewBounds="true"/>
+            android:layout_marginBottom="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="16dp"
+            android:background="@color/colorRed"
+            android:text="100kg"
+            android:gravity="center"
+            android:textAppearance="@android:style/TextAppearance.Large"
+            android:textColor="@color/colorTextPrimary" />
 
     </LinearLayout>
 </LinearLayout>
