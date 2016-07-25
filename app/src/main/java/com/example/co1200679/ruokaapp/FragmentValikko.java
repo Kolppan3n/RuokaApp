@@ -35,23 +35,20 @@ public class FragmentValikko extends Fragment {
     public boolean takaisin() {
         if (LL.Viimeinen.edellinen == null) {
             return false;
-        }
-        else{
+        } else {
             LauseMoodi Temp = LL.Takaisin();
-            moodi=Temp.getMoodi();
+            moodi = Temp.getMoodi();
             populateList(Temp.getLause());
             return true;
         }
     }
 
 
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //return super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_valikko, container, false);
-        int moodi = getArguments().getInt("moodi",0);
+        int moodi = getArguments().getInt("moodi", 0);
         valikko = (ListView) view.findViewById(R.id.valikko);
 
         return view;
@@ -61,13 +58,13 @@ public class FragmentValikko extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        liukkari = (Liukuvalikko2)(getActivity());
+        liukkari = (Liukuvalikko2) (getActivity());
         TK = liukkari.TK;
         String lause = getArguments().getString("sqlqry");
-        moodi = getArguments().getInt("moodi",0);
+        moodi = getArguments().getInt("moodi", 0);
 
         LL = new LauseLista();
-        LL.UusiLause(lause,moodi);
+        LL.UusiLause(lause, moodi);
 
         plussa = 0;
         if (moodi == 3) varauksetOstoksiksi();
@@ -107,7 +104,6 @@ public class FragmentValikko extends Fragment {
         valikko.setAdapter(filleri);
 
 
-
         valikko.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
@@ -120,7 +116,12 @@ public class FragmentValikko extends Fragment {
 
                 switch (moodi) {
                     case 0: {
-                        if (plussa == 0) {
+
+                        LinearLayout pika = (LinearLayout) view.findViewById(R.id.pikavalikko);
+                        if (pika.getVisibility() == View.VISIBLE) {
+                            Log.d("asdasdasd", "asdasdasd");
+                            pika.setVisibility(View.GONE);
+                        } else {
                             Cursor lasku = TK.HaeTiedot("SELECT count(aineID) AS luku FROM AineKanta WHERE edellinenID IS " + ID);
                             lasku.moveToNext();
 
@@ -130,12 +131,9 @@ public class FragmentValikko extends Fragment {
                             } else {
                                 String lause = ("SELECT aine nimi, aineID _id, kuva, " + moodi + " as moodi FROM AineKanta WHERE edellinenID is " + ID);
                                 lasku.close();
-                                LL.UusiLause(lause,0);
+                                LL.UusiLause(lause, 0);
                                 populateList(lause);
                             }
-                        } else {
-                            laitaListaan(ID, 1);
-                            Toast.makeText(liukkari, nimi + " lisättiin ostoslistalle", Toast.LENGTH_SHORT).show();
                         }
                         break;
                     }
@@ -176,7 +174,7 @@ public class FragmentValikko extends Fragment {
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
                 ItemInfo temp = (ItemInfo) view.findViewById(R.id.teksti);
-                LinearLayout pika = (LinearLayout)view.findViewById(R.id.pikavalikko);
+                LinearLayout pika = (LinearLayout) view.findViewById(R.id.pikavalikko);
                 int moodi = temp.getMoodi();
                 int ID = temp.getID();
 
@@ -286,7 +284,7 @@ public class FragmentValikko extends Fragment {
 
     public void ruokaMahdollisuudetKaapinAineksista() {
         String lause = ("SELECT ruoka nimi, ruokaID _id, kuva, 1 AS moodi  FROM RuokaKanta WHERE ruokaID NOT IN (SELECT ruokaID FROM ReseptiKanta WHERE NOT toiminta & 6 AND aineID NOT IN (SELECT aineID FROM KaappiKanta))");
-        LL.UusiLause(lause,1);
+        LL.UusiLause(lause, 1);
         populateList(lause);
     }
 
