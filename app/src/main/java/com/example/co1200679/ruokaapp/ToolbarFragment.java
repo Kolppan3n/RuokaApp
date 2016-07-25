@@ -199,15 +199,6 @@ public class ToolbarFragment extends Fragment {
                 break;
             }
 
-            case R.id.testi: {
-                Intent intent = new Intent(this.getActivity(), Liukuvalikko2.class);
-                intent.putExtra("MoodiVasen", 0);
-                intent.putExtra("MoodiOikea", 1);
-                intent.putExtra("valitseValikko",1);
-                startActivity(intent);
-                break;
-            }
-
             default:
                 Log.d("Herp", "Derp");
                 break;

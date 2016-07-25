@@ -1,24 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/itemi"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="4dp">
+    android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/ikoni"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_margin="8dp"
-        android:src="@drawable/grilli" />
-
-    <com.example.co1200679.ruokaapp.ItemInfo
-        android:id="@+id/teksti"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/itemi"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:tag=""
-        android:text="Large Text"
-        android:textAppearance="@android:style/TextAppearance.Large" />
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="4dp">
 
+        <ImageView
+            android:id="@+id/ikoni"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_margin="8dp"
+            android:src="@drawable/grilli" />
+
+        <com.example.co1200679.ruokaapp.ItemInfo
+            android:id="@+id/teksti"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:tag=""
+            android:text="Large Text"
+            android:textAppearance="@android:style/TextAppearance.Large" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/pikavalikko"
+        android:layout_width="match_parent"
+        android:layout_height="76dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:paddingBottom="16dp"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/ateriat4"
+            android:scaleType="fitCenter"
+            android:padding="8dp"
+            android:adjustViewBounds="true"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/ateriat5"
+            android:scaleType="fitCenter"
+            android:padding="8dp"
+            android:adjustViewBounds="true"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/ateriat1"
+            android:scaleType="fitCenter"
+            android:padding="8dp"
+            android:adjustViewBounds="true"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/ateriat3"
+            android:scaleType="fitCenter"
+            android:padding="8dp"
+            android:adjustViewBounds="true"/>
+
+    </LinearLayout>
 </LinearLayout>

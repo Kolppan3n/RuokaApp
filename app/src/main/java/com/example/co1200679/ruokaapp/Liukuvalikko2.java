@@ -23,11 +23,10 @@ public class Liukuvalikko2 extends AppCompatActivity {
         int item = pager.getCurrentItem();
         if (pada.taakse(item)) ;
         else {
-            if (item == 1) pager.setCurrentItem(0);
-            else {
+
                 TK.close();
                 this.finish();
-            }
+
         }
     }
 

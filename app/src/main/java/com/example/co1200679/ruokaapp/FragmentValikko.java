@@ -52,8 +52,6 @@ public class FragmentValikko extends Fragment {
         //return super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_valikko, container, false);
         int moodi = getArguments().getInt("moodi",0);
-        if(moodi==1)view.findViewById(R.id.rela).setBackgroundColor(Color.BLUE);
-        else view.findViewById(R.id.rela).setBackgroundColor(Color.GREEN);
         valikko = (ListView) view.findViewById(R.id.valikko);
 
         return view;
@@ -178,13 +176,14 @@ public class FragmentValikko extends Fragment {
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
                 ItemInfo temp = (ItemInfo) view.findViewById(R.id.teksti);
+                LinearLayout pika = (LinearLayout)view.findViewById(R.id.pikavalikko);
                 int moodi = temp.getMoodi();
                 int ID = temp.getID();
 
                 switch (moodi) {
 
                     case 0: {
-                        avaaRuuat(ID);
+                        pika.setVisibility(View.VISIBLE);
                         break;
                     }
                     case 1: {
@@ -208,7 +207,7 @@ public class FragmentValikko extends Fragment {
                         Log.d("Herp", "Derp");
                 }
 
-                return false;
+                return true;
             }
         });
     }
