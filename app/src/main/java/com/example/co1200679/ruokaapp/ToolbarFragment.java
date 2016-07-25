@@ -86,7 +86,7 @@ public class ToolbarFragment extends Fragment {
         if (getActivity().getLocalClassName().toLowerCase().equals("liukuvalikko2")) {
             Liukuvalikko2 akti = (Liukuvalikko2) getActivity();
             akti.Toolbar = this;
-            akti.Toolbar.muutaToolbar(akti.alkuvalinta());
+            akti.muuttuvaValikko(akti.alkuvalinta());
         }
     }
 

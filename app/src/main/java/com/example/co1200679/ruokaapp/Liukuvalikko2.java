@@ -44,9 +44,9 @@ public class Liukuvalikko2 extends AppCompatActivity {
     }
 
     public void muuttuvaValikko(int numero) {
-        int moodi = pada.ova.moodi;
+        int moodi = pada.vava.moodi;
         if (numero == 1) {
-            moodi = pada.vava.moodi;
+            moodi = pada.ova.moodi;
         }
             Toolbar.muutaToolbar(moodi);
     }
