@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.media.Image;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -100,24 +101,23 @@ public class FragmentValikko extends Fragment {
                         hermanni.setBackgroundColor(KaappiVari(prosentti));
                     }
 
-                    LinearLayout goddamnfilthy = (LinearLayout) view.getParent().getParent();
-                    goddamnfilthy = (LinearLayout) goddamnfilthy.findViewById(R.id.pikavalikko);
-                    View.OnClickListener oni = new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            pikavalinta(v, ID);
-                        }
-                    };
+                    if (moodi==0) {
+                        LinearLayout goddamnfilthy = (LinearLayout) view.getParent().getParent();
+                        goddamnfilthy = (LinearLayout) goddamnfilthy.findViewById(R.id.pikavalikko);
+                        View.OnClickListener oni = new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                pikavalinta(v, ID);
+                            }
+                        };
 
-                    TextView mittari = (TextView) goddamnfilthy.findViewById(R.id.mittari);
-
-
-                    ImageView nappi1 = (ImageView) goddamnfilthy.findViewById(R.id.pika1);
-                    ImageView nappi2 = (ImageView) goddamnfilthy.findViewById(R.id.pika2);
-                    ImageView nappi3 = (ImageView) goddamnfilthy.findViewById(R.id.pika3);
-                    nappi1.setOnClickListener(oni);
-                    nappi2.setOnClickListener(oni);
-                    nappi3.setOnClickListener(oni);
+                        ImageView nappi1 = (ImageView) goddamnfilthy.findViewById(R.id.pika1);
+                        ImageView nappi2 = (ImageView) goddamnfilthy.findViewById(R.id.pika2);
+                        ImageView nappi3 = (ImageView) goddamnfilthy.findViewById(R.id.pika3);
+                        nappi1.setOnClickListener(oni);
+                        nappi2.setOnClickListener(oni);
+                        nappi3.setOnClickListener(oni);
+                    }
                 }
 
                 return false;
@@ -204,6 +204,16 @@ public class FragmentValikko extends Fragment {
 
                     case 0: {
                         pika.setVisibility(View.VISIBLE);
+
+                        Cursor maaraprosentti = TK.HaeTiedot("SELECT PRINTF('%g', maara)|| ' ' || mitta AS kaappikasa, maara / pakkauskoko AS prosentti, aine  FROM AineKanta AK, KaappiKanta KK WHERE KK.aineID IS AK.aineID AND KK.aineID IS " + ID);
+                        TextView mittari = (TextView) pika.findViewById(R.id.mittari);
+
+                        Log.d("asdasd",DatabaseUtils.dumpCursorToString(maaraprosentti));
+                        if(maaraprosentti.moveToNext()) {
+                            mittari.setBackgroundColor(KaappiVari(maaraprosentti.getFloat(1)));
+                            mittari.setText(maaraprosentti.getString(0));
+                        }
+                        maaraprosentti.close();
                         break;
                     }
                     case 1: {

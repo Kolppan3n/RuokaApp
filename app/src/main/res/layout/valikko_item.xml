@@ -77,8 +77,7 @@
             android:layout_marginTop="12dp"
             android:layout_marginStart="12dp"
             android:layout_marginEnd="16dp"
-            android:background="@color/colorRed"
-            android:text="100kg"
+            android:text=""
             android:gravity="center"
             android:textAppearance="@android:style/TextAppearance.Large"
             android:textColor="@color/colorTextPrimary" />
