@@ -157,14 +157,16 @@ public class ToolbarFragment extends Fragment {
             }
 
             case R.id.kassi: {
-                Liukuvalikko Lvalikko = (Liukuvalikko) getActivity();
-                Lvalikko.ostoksetKaappiin();
+                Liukuvalikko2 Lvalikko = (Liukuvalikko2) getActivity();
+                Lvalikko.pada.ova.ostoksetKaappiin();
+                //Lvalikko.ostoksetKaappiin();
                 break;
             }
 
             case R.id.ruokaMahdollisuudet: {
-                Liukuvalikko Lvalikko = (Liukuvalikko) getActivity();
-                Lvalikko.ruokaMahdollisuudetKaapinAineksista();
+                Liukuvalikko2 Lvalikko = (Liukuvalikko2) getActivity();
+                Lvalikko.pada.vava.ruokaMahdollisuudetKaapinAineksista();
+                //Lvalikko.ruokaMahdollisuudetKaapinAineksista();
                 break;
             }
 

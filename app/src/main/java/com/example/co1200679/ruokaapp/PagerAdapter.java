@@ -9,8 +9,8 @@ import android.util.Log;
 
 public class PagerAdapter extends FragmentPagerAdapter {
 
-    FragmentValikko vava;
-    FragmentValikko ova;
+    public FragmentValikko vava;
+    public FragmentValikko ova;
 
     int MV;
     int MO;

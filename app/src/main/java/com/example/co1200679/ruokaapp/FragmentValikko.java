@@ -95,7 +95,7 @@ public class FragmentValikko extends Fragment {
                     temp.setID(ruokaID);
                     temp.setMoodi(moodi);
                     if (moodi == 2) {
-                        float prosentti = cursor.getInt(cursor.getColumnIndex("prosentti"));
+                        float prosentti = cursor.getFloat(cursor.getColumnIndex("prosentti"));
                         LinearLayout hermanni = (LinearLayout) temp.getParent();
                         hermanni.setBackgroundColor(KaappiVari(prosentti));
                     }
