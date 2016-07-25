@@ -89,10 +89,10 @@ public class FragmentValikko extends Fragment {
                 if (view.getId() == R.id.teksti) {
                     ItemInfo temp = (ItemInfo) view.findViewById(R.id.teksti);
                     String nimi = cursor.getString(cursor.getColumnIndex("nimi"));
-                    int ruokaID = cursor.getInt(cursor.getColumnIndex("_id"));
+                    final int ID = cursor.getInt(cursor.getColumnIndex("_id"));
                     int moodi = cursor.getInt(cursor.getColumnIndex("moodi"));
                     temp.setNimi(nimi);
-                    temp.setID(ruokaID);
+                    temp.setID(ID);
                     temp.setMoodi(moodi);
                     if (moodi == 2) {
                         float prosentti = cursor.getFloat(cursor.getColumnIndex("prosentti"));
@@ -105,14 +105,12 @@ public class FragmentValikko extends Fragment {
                     View.OnClickListener oni = new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            pikavalinta(v);
+                            pikavalinta(v, ID);
                         }
                     };
 
                     TextView mittari = (TextView) goddamnfilthy.findViewById(R.id.mittari);
 
-
-                    
 
                     ImageView nappi1 = (ImageView) goddamnfilthy.findViewById(R.id.pika1);
                     ImageView nappi2 = (ImageView) goddamnfilthy.findViewById(R.id.pika2);
@@ -120,9 +118,6 @@ public class FragmentValikko extends Fragment {
                     nappi1.setOnClickListener(oni);
                     nappi2.setOnClickListener(oni);
                     nappi3.setOnClickListener(oni);
-                    nappi1.setTag(1);
-                    nappi2.setTag(2);
-                    nappi3.setTag(3);
                 }
 
                 return false;
@@ -381,18 +376,18 @@ public class FragmentValikko extends Fragment {
 
     }
 
-    public void pikavalinta(View v) {
-        int nappinumero = (int) v.getTag();
-        switch (nappinumero) {
-            case 1: {
+    public void pikavalinta(View v, int ID) {
+
+        switch (v.getId()) {
+            case R.id.pika1: {
                 Log.d("paksaaaakooodiaaaa", "Nappi#1");
                 break;
             }
-            case 2: {
-                Log.d("paksaaaakooodiaaaa", "Nappi#2");
+            case R.id.pika2: {
+                laitaListaan(ID, 1);
                 break;
             }
-            case 3: {
+            case R.id.pika3: {
                 Log.d("paksaaaakooodiaaaa", "Nappi#3");
                 break;
             }
