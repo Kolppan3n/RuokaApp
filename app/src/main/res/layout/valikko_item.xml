@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="fill_parent"
     android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/itemi"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:padding="4dp"
@@ -23,7 +23,7 @@
         <com.example.co1200679.ruokaapp.ItemInfo
             android:id="@+id/teksti"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:layout_marginStart="12dp"
             android:tag=""
             android:text="Large Text"
@@ -37,7 +37,7 @@
         android:layout_height="76dp"
         android:orientation="horizontal"
         android:gravity="center"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/pika1"
@@ -88,8 +88,8 @@
             android:layout_marginTop="12dp"
             android:layout_marginStart="12dp"
             android:layout_marginEnd="16dp"
-            android:background="@color/colorRed"
-            android:text="100kg"
+            android:visibility="gone"
+            android:text=""
             android:gravity="center"
             android:textAppearance="@android:style/TextAppearance.Large"
             android:textColor="@color/colorTextPrimary" />
