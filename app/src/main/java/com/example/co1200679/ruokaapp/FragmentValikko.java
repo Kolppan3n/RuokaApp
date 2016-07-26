@@ -233,10 +233,24 @@ public class FragmentValikko extends Fragment {
                     }
                     case 2: {
 
+                        nappi1.setImageResource(R.drawable.menupoistotila);
+                        nappi2.setVisibility(View.GONE);
+                        nappi3.setVisibility(View.GONE);
 
+                        Cursor maaraprosentti = TK.HaeTiedot("SELECT PRINTF('%g', maara)|| ' ' || mitta AS kaappikasa, maara / pakkauskoko AS prosentti, aine  FROM AineKanta AK, KaappiKanta KK WHERE KK.aineID IS AK.aineID AND KK.aineID IS " + ID);
+                        TextView mittari = (TextView) pika.findViewById(R.id.mittari);
+                        mittari.setVisibility(View.VISIBLE);
 
-
+                        Log.d("asdasd", DatabaseUtils.dumpCursorToString(maaraprosentti));
+                        if (maaraprosentti.moveToNext()) {
+                            mittari.setBackgroundColor(KaappiVari(maaraprosentti.getFloat(1)));
+                            mittari.setText(maaraprosentti.getString(0));
+                        }
+                        maaraprosentti.close();
                         pika.setVisibility(View.VISIBLE);
+                        break;
+
+
                     }
 
                     case 3: {
@@ -422,8 +436,11 @@ public class FragmentValikko extends Fragment {
             viesti += "Sinulta puuttuu:" + eiOle;
         } else viesti = "Kaikki aineet löytyy!";
 
+        kaapissaON.close();
+        kaapissaEIOLE.close();
         Toast.makeText(liukkari, viesti, Toast.LENGTH_LONG).show();
     }
+
 
     public void pikavalinta(View v, int ID, int _moodi) {
 
@@ -475,6 +492,29 @@ public class FragmentValikko extends Fragment {
 
                 break;
             }
+            case 2: {
+                switch (v.getId()) {
+                    case R.id.pika1: {
+                        TK.PoistaKaapista(ID);
+                        populateList("SELECT aine nimi, KK.aineID _id, kuva, 2 AS moodi, maara / pakkauskoko AS prosentti FROM AineKanta AK, KaappiKanta KK WHERE AK.aineID IS KK.aineID");
+                        break;
+                    }
+                    case R.id.pika2: {
+                        Log.d("paksaaaakooodiaaaa", "Nappi#2");
+                        break;
+                    }
+                    case R.id.pika3: {
+                        Log.d("paksaaaakooodiaaaa", "Nappi#3");
+                        break;
+                    }
+                    case R.id.pika4: {
+                        Log.d("paksaaaakooodiaaaa", "Nappi#4");
+                        break;
+                    }
+                }
+
+                break;
+            }
             case 3: {
                 switch (v.getId()) {
                     case R.id.pika1: {
@@ -499,29 +539,7 @@ public class FragmentValikko extends Fragment {
 
                 break;
             }
-            case 4:
-            {
-                switch (v.getId()) {
-                    case R.id.pika1: {
-                        Log.d("paksaaaakooodiaaaa", "Nappi#1");
 
-                        break;
-                    }
-                    case R.id.pika2: {
-                        Log.d("paksaaaakooodiaaaa", "Nappi#2");
-                        break;
-                    }
-                    case R.id.pika3: {
-                        Log.d("paksaaaakooodiaaaa", "Nappi#3");
-                        break;
-                    }
-                    case R.id.pika4: {
-                        Log.d("paksaaaakooodiaaaa", "Nappi#4");
-                        break;
-                    }
-                }
-                break;
-            }
         }
 
     }
