@@ -100,24 +100,6 @@ public class FragmentValikko extends Fragment {
                         LinearLayout hermanni = (LinearLayout) temp.getParent();
                         hermanni.setBackgroundColor(KaappiVari(prosentti));
                     }
-
-                    /*if (moodi==0) {
-                        LinearLayout goddamnfilthy = (LinearLayout) view.getParent().getParent();
-                        goddamnfilthy = (LinearLayout) goddamnfilthy.findViewById(R.id.pikavalikko);
-                        View.OnClickListener oni = new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                pikavalinta(v, ID);
-                            }
-                        };
-
-                        ImageView nappi1 = (ImageView) goddamnfilthy.findViewById(R.id.pika1);
-                        ImageView nappi2 = (ImageView) goddamnfilthy.findViewById(R.id.pika2);
-                        ImageView nappi3 = (ImageView) goddamnfilthy.findViewById(R.id.pika3);
-                        nappi1.setOnClickListener(oni);
-                        nappi2.setOnClickListener(oni);
-                        nappi3.setOnClickListener(oni);
-                    }*/
                 }
 
                 return false;
@@ -239,16 +221,15 @@ public class FragmentValikko extends Fragment {
                     }
                     case 1: {
 
-
+                        nappi1.setImageResource(R.drawable.menukatsokaappiin);
+                        nappi3.setImageResource(R.drawable.menuresepti);
                         pika.setVisibility(View.VISIBLE);
 
-
-                       /* Intent intent = new Intent(liukkari, Kokkausohjeet.class);
-                        intent.putExtra("ruokaID", ID);
-                        startActivity(intent);*/
                         break;
                     }
                     case 2: {
+
+
 
 
                         pika.setVisibility(View.VISIBLE);
@@ -256,12 +237,14 @@ public class FragmentValikko extends Fragment {
 
                     case 3: {
 
-                        nappi4.setImageResource(R.drawable.errori);
-                        nappi4.setVisibility(View.VISIBLE);
+                        nappi1.setImageResource(R.drawable.menupoistotila);
+                        nappi2.setVisibility(View.GONE);
+                        nappi3.setVisibility(View.GONE);
+
+
                         pika.setVisibility(View.VISIBLE);
 
-                        /*TK.PoistaListasta(ID);
-                        populateList("SELECT kpl|| ' X '||aine  AS nimi, AK.aineID _id, kuva,3 AS moodi FROM AineKanta AK, OstosKanta OK WHERE AK.aineID IS OK.aineID");*/
+
                         break;
                     }
 
@@ -419,6 +402,31 @@ public class FragmentValikko extends Fragment {
 
     }
 
+    public void katsoKaappiin(int ruokaID) {
+        Cursor kaapissaON = TK.HaeTiedot("SELECT aine, Ak.aineID, RK.aineID FROM AineKanta AK, ReseptiKanta RK WHERE RK.aineID IS AK.aineID AND RK.aineID IN (SELECT aineID FROM KaappiKanta) AND RuokaID IS " + ruokaID);
+        Cursor kaapissaEIOLE = TK.HaeTiedot("SELECT aine, Ak.aineID, RK.aineID FROM AineKanta AK, ReseptiKanta RK WHERE RK.aineID IS AK.aineID AND RK.aineID NOT IN (SELECT aineID FROM KaappiKanta) AND RuokaID IS " + ruokaID);
+        String viesti = "";
+        String on = "";
+        String eiOle = "";
+
+        while (kaapissaON.moveToNext()) {
+            on += "\n -" + kaapissaON.getString(0);
+        }
+        if (on != "")
+            viesti = "Kaapista löytyy:" + on;
+
+        while (kaapissaEIOLE.moveToNext()) {
+            eiOle += "\n -" + kaapissaEIOLE.getString(0);
+        }
+        if (eiOle != "") {
+            if (on != "")
+                viesti += "\n\n";
+            viesti += "Sinulta puuttuu:" + eiOle;
+        } else viesti = "Kaikki aineet löytyy!";
+
+        Toast.makeText(liukkari, viesti, Toast.LENGTH_LONG).show();
+    }
+
     public void pikavalinta(View v, int ID, int _moodi) {
 
         switch (_moodi)
@@ -434,7 +442,7 @@ public class FragmentValikko extends Fragment {
                         break;
                     }
                     case R.id.pika3: {
-                        Log.d("paksaaaakooodiaaaa", "Nappi#3");
+                        avaaRuuat(ID);
                         break;
                     }
                     case R.id.pika4: {
@@ -448,7 +456,7 @@ public class FragmentValikko extends Fragment {
             case 1: {
                 switch (v.getId()) {
                     case R.id.pika1: {
-                        Log.d("paksaaaakooodiaaaa", "Nappi#1");
+                        katsoKaappiin(ID);
                         break;
                     }
                     case R.id.pika2: {
@@ -456,7 +464,9 @@ public class FragmentValikko extends Fragment {
                         break;
                     }
                     case R.id.pika3: {
-                        Log.d("paksaaaakooodiaaaa", "Nappi#3");
+                        Intent intent = new Intent(liukkari, Kokkausohjeet.class);
+                        intent.putExtra("ruokaID", ID);
+                        startActivity(intent);
                         break;
                     }
                     case R.id.pika4: {
@@ -470,7 +480,9 @@ public class FragmentValikko extends Fragment {
             case 3: {
                 switch (v.getId()) {
                     case R.id.pika1: {
-                        Log.d("paksaaaakooodiaaaa", "Nappi#1");
+                        TK.PoistaListasta(ID);
+                        populateList("SELECT kpl|| ' X '||aine  AS nimi, AK.aineID _id, kuva,3 AS moodi FROM AineKanta AK, OstosKanta OK WHERE AK.aineID IS OK.aineID");
+
                         break;
                     }
                     case R.id.pika2: {
@@ -494,6 +506,7 @@ public class FragmentValikko extends Fragment {
                 switch (v.getId()) {
                     case R.id.pika1: {
                         Log.d("paksaaaakooodiaaaa", "Nappi#1");
+
                         break;
                     }
                     case R.id.pika2: {
