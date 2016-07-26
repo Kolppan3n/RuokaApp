@@ -21,19 +21,18 @@ public class Liukuvalikko2 extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         int item = pager.getCurrentItem();
-        if (pada.taakse(item)) ;
+        if (pada.taakse(item)) muuttuvaValikko(item);
         else {
 
                 TK.close();
                 this.finish();
-
         }
     }
 
 
     public void avaaRuuat(String lause) {
-        pager.setCurrentItem(1);
         pada.avaaRuuat(lause);
+        pager.setCurrentItem(1);
     }
 
     public int alkuvalinta(){

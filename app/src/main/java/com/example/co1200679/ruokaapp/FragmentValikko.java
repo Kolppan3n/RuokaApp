@@ -32,7 +32,6 @@ public class FragmentValikko extends Fragment {
     ListView valikko;
     Tietokanta TK;
     int moodi;
-    int plussa;
     LauseLista LL;
 
 
@@ -70,12 +69,12 @@ public class FragmentValikko extends Fragment {
         LL = new LauseLista();
         LL.UusiLause(lause, moodi);
 
-        plussa = 0;
         if (moodi == 3) varauksetOstoksiksi();
         populateList(lause);
     }
 
     public void populateList(String lause) {
+
 
         Cursor tiedot = TK.HaeTiedot(lause);
 
@@ -270,12 +269,6 @@ public class FragmentValikko extends Fragment {
         }
     }
 
-
-    public int muutaPlussa() {
-        plussa ^= 1;
-        return plussa;
-    }
-
     public void laitaListaan(int aineID, int maara) {
         Cursor lasku = TK.HaeTiedot("SELECT count(aineID) AS luku, kpl FROM OstosKanta WHERE aineID IS " + aineID);
         lasku.moveToNext();
@@ -332,8 +325,7 @@ public class FragmentValikko extends Fragment {
 
     public void ruokaMahdollisuudetKaapinAineksista() {
         String lause = ("SELECT ruoka nimi, ruokaID _id, kuva, 1 AS moodi  FROM RuokaKanta WHERE ruokaID NOT IN (SELECT ruokaID FROM ReseptiKanta WHERE NOT toiminta & 6 AND aineID NOT IN (SELECT aineID FROM KaappiKanta))");
-        LL.UusiLause(lause, 1);
-        populateList(lause);
+        liukkari.avaaRuuat(lause);
     }
 
 

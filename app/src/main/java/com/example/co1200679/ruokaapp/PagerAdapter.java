@@ -74,6 +74,7 @@ public class PagerAdapter extends FragmentPagerAdapter {
 
     public void avaaRuuat(String lause) {
         ova.LL.UusiLause(lause, 1);
+        ova.moodi=1;
         ova.populateList(lause);
     }
 }
