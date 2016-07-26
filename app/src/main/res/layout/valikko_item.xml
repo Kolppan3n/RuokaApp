@@ -69,6 +69,17 @@
             android:adjustViewBounds="true"
             android:tint="@color/colorAccent"/>
 
+        <ImageView
+            android:id="@+id/pika4"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/ruokamahdollisuudet"
+            android:scaleType="fitCenter"
+            android:padding="12dp"
+            android:adjustViewBounds="true"
+            android:visibility="gone"
+            android:tint="@color/colorAccent"/>
+
         <TextView
             android:id="@+id/mittari"
             android:layout_width="match_parent"

@@ -213,9 +213,11 @@ public class FragmentValikko extends Fragment {
                 ImageView nappi1 = (ImageView) pika.findViewById(R.id.pika1);
                 ImageView nappi2 = (ImageView) pika.findViewById(R.id.pika2);
                 ImageView nappi3 = (ImageView) pika.findViewById(R.id.pika3);
+                ImageView nappi4 = (ImageView) pika.findViewById(R.id.pika4);
                 nappi1.setOnClickListener(oni);
                 nappi2.setOnClickListener(oni);
                 nappi3.setOnClickListener(oni);
+                nappi4.setOnClickListener(oni);
 
                 switch (moodi) {
 
@@ -237,9 +239,7 @@ public class FragmentValikko extends Fragment {
                     }
                     case 1: {
 
-                        nappi1.setOnClickListener(oni);
-                        nappi2.setOnClickListener(oni);
-                        nappi3.setOnClickListener(oni);
+
                         pika.setVisibility(View.VISIBLE);
 
 
@@ -250,18 +250,14 @@ public class FragmentValikko extends Fragment {
                     }
                     case 2: {
 
-                        nappi1.setOnClickListener(oni);
-                        nappi2.setOnClickListener(oni);
-                        nappi3.setOnClickListener(oni);
+
                         pika.setVisibility(View.VISIBLE);
                     }
 
                     case 3: {
 
-                        nappi3.setImageResource(R.drawable.errori);
-                        nappi1.setOnClickListener(oni);
-                        nappi2.setOnClickListener(oni);
-                        nappi3.setOnClickListener(oni);
+                        nappi4.setImageResource(R.drawable.errori);
+                        nappi4.setVisibility(View.VISIBLE);
                         pika.setVisibility(View.VISIBLE);
 
                         /*TK.PoistaListasta(ID);
@@ -441,6 +437,10 @@ public class FragmentValikko extends Fragment {
                         Log.d("paksaaaakooodiaaaa", "Nappi#3");
                         break;
                     }
+                    case R.id.pika4: {
+                        Log.d("paksaaaakooodiaaaa", "Nappi#4");
+                        break;
+                    }
                 }
 
                 break;
@@ -457,6 +457,10 @@ public class FragmentValikko extends Fragment {
                     }
                     case R.id.pika3: {
                         Log.d("paksaaaakooodiaaaa", "Nappi#3");
+                        break;
+                    }
+                    case R.id.pika4: {
+                        Log.d("paksaaaakooodiaaaa", "Nappi#4");
                         break;
                     }
                 }
@@ -477,6 +481,10 @@ public class FragmentValikko extends Fragment {
                         Log.d("paksaaaakooodiaaaa", "Nappi#3");
                         break;
                     }
+                    case R.id.pika4: {
+                        Log.d("paksaaaakooodiaaaa", "Nappi#4");
+                        break;
+                    }
                 }
 
                 break;
@@ -494,6 +502,10 @@ public class FragmentValikko extends Fragment {
                     }
                     case R.id.pika3: {
                         Log.d("paksaaaakooodiaaaa", "Nappi#3");
+                        break;
+                    }
+                    case R.id.pika4: {
+                        Log.d("paksaaaakooodiaaaa", "Nappi#4");
                         break;
                     }
                 }
