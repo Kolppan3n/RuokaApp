@@ -35,6 +35,12 @@ public class Liukuvalikko2 extends AppCompatActivity {
         pager.setCurrentItem(1);
     }
 
+    public void paivitaKaappi()
+    {
+        pada.kaapitus();
+        pager.setCurrentItem(0);
+    }
+
     public int alkuvalinta(){
         int valitseValikko = getIntent().getIntExtra("valitseValikko",0);
         pager.setCurrentItem(valitseValikko);

@@ -77,4 +77,9 @@ public class PagerAdapter extends FragmentPagerAdapter {
         ova.moodi=1;
         ova.populateList(lause);
     }
+
+    public void kaapitus()
+    {
+        vava.populateList("SELECT aine nimi, KK.aineID _id, kuva, 2 AS moodi, maara / pakkauskoko AS prosentti FROM AineKanta AK, KaappiKanta KK WHERE AK.aineID IS KK.aineID");
+    }
 }

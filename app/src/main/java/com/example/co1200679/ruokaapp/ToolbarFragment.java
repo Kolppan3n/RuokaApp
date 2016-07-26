@@ -159,6 +159,7 @@ public class ToolbarFragment extends Fragment {
             case R.id.kassi: {
                 Liukuvalikko2 Lvalikko = (Liukuvalikko2) getActivity();
                 Lvalikko.pada.ova.ostoksetKaappiin();
+                Lvalikko.paivitaKaappi();
                 //Lvalikko.ostoksetKaappiin();
                 break;
             }
