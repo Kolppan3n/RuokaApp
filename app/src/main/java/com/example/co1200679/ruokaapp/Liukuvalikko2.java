@@ -45,6 +45,7 @@ public class Liukuvalikko2 extends AppCompatActivity {
         int moodi = pada.vava.moodi;
         if (numero == 1) {
             moodi = pada.ova.moodi;
+            if(!pada.ova.kassi) moodi = 22;
         }
             Toolbar.muutaToolbar(moodi);
     }

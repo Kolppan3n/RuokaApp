@@ -33,6 +33,7 @@ public class FragmentValikko extends Fragment {
     Tietokanta TK;
     int moodi;
     LauseLista LL;
+    boolean kassi;
 
 
     public boolean takaisin() {
@@ -76,7 +77,11 @@ public class FragmentValikko extends Fragment {
     public void populateList(String lause) {
 
 
+
         Cursor tiedot = TK.HaeTiedot(lause);
+
+        if(moodi == 3 && tiedot.getCount()>0) kassi = true;
+        else kassi = false;
 
         String[] columns = new String[]{"nimi", "kuva"};
         int[] viewIDs = new int[]{R.id.teksti, R.id.ikoni};
@@ -359,6 +364,7 @@ public class FragmentValikko extends Fragment {
         Toast.makeText(liukkari, "Ostokset laitettu kaappiin ja poistettu listasta", Toast.LENGTH_SHORT).show();
         populateList("SELECT kpl|| ' X '||aine  AS nimi, AK.aineID _id, kuva,3 AS moodi FROM AineKanta AK, OstosKanta OK WHERE AK.aineID IS OK.aineID");
         listatiedot.close();
+        liukkari.muuttuvaValikko(1);
     }
 
     public void varauksetOstoksiksi() {
