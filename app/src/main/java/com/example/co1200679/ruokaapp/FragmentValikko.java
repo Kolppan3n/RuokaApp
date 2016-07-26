@@ -310,7 +310,7 @@ public class FragmentValikko extends Fragment {
         lasku.close();
     }
 
-    public void laitaRuokaListaan(int ID, String nimi) {
+    public void laitaRuokaListaan(int ID) {
 
         String lause = ("SELECT aineID, ruokaID,lkm , toiminta FROM ReseptiKanta WHERE NOT toiminta & 6 AND RuokaID IS " + ID);
         Cursor listatiedot = TK.HaeTiedot(lause);
@@ -319,7 +319,7 @@ public class FragmentValikko extends Fragment {
             laitaVaraus(listatiedot.getInt(0), listatiedot.getFloat(2));
         }
 
-        Toast.makeText(liukkari, nimi + " ainekset lisättiin ostoslistalle", Toast.LENGTH_SHORT).show();
+        Toast.makeText(liukkari,"ainekset lisättiin ostoslistalle", Toast.LENGTH_SHORT).show();
         listatiedot.close();
 
     }
@@ -425,20 +425,82 @@ public class FragmentValikko extends Fragment {
 
     public void pikavalinta(View v, int ID, int _moodi) {
 
-        switch (v.getId()) {
-            case R.id.pika1: {
-                Log.d("paksaaaakooodiaaaa", "Nappi#1");
+        switch (_moodi)
+        {
+            case 0:{
+                switch (v.getId()) {
+                    case R.id.pika1: {
+                        Log.d("paksaaaakooodiaaaa", "Nappi#1");
+                        break;
+                    }
+                    case R.id.pika2: {
+                        laitaListaan(ID, 1);
+                        break;
+                    }
+                    case R.id.pika3: {
+                        Log.d("paksaaaakooodiaaaa", "Nappi#3");
+                        break;
+                    }
+                }
+
                 break;
             }
-            case R.id.pika2: {
-                laitaListaan(ID, 1);
+            case 1: {
+                switch (v.getId()) {
+                    case R.id.pika1: {
+                        Log.d("paksaaaakooodiaaaa", "Nappi#1");
+                        break;
+                    }
+                    case R.id.pika2: {
+                        laitaRuokaListaan(ID);
+                        break;
+                    }
+                    case R.id.pika3: {
+                        Log.d("paksaaaakooodiaaaa", "Nappi#3");
+                        break;
+                    }
+                }
+
                 break;
             }
-            case R.id.pika3: {
-                Log.d("paksaaaakooodiaaaa", "Nappi#3");
+            case 3: {
+                switch (v.getId()) {
+                    case R.id.pika1: {
+                        Log.d("paksaaaakooodiaaaa", "Nappi#1");
+                        break;
+                    }
+                    case R.id.pika2: {
+                        Log.d("paksaaaakooodiaaaa", "Nappi#2");
+                        break;
+                    }
+                    case R.id.pika3: {
+                        Log.d("paksaaaakooodiaaaa", "Nappi#3");
+                        break;
+                    }
+                }
+
+                break;
+            }
+            case 4:
+            {
+                switch (v.getId()) {
+                    case R.id.pika1: {
+                        Log.d("paksaaaakooodiaaaa", "Nappi#1");
+                        break;
+                    }
+                    case R.id.pika2: {
+                        Log.d("paksaaaakooodiaaaa", "Nappi#2");
+                        break;
+                    }
+                    case R.id.pika3: {
+                        Log.d("paksaaaakooodiaaaa", "Nappi#3");
+                        break;
+                    }
+                }
                 break;
             }
         }
+
     }
 
 }
