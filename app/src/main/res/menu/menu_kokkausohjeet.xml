@@ -18,6 +18,4 @@
         android:title="@string/kotiToast"
         app:showAsAction="ifRoom" />
 
-
-
 </menu>

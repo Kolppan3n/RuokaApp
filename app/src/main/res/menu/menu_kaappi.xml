@@ -18,12 +18,4 @@
         android:title="@string/RMToast"
         app:showAsAction="ifRoom" />
 
-    <item
-        android:id="@+id/tila"
-        android:icon="@drawable/menupoistotila"
-        android:orderInCategory="10"
-        android:title="@string/RMToast"
-        app:showAsAction="ifRoom" />
-
-
 </menu>
