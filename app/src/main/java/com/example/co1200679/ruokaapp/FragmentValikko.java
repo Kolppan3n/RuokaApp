@@ -101,7 +101,7 @@ public class FragmentValikko extends Fragment {
                         hermanni.setBackgroundColor(KaappiVari(prosentti));
                     }
 
-                    if (moodi==0) {
+                    /*if (moodi==0) {
                         LinearLayout goddamnfilthy = (LinearLayout) view.getParent().getParent();
                         goddamnfilthy = (LinearLayout) goddamnfilthy.findViewById(R.id.pikavalikko);
                         View.OnClickListener oni = new View.OnClickListener() {
@@ -117,7 +117,7 @@ public class FragmentValikko extends Fragment {
                         nappi1.setOnClickListener(oni);
                         nappi2.setOnClickListener(oni);
                         nappi3.setOnClickListener(oni);
-                    }
+                    }*/
                 }
 
                 return false;
@@ -144,6 +144,8 @@ public class FragmentValikko extends Fragment {
                             Log.d("asdasdasd", "asdasdasd");
                             pika.setVisibility(View.GONE);
                         } else {
+
+
                             Cursor lasku = TK.HaeTiedot("SELECT count(aineID) AS luku FROM AineKanta WHERE edellinenID IS " + ID);
                             lasku.moveToNext();
 
@@ -198,11 +200,29 @@ public class FragmentValikko extends Fragment {
                 ItemInfo temp = (ItemInfo) view.findViewById(R.id.teksti);
                 LinearLayout pika = (LinearLayout) view.findViewById(R.id.pikavalikko);
                 int moodi = temp.getMoodi();
-                int ID = temp.getID();
+                final int ID = temp.getID();
 
                 switch (moodi) {
 
                     case 0: {
+                        {
+
+                            View.OnClickListener oni = new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    pikavalinta(v, ID);
+                                }
+                            };
+
+                            ImageView nappi1 = (ImageView) pika.findViewById(R.id.pika1);
+                            ImageView nappi2 = (ImageView) pika.findViewById(R.id.pika2);
+                            ImageView nappi3 = (ImageView) pika.findViewById(R.id.pika3);
+                            nappi1.setOnClickListener(oni);
+                            nappi2.setOnClickListener(oni);
+                            nappi3.setOnClickListener(oni);
+                        }
+
+
                         pika.setVisibility(View.VISIBLE);
 
                         Cursor maaraprosentti = TK.HaeTiedot("SELECT PRINTF('%g', maara)|| ' ' || mitta AS kaappikasa, maara / pakkauskoko AS prosentti, aine  FROM AineKanta AK, KaappiKanta KK WHERE KK.aineID IS AK.aineID AND KK.aineID IS " + ID);
