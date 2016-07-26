@@ -91,7 +91,7 @@ public class FragmentValikko extends Fragment {
                     ItemInfo temp = (ItemInfo) view.findViewById(R.id.teksti);
                     String nimi = cursor.getString(cursor.getColumnIndex("nimi"));
                     final int ID = cursor.getInt(cursor.getColumnIndex("_id"));
-                    int moodi = cursor.getInt(cursor.getColumnIndex("moodi"));
+                    final int moodi = cursor.getInt(cursor.getColumnIndex("moodi"));
                     temp.setNimi(nimi);
                     temp.setID(ID);
                     temp.setMoodi(moodi);
@@ -135,16 +135,14 @@ public class FragmentValikko extends Fragment {
                 int moodi = temp.getMoodi();
                 int ID = temp.getID();
                 String nimi = temp.getNimi();
+                LinearLayout pika = (LinearLayout) view.findViewById(R.id.pikavalikko);
 
-                switch (moodi) {
-                    case 0: {
-
-                        LinearLayout pika = (LinearLayout) view.findViewById(R.id.pikavalikko);
-                        if (pika.getVisibility() == View.VISIBLE) {
-                            Log.d("asdasdasd", "asdasdasd");
-                            pika.setVisibility(View.GONE);
-                        } else {
-
+                if (pika.getVisibility() == View.VISIBLE) {
+                    Log.d("asdasdasd", "asdasdasd");
+                    pika.setVisibility(View.GONE);
+                } else {
+                    switch (moodi) {
+                        case 0: {
 
                             Cursor lasku = TK.HaeTiedot("SELECT count(aineID) AS luku FROM AineKanta WHERE edellinenID IS " + ID);
                             lasku.moveToNext();
@@ -158,37 +156,40 @@ public class FragmentValikko extends Fragment {
                                 LL.UusiLause(lause, 0);
                                 populateList(lause);
                             }
+
+                            break;
                         }
-                        break;
-                    }
-                    case 1: {
-                        if (plussa == 0) {
+                        case 1: {
+
                             Intent intent = new Intent(liukkari, Valikko.class);
                             intent.putExtra("ruokaID", ID);
                             startActivity(intent);
-                        } else {
-                            laitaRuokaListaan(ID, nimi);
-                        }
-                        break;
-                    }
-                    case 2: {
-                        break;
-                    }
 
-                    case 3: {
-                        if (temp.getTag().equals("")) {
-                            temp.setTextColor(ContextCompat.getColor(liukkari, R.color.colorTextSecondary));
-                            temp.setPaintFlags(temp.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                            temp.setTag("Checked");
-                        } else {
-                            temp.setTextColor(ContextCompat.getColor(liukkari, R.color.colorTextPrimary));
-                            temp.setPaintFlags(temp.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
-                            temp.setTag("");
+
+                            break;
                         }
-                        break;
+                        case 2: {
+
+                            break;
+                        }
+
+                        case 3: {
+
+                            if (temp.getTag().equals("")) {
+                                temp.setTextColor(ContextCompat.getColor(liukkari, R.color.colorTextSecondary));
+                                temp.setPaintFlags(temp.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                                temp.setTag("Checked");
+                            } else {
+                                temp.setTextColor(ContextCompat.getColor(liukkari, R.color.colorTextPrimary));
+                                temp.setPaintFlags(temp.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+                                temp.setTag("");
+                            }
+
+                            break;
+                        }
+                        default:
+                            Log.d("Herp", "Derp");
                     }
-                    default:
-                        Log.d("Herp", "Derp");
                 }
             }
         });
@@ -199,56 +200,72 @@ public class FragmentValikko extends Fragment {
 
                 ItemInfo temp = (ItemInfo) view.findViewById(R.id.teksti);
                 LinearLayout pika = (LinearLayout) view.findViewById(R.id.pikavalikko);
-                int moodi = temp.getMoodi();
+                final int moodi = temp.getMoodi();
                 final int ID = temp.getID();
+
+                View.OnClickListener oni = new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        pikavalinta(v, ID, moodi);
+                    }
+                };
+
+                ImageView nappi1 = (ImageView) pika.findViewById(R.id.pika1);
+                ImageView nappi2 = (ImageView) pika.findViewById(R.id.pika2);
+                ImageView nappi3 = (ImageView) pika.findViewById(R.id.pika3);
+                nappi1.setOnClickListener(oni);
+                nappi2.setOnClickListener(oni);
+                nappi3.setOnClickListener(oni);
 
                 switch (moodi) {
 
                     case 0: {
                         {
+                            Cursor maaraprosentti = TK.HaeTiedot("SELECT PRINTF('%g', maara)|| ' ' || mitta AS kaappikasa, maara / pakkauskoko AS prosentti, aine  FROM AineKanta AK, KaappiKanta KK WHERE KK.aineID IS AK.aineID AND KK.aineID IS " + ID);
+                            TextView mittari = (TextView) pika.findViewById(R.id.mittari);
+                            mittari.setVisibility(View.VISIBLE);
 
-                            View.OnClickListener oni = new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    pikavalinta(v, ID);
-                                }
-                            };
-
-                            ImageView nappi1 = (ImageView) pika.findViewById(R.id.pika1);
-                            ImageView nappi2 = (ImageView) pika.findViewById(R.id.pika2);
-                            ImageView nappi3 = (ImageView) pika.findViewById(R.id.pika3);
-                            nappi1.setOnClickListener(oni);
-                            nappi2.setOnClickListener(oni);
-                            nappi3.setOnClickListener(oni);
+                            Log.d("asdasd", DatabaseUtils.dumpCursorToString(maaraprosentti));
+                            if (maaraprosentti.moveToNext()) {
+                                mittari.setBackgroundColor(KaappiVari(maaraprosentti.getFloat(1)));
+                                mittari.setText(maaraprosentti.getString(0));
+                            }
+                            maaraprosentti.close();
+                            pika.setVisibility(View.VISIBLE);
+                            break;
                         }
-
-
-                        pika.setVisibility(View.VISIBLE);
-
-                        Cursor maaraprosentti = TK.HaeTiedot("SELECT PRINTF('%g', maara)|| ' ' || mitta AS kaappikasa, maara / pakkauskoko AS prosentti, aine  FROM AineKanta AK, KaappiKanta KK WHERE KK.aineID IS AK.aineID AND KK.aineID IS " + ID);
-                        TextView mittari = (TextView) pika.findViewById(R.id.mittari);
-
-                        Log.d("asdasd",DatabaseUtils.dumpCursorToString(maaraprosentti));
-                        if(maaraprosentti.moveToNext()) {
-                            mittari.setBackgroundColor(KaappiVari(maaraprosentti.getFloat(1)));
-                            mittari.setText(maaraprosentti.getString(0));
-                        }
-                        maaraprosentti.close();
-                        break;
                     }
                     case 1: {
-                        Intent intent = new Intent(liukkari, Kokkausohjeet.class);
+
+                        nappi1.setOnClickListener(oni);
+                        nappi2.setOnClickListener(oni);
+                        nappi3.setOnClickListener(oni);
+                        pika.setVisibility(View.VISIBLE);
+
+
+                       /* Intent intent = new Intent(liukkari, Kokkausohjeet.class);
                         intent.putExtra("ruokaID", ID);
-                        startActivity(intent);
+                        startActivity(intent);*/
                         break;
                     }
                     case 2: {
-                        break;
+
+                        nappi1.setOnClickListener(oni);
+                        nappi2.setOnClickListener(oni);
+                        nappi3.setOnClickListener(oni);
+                        pika.setVisibility(View.VISIBLE);
                     }
 
                     case 3: {
-                        TK.PoistaListasta(ID);
-                        populateList("SELECT kpl|| ' X '||aine  AS nimi, AK.aineID _id, kuva,3 AS moodi FROM AineKanta AK, OstosKanta OK WHERE AK.aineID IS OK.aineID");
+
+                        nappi3.setImageResource(R.drawable.errori);
+                        nappi1.setOnClickListener(oni);
+                        nappi2.setOnClickListener(oni);
+                        nappi3.setOnClickListener(oni);
+                        pika.setVisibility(View.VISIBLE);
+
+                        /*TK.PoistaListasta(ID);
+                        populateList("SELECT kpl|| ' X '||aine  AS nimi, AK.aineID _id, kuva,3 AS moodi FROM AineKanta AK, OstosKanta OK WHERE AK.aineID IS OK.aineID");*/
                         break;
                     }
 
@@ -406,7 +423,7 @@ public class FragmentValikko extends Fragment {
 
     }
 
-    public void pikavalinta(View v, int ID) {
+    public void pikavalinta(View v, int ID, int _moodi) {
 
         switch (v.getId()) {
             case R.id.pika1: {
