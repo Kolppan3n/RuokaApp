@@ -80,8 +80,7 @@ public class FragmentValikko extends Fragment {
 
         Cursor tiedot = TK.HaeTiedot(lause);
 
-        if(moodi == 3 && tiedot.getCount()>0) kassi = true;
-        else kassi = false;
+        kassi = moodi == 3 && tiedot.getCount() > 0;
 
         String[] columns = new String[]{"nimi", "kuva"};
         int[] viewIDs = new int[]{R.id.teksti, R.id.ikoni};
@@ -450,102 +449,87 @@ public class FragmentValikko extends Fragment {
 
     public void pikavalinta(View v, int ID, int _moodi) {
 
-        switch (_moodi)
-        {
-            case 0:{
-                switch (v.getId()) {
-                    case R.id.pika1: {
-                        Log.d("paksaaaakooodiaaaa", "Nappi#1");
-                        break;
-                    }
-                    case R.id.pika2: {
-                        laitaListaan(ID, 1);
-                        break;
-                    }
-                    case R.id.pika3: {
-                        avaaRuuat(ID);
-                        break;
-                    }
-                    case R.id.pika4: {
-                        Log.d("paksaaaakooodiaaaa", "Nappi#4");
-                        break;
-                    }
+        if (_moodi == 0) {
+            switch (v.getId()) {
+                case R.id.pika1: {
+                    Log.d("paksaaaakooodiaaaa", "Nappi#1");
+                    break;
                 }
-
-                break;
-            }
-            case 1: {
-                switch (v.getId()) {
-                    case R.id.pika1: {
-                        katsoKaappiin(ID);
-                        break;
-                    }
-                    case R.id.pika2: {
-                        laitaRuokaListaan(ID);
-                        break;
-                    }
-                    case R.id.pika3: {
-                        Intent intent = new Intent(liukkari, Kokkausohjeet.class);
-                        intent.putExtra("ruokaID", ID);
-                        startActivity(intent);
-                        break;
-                    }
-                    case R.id.pika4: {
-                        Log.d("paksaaaakooodiaaaa", "Nappi#4");
-                        break;
-                    }
+                case R.id.pika2: {
+                    laitaListaan(ID, 1);
+                    break;
                 }
-
-                break;
-            }
-            case 2: {
-                switch (v.getId()) {
-                    case R.id.pika1: {
-                        TK.PoistaKaapista(ID);
-                        populateList("SELECT aine nimi, KK.aineID _id, kuva, 2 AS moodi, maara / pakkauskoko AS prosentti FROM AineKanta AK, KaappiKanta KK WHERE AK.aineID IS KK.aineID");
-                        break;
-                    }
-                    case R.id.pika2: {
-                        Log.d("paksaaaakooodiaaaa", "Nappi#2");
-                        break;
-                    }
-                    case R.id.pika3: {
-                        Log.d("paksaaaakooodiaaaa", "Nappi#3");
-                        break;
-                    }
-                    case R.id.pika4: {
-                        Log.d("paksaaaakooodiaaaa", "Nappi#4");
-                        break;
-                    }
+                case R.id.pika3: {
+                    avaaRuuat(ID);
+                    break;
                 }
-
-                break;
-            }
-            case 3: {
-                switch (v.getId()) {
-                    case R.id.pika1: {
-                        TK.PoistaListasta(ID);
-                        populateList("SELECT kpl|| ' X '||aine  AS nimi, AK.aineID _id, kuva,3 AS moodi FROM AineKanta AK, OstosKanta OK WHERE AK.aineID IS OK.aineID");
-
-                        break;
-                    }
-                    case R.id.pika2: {
-                        Log.d("paksaaaakooodiaaaa", "Nappi#2");
-                        break;
-                    }
-                    case R.id.pika3: {
-                        Log.d("paksaaaakooodiaaaa", "Nappi#3");
-                        break;
-                    }
-                    case R.id.pika4: {
-                        Log.d("paksaaaakooodiaaaa", "Nappi#4");
-                        break;
-                    }
+                case R.id.pika4: {
+                    Log.d("paksaaaakooodiaaaa", "Nappi#4");
+                    break;
                 }
-
-                break;
             }
+        } else if (_moodi == 1) {
+            switch (v.getId()) {
+                case R.id.pika1: {
+                    katsoKaappiin(ID);
+                    break;
+                }
+                case R.id.pika2: {
+                    laitaRuokaListaan(ID);
+                    break;
+                }
+                case R.id.pika3: {
+                    Intent intent = new Intent(liukkari, Kokkausohjeet.class);
+                    intent.putExtra("ruokaID", ID);
+                    startActivity(intent);
+                    break;
+                }
+                case R.id.pika4: {
+                    Log.d("paksaaaakooodiaaaa", "Nappi#4");
+                    break;
+                }
+            }
+        } else if (_moodi == 2) {
+            switch (v.getId()) {
+                case R.id.pika1: {
+                    TK.PoistaKaapista(ID);
+                    populateList("SELECT aine nimi, KK.aineID _id, kuva, 2 AS moodi, maara / pakkauskoko AS prosentti FROM AineKanta AK, KaappiKanta KK WHERE AK.aineID IS KK.aineID");
+                    break;
+                }
+                case R.id.pika2: {
+                    Log.d("paksaaaakooodiaaaa", "Nappi#2");
+                    break;
+                }
+                case R.id.pika3: {
+                    Log.d("paksaaaakooodiaaaa", "Nappi#3");
+                    break;
+                }
+                case R.id.pika4: {
+                    Log.d("paksaaaakooodiaaaa", "Nappi#4");
+                    break;
+                }
+            }
+        } else if (_moodi == 3) {
+            switch (v.getId()) {
+                case R.id.pika1: {
+                    TK.PoistaListasta(ID);
+                    populateList("SELECT kpl|| ' X '||aine  AS nimi, AK.aineID _id, kuva,3 AS moodi FROM AineKanta AK, OstosKanta OK WHERE AK.aineID IS OK.aineID");
 
+                    break;
+                }
+                case R.id.pika2: {
+                    Log.d("paksaaaakooodiaaaa", "Nappi#2");
+                    break;
+                }
+                case R.id.pika3: {
+                    Log.d("paksaaaakooodiaaaa", "Nappi#3");
+                    break;
+                }
+                case R.id.pika4: {
+                    Log.d("paksaaaakooodiaaaa", "Nappi#4");
+                    break;
+                }
+            }
         }
 
     }
