@@ -10,6 +10,7 @@ public class ItemInfo extends TextView {
     private String kpl = "Testi";
     private int ID;
     private int moodi;
+    private int piilo;
 
     public ItemInfo(Context context) {
         super(context);
@@ -54,5 +55,13 @@ public class ItemInfo extends TextView {
 
     public void setKpl(String kpl) {
         this.kpl = kpl;
+    }
+
+    public int getPiilo() {
+        return piilo;
+    }
+
+    public void setPiilo(int piilo) {
+        this.piilo = piilo;
     }
 }

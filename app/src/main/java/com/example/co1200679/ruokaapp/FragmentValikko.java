@@ -96,9 +96,12 @@ public class FragmentValikko extends Fragment {
                     String nimi = cursor.getString(cursor.getColumnIndex("nimi"));
                     final int ID = cursor.getInt(cursor.getColumnIndex("_id"));
                     final int moodi = cursor.getInt(cursor.getColumnIndex("moodi"));
+                    int piilo = 0;
+                    if (moodi == 0) piilo = cursor.getInt(cursor.getColumnIndex("piilot"));
                     temp.setNimi(nimi);
                     temp.setID(ID);
                     temp.setMoodi(moodi);
+                    temp.setPiilo(piilo);
                     if (moodi == 2) {
                         float prosentti = cursor.getFloat(cursor.getColumnIndex("prosentti"));
                         LinearLayout hermanni = (LinearLayout) temp.getParent();
@@ -111,7 +114,6 @@ public class FragmentValikko extends Fragment {
         });
         valikko.setAdapter(filleri);
 
-
         valikko.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
@@ -122,6 +124,7 @@ public class FragmentValikko extends Fragment {
                 int ID = temp.getID();
                 String nimi = temp.getNimi();
                 LinearLayout pika = (LinearLayout) view.findViewById(R.id.pikavalikko);
+
 
                 if (pika.getVisibility() == View.VISIBLE) {
                     Log.d("asdasdasd", "asdasdasd");
@@ -180,6 +183,7 @@ public class FragmentValikko extends Fragment {
             }
         });
 
+
         valikko.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
@@ -209,17 +213,19 @@ public class FragmentValikko extends Fragment {
 
                     case 0: {
                         {
-                            Cursor maaraprosentti = TK.HaeTiedot("SELECT PRINTF('%g', maara)|| ' ' || mitta AS kaappikasa, maara / pakkauskoko AS prosentti, aine  FROM AineKanta AK, KaappiKanta KK WHERE KK.aineID IS AK.aineID AND KK.aineID IS " + ID);
-                            TextView mittari = (TextView) pika.findViewById(R.id.mittari);
-                            mittari.setVisibility(View.VISIBLE);
+                            if (temp.getPiilo()== 0) {
+                                Cursor maaraprosentti = TK.HaeTiedot("SELECT PRINTF('%g', maara)|| ' ' || mitta AS kaappikasa, maara / pakkauskoko AS prosentti, aine  FROM AineKanta AK, KaappiKanta KK WHERE KK.aineID IS AK.aineID AND KK.aineID IS " + ID);
+                                TextView mittari = (TextView) pika.findViewById(R.id.mittari);
+                                mittari.setVisibility(View.VISIBLE);
 
-                            Log.d("asdasd", DatabaseUtils.dumpCursorToString(maaraprosentti));
-                            if (maaraprosentti.moveToNext()) {
-                                mittari.setBackgroundColor(KaappiVari(maaraprosentti.getFloat(1)));
-                                mittari.setText(maaraprosentti.getString(0));
+                                Log.d("asdasd", DatabaseUtils.dumpCursorToString(maaraprosentti));
+                                if (maaraprosentti.moveToNext()) {
+                                    mittari.setBackgroundColor(KaappiVari(maaraprosentti.getFloat(1)));
+                                    mittari.setText(maaraprosentti.getString(0));
+                                }
+                                maaraprosentti.close();
+                                pika.setVisibility(View.VISIBLE);
                             }
-                            maaraprosentti.close();
-                            pika.setVisibility(View.VISIBLE);
                             break;
                         }
                     }
