@@ -137,7 +137,7 @@ public class FragmentValikko extends Fragment {
                                 lasku.close();
                                 avaaRuuat(ID);
                             } else {
-                                String lause = ("SELECT aine nimi, aineID _id, kuva, " + moodi + " as moodi FROM AineKanta WHERE edellinenID is " + ID);
+                                String lause = ("SELECT aine nimi, aineID _id, kuva, " + moodi + " as moodi FROM AineKanta WHERE NOT piilot & 2 AND edellinenID is " + ID);
                                 lasku.close();
                                 LL.UusiLause(lause, 0);
                                 populateList(lause);

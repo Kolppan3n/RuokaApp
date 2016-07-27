@@ -57,7 +57,7 @@ public class Kirjastonhoitaja extends AsyncTask<Void, Void, Void> {
 
             for (int k = 0; k < aineet.length(); k++) {
                 JSONObject JO = aineet.getJSONObject(k);
-                TK.LaitaAine(JO.getString("aine"), JO.getInt("aineID"), JO.getInt("edellinenID"), JO.getString("mitta"), JO.getString("kuva"), (float) JO.getDouble("pakkauskoko"));
+                TK.LaitaAine(JO.getString("aine"), JO.getInt("aineID"), JO.getInt("edellinenID"), JO.getString("mitta"), JO.getString("kuva"), (float) JO.getDouble("pakkauskoko"), JO.getInt("piilot"));
             }
 
             for (int k = 0; k < ruuat.length(); k++) {

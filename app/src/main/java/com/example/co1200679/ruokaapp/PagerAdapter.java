@@ -15,7 +15,7 @@ public class PagerAdapter extends FragmentPagerAdapter {
     int MV;
     int MO;
     String moodit[] =
-            {"SELECT aine nimi, aineID _id, kuva, 0 AS moodi FROM AineKanta WHERE edellinenID is 0",
+            {"SELECT aine nimi, aineID _id, kuva, 0 AS moodi, piilot FROM AineKanta WHERE edellinenID is 0 AND NOT piilot & 2",
                     "SELECT ruoka nimi, ruokaID _id, kuva, 1 AS moodi  FROM RuokaKanta",
                     "SELECT aine nimi, KK.aineID _id, kuva, 2 AS moodi, maara / pakkauskoko AS prosentti FROM AineKanta AK, KaappiKanta KK WHERE AK.aineID IS KK.aineID",
                     "SELECT kpl|| ' X '||aine  AS nimi, AK.aineID _id, kuva,3 AS moodi FROM AineKanta AK, OstosKanta OK WHERE AK.aineID IS OK.aineID"};
